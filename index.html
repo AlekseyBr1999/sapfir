@@ -1,0 +1,537 @@
+<!doctype html>
+
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Сапфир — салон красоты</title>
+  <meta name="description" content="Салон красоты Сапфир — парикмахерские услуги, ногтевой сервис, косметология." />
+  <style>
+    /* 
+      Палитра и идеи сочетаний: Visme, Magezon, Looka
+      - https://visme.co/blog/website-color-schemes/
+      - https://blog.magezon.com/best-blue-websites-with-schemes-ecm/
+      - https://looka.com/blog/color-combinations/
+    */
+    :root{
+      --bg-deep: #0B1533;           /* глубокий ночной фон */
+      --bg-deeper: #070e24;
+      --sapphire-900:#071a3a;
+      --sapphire-800:#0a2e6e;
+      --sapphire-700:#103d8d;
+      --sapphire-500:#185adb;
+      --sapphire-300:#5fa4ff;
+      --silver-100:#F1F3F6;
+      --silver-200:#E3E6EC;
+      --silver-300:#D0D6DF;
+      --silver-500:#AAB4C3;
+      --silver-700:#8C95A3;
+      --ink:#dfe7ff;
+      --muted:#9aa3b2;  --radius-xl: 18px;
+  --radius-l: 14px;
+  --radius-m: 12px;
+  --radius-s: 10px;
+  --shadow-soft: 0 10px 30px rgba(16,61,141,.25);
+  --shadow-glow: 0 0 30px rgba(24,90,219,.35), inset 0 0 20px rgba(255,255,255,.04);
+  --glass-bg: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+  --glass-border: 1px solid rgba(255,255,255,.14);
+  --line: rgba(255,255,255,.08);
+}
+/* Базовая типографика (тонко и элегантно, без внешних шрифтов) */
+html,body{
+  height:100%;
+  background:
+    radial-gradient(1200px 800px at 70% -10%, rgba(16,61,141,.25), transparent 55%),
+    radial-gradient(900px 600px at -10% 30%, rgba(24,90,219,.20), transparent 60%),
+    linear-gradient(180deg, var(--bg-deep), var(--bg-deeper));
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+body{
+  margin:0;
+  font-family: "Segoe UI", Roboto, "Helvetica Neue", Arial, system-ui, -apple-system, "Noto Sans", "Liberation Sans", sans-serif;
+  line-height:1.6;
+  scrollbar-gutter: stable; /* Подход объясняется у Ahmad Shadeed */
+}
+/* Кастомный скроллбар (стандартизированный синтаксис для Firefox): MDN */
+/* https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_scrollbars_styling */
+html{
+  scrollbar-width: thin;
+  scrollbar-color: var(--sapphire-500) rgba(255,255,255,.05);
+}
+/* Вебкит-стили скроллбара: W3Schools пример синтаксиса */
+/* https://www.w3schools.com/howto/howto_css_custom_scrollbar.asp */
+::-webkit-scrollbar{
+  width: 12px;
+  height: 12px;
+}
+::-webkit-scrollbar-track{
+  background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+  border-radius: 10px;
+  box-shadow: inset 0 0 8px rgba(0,0,0,.25);
+}
+/* Сияющий “сапфировый” бегунок с анимацией блики */
+::-webkit-scrollbar-thumb{
+  border-radius: 10px;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.35), rgba(255,255,255,0) 40%) ,
+    linear-gradient(135deg, var(--sapphire-700), var(--sapphire-500));
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.25), 0 0 14px rgba(24,90,219,.45);
+  background-size: 200% 200%;
+  animation: thumbShine 4s ease-in-out infinite;
+}
+::-webkit-scrollbar-thumb:hover{
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.5), rgba(255,255,255,0) 40%) ,
+    linear-gradient(135deg, var(--sapphire-300), var(--sapphire-500));
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.35), 0 0 18px rgba(95,164,255,.55);
+}
+@keyframes thumbShine{
+  0%,100%{ background-position: 0% 0%, 0% 50%;}
+  50%{ background-position: 100% 100%, 100% 50%;}
+}
+/* Верхняя информационная плашка с адресом и телефоном */
+.topbar{
+  position: relative;
+  z-index: 5;
+  display:flex;
+  align-items:center;
+  justify-content: flex-end;
+  gap:22px;
+  padding:10px 22px;
+  border-bottom: 1px solid var(--line);
+  backdrop-filter: blur(6px);
+  background: linear-gradient(90deg, rgba(255,255,255,.06), rgba(255,255,255,0));
+  font-size: 13px;
+  color: var(--muted);
+}
+.topbar a{
+  color: var(--ink);
+  text-decoration: none;
+  opacity:.9;
+  transition: opacity .25s ease, text-shadow .25s ease;
+}
+.topbar a:hover{
+  opacity:1;
+  text-shadow: 0 0 14px rgba(95,164,255,.45);
+}
+.diamond-dot{
+  display:inline-block;
+  width:7px; height:7px;
+  background: linear-gradient(135deg, var(--silver-500), var(--silver-100));
+  transform: rotate(45deg);
+  margin: 0 10px;
+  box-shadow: 0 0 8px rgba(255,255,255,.35);
+}
+/* Хедер + навигация с “ювелирной” линией (magic line) — идеи hover и меню: Prismic, Hover.css */
+/* https://prismic.io/blog/css-hover-effects, https://ianlunn.github.io/Hover/ */
+header.site-header{
+  position: sticky;
+  top:0; z-index:10;
+  background: rgba(7,14,36,.6);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--line);
+}
+.nav-wrap{
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 16px 22px;
+  display:flex; align-items:center; justify-content: space-between;
+}
+.brand{
+  display:flex; align-items:center; gap:12px;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  font-weight: 300;
+  font-size: 15px;
+  color: var(--silver-300);
+}
+.brand-mark{
+  width:28px; height:28px;
+  background: conic-gradient(from 0deg, #7da8ff, #cbd5e1, #185adb, #7da8ff);
+  border-radius: 6px;
+  transform: rotate(45deg);
+  box-shadow: 0 0 20px rgba(24,90,219,.45), inset 0 0 12px rgba(255,255,255,.35);
+}
+nav.primary{
+  position: relative;
+  display:flex; gap: 24px;
+}
+nav.primary a{
+  position: relative;
+  display:inline-block;
+  padding: 10px 6px;
+  color: var(--silver-200);
+  text-decoration: none;
+  font-weight: 300;
+  letter-spacing: .04em;
+  transition: color .3s ease, text-shadow .3s ease, transform .2s ease;
+}
+nav.primary a:hover{
+  color: #ffffff;
+  text-shadow: 0 0 14px rgba(95,164,255,.5);
+  transform: translateY(-1px);
+}
+/* Алмазные маркеры возле пунктов меню */
+nav.primary a::before{
+  content:"";
+  position:absolute; left:-12px; top:50%;
+  width:6px; height:6px; transform: translateY(-50%) rotate(45deg) scale(.5);
+  background: linear-gradient(135deg, var(--silver-500), var(--silver-100));
+  opacity:.0; transition: .3s ease;
+  box-shadow: 0 0 10px rgba(255,255,255,.35);
+  border: 1px solid rgba(255,255,255,.25);
+}
+nav.primary a:hover::before{ opacity: .9; transform: translateY(-50%) rotate(45deg) scale(1); }
+/* “Magic line” под активным пунктом */
+.nav-underline{
+  position:absolute; left:0; bottom: -2px;
+  height:2px; width: 0;
+  background: linear-gradient(90deg, #a7b7cc, #5fa4ff, #a7b7cc);
+  border-radius: 2px;
+  box-shadow: 0 0 12px rgba(95,164,255,.55);
+  transition: left .35s ease, width .35s ease;
+  pointer-events: none;
+}
+/* Герой-секция с акцентом “САПФИР” */
+.hero{
+  position: relative;
+  overflow: hidden;
+  padding: 96px 22px 56px;
+}
+.hero-inner{
+  max-width: 1200px; margin: 0 auto;
+  display:grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap:40px;
+  align-items: center;
+}
+.headline{
+  font-family: Georgia, "Times New Roman", serif;
+  font-weight: 300;
+  line-height: 1.05;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  font-size: clamp(38px, 7vw, 88px);
+  margin: 0 0 18px;
+  background: linear-gradient(90deg, #cbd5e1 0%, #7da8ff 35%, #dfe7ff 65%, #9fb9ff 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  text-shadow: 0 0 22px rgba(125,168,255,.25);
+}
+.sub{
+  color: var(--silver-300);
+  font-size: clamp(16px, 2.4vw, 18px);
+  max-width: 58ch;
+  margin-bottom: 28px;
+}
+.cta-row{
+  display:flex; gap:14px; flex-wrap: wrap;
+}
+.btn{
+  position: relative;
+  display:inline-flex; align-items:center; justify-content:center;
+  gap:10px;
+  padding: 14px 22px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,.18);
+  background: linear-gradient(180deg, rgba(95,164,255,.22), rgba(95,164,255,.12));
+  color: #fff; text-decoration: none;
+  letter-spacing: .06em; font-weight: 500;
+  box-shadow: var(--shadow-soft);
+  overflow: hidden;
+  transition: transform .2s ease, box-shadow .3s ease, background .3s ease, border-color .3s ease;
+}
+.btn::after{
+  content:"";
+  position:absolute; inset:-1px;
+  background: linear-gradient(120deg, rgba(255,255,255,.65), rgba(255,255,255,0) 35%);
+  transform: translateX(-120%);
+  transition: transform .6s ease;
+  mix-blend-mode: soft-light;
+}
+.btn:hover{
+  transform: translateY(-1px);
+  box-shadow: 0 12px 36px rgba(95,164,255,.35);
+  border-color: rgba(255,255,255,.35);
+  background: linear-gradient(180deg, rgba(95,164,255,.3), rgba(95,164,255,.14));
+}
+.btn:hover::after{ transform: translateX(0%); }
+.btn.secondary{
+  background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.02));
+  color: var(--silver-200);
+}
+.btn.secondary:hover{
+  color:#fff;
+  box-shadow: 0 12px 36px rgba(170,180,195,.25);
+}
+/* Декоративный “грани сапфира” блок */
+.gem{
+  position: relative;
+  aspect-ratio: 1.1/1;
+  border-radius: var(--radius-xl);
+  background:
+    conic-gradient(from 180deg, rgba(203,213,225,.2), rgba(125,168,255,.2), rgba(24,90,219,.3), rgba(11,21,51,.4), rgba(203,213,225,.2));
+  box-shadow: inset 0 0 40px rgba(255,255,255,.08), 0 20px 60px rgba(11,21,51,.6), 0 0 80px rgba(24,90,219,.35);
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,.12);
+}
+.gem::before{
+  content:"";
+  position:absolute; inset:-30%;
+  background:
+    radial-gradient(300px 180px at 25% 20%, rgba(255,255,255,.18), transparent 60%),
+    radial-gradient(260px 160px at 80% 60%, rgba(95,164,255,.25), transparent 70%),
+    radial-gradient(200px 120px at 40% 90%, rgba(255,255,255,.15), transparent 75%);
+  filter: blur(10px);
+  animation: gemDrift 12s ease-in-out infinite alternate;
+}
+@keyframes gemDrift{
+  0%{ transform: rotate(0deg) translate(0,0) scale(1); opacity: .85;}
+  100%{ transform: rotate(10deg) translate(-10px, -6px) scale(1.02); opacity: 1;}
+}
+.gem-grid{
+  position:absolute; inset:0;
+  background:
+    linear-gradient(60deg, rgba(255,255,255,.08) 1px, transparent 1px) 0 0/ 32px 32px,
+    linear-gradient(-60deg, rgba(255,255,255,.06) 1px, transparent 1px) 0 0/ 32px 32px;
+  mix-blend-mode: overlay;
+  opacity:.5;
+  animation: gridSparkle 8s linear infinite;
+}
+@keyframes gridSparkle{
+  0%{ background-position: 0 0, 0 0; }
+  100%{ background-position: 64px 0, -64px 0; }
+}
+/* Превью услуг */
+.section{
+  max-width: 1200px; margin: 30px auto; padding: 0 22px;
+}
+.section h2{
+  font-family: Georgia, "Times New Roman", serif;
+  font-weight: 300;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  font-size: 24px;
+  color: var(--silver-200);
+  margin: 34px 0 18px;
+}
+.services{
+  display:grid;
+  grid-template-columns: repeat(3, minmax(0,1fr));
+  gap: 18px;
+}
+.card{
+  position:relative;
+  border-radius: var(--radius-xl);
+  background: var(--glass-bg);
+  border: var(--glass-border);
+  padding: 22px;
+  overflow:hidden;
+  transition: transform .25s ease, box-shadow .35s ease, border-color .3s ease;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.06);
+}
+.card:hover{
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-glow);
+  border-color: rgba(255,255,255,.28);
+}
+.card::after{
+  content:"";
+  position:absolute; inset: 1px;
+  border-radius: calc(var(--radius-xl) - 1px);
+  background: radial-gradient(1000px 240px at -10% -20%, rgba(95,164,255,.18), transparent 60%);
+  pointer-events:none;
+  transition: opacity .35s ease;
+  opacity: 0;
+}
+.card:hover::after{ opacity:1; }
+.card h3{
+  margin: 14px 0 8px;
+  font-weight: 400;
+  letter-spacing: .04em;
+  color: #fff;
+}
+.card p{ margin: 0; color: var(--silver-300); }
+.icon{
+  width:48px; height:48px;
+  border-radius: 14px;
+  display:grid; place-items:center;
+  background: linear-gradient(135deg, rgba(95,164,255,.22), rgba(95,164,255,.06));
+  border: 1px solid rgba(255,255,255,.16);
+  box-shadow: inset 0 0 12px rgba(255,255,255,.05), 0 6px 16px rgba(24,90,219,.18);
+}
+.icon svg{ width:26px; height:26px; fill:none; stroke:#cfe0ff; stroke-width:1.5; }
+/* Контактный блок */
+.contact{
+  margin: 46px auto 20px; padding: 22px;
+  border-radius: var(--radius-xl);
+  background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+  border: 1px solid rgba(255,255,255,.14);
+  display:flex; align-items:center; justify-content: space-between;
+  gap:20px; flex-wrap: wrap;
+}
+.contact .info{
+  display:flex; align-items:center; gap:18px; flex-wrap:wrap;
+  color: var(--silver-300);
+}
+.contact .info a{ color:#fff; text-decoration: none; opacity:.9; }
+.contact .info a:hover{ opacity:1; text-shadow: 0 0 10px rgba(95,164,255,.5); }
+footer{
+  border-top: 1px solid var(--line);
+  color: var(--silver-300);
+  font-size: 13px;
+  padding: 22px;
+  text-align: center;
+  background: linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,0));
+}
+/* Адаптив */
+@media (max-width: 960px){
+  .hero-inner{ grid-template-columns: 1fr; }
+}
+@media (max-width: 720px){
+  nav.primary{ gap:14px; }
+  .services{ grid-template-columns: 1fr; }
+  .topbar{ justify-content: center; }
+}
+
+  </style>
+</head>
+<body>
+  <div class="topbar">
+    <span>г. Санкт‑Петербург, ул. Сапфировая, 12</span>
+    <span class="diamond-dot" aria-hidden="true"></span>
+    <a href="tel:+78125552342">+7 (812) 555‑23‑42</a>
+  </div>  <header class="site-header">
+    <div class="nav-wrap">
+      <div class="brand">
+        <span class="brand-mark" aria-hidden="true"></span>
+        Сапфир
+      </div>
+      <nav class="primary" id="primaryNav">
+        <a href="#" class="active">Главная</a>
+        <a href="#services">Парикмахерские</a>
+        <a href="#services">Ногтевой сервис</a>
+        <a href="#services">Косметологические</a>
+        <a href="#contact">Контакты</a>
+        <span class="nav-underline" id="navUnderline" aria-hidden="true"></span>
+      </nav>
+    </div>
+  </header>  <main>
+    <section class="hero">
+      <div class="hero-inner">
+        <div>
+          <h1 class="headline">Сапфир</h1>
+          <p class="sub">
+            Бьюти‑пространство, где сияние граней встречается с высоким сервисом. Идеальные укладки, безупречный маникюр и деликатная косметология — тонкая работа, огранённая заботой.
+          </p>
+          <div class="cta-row">
+            <a href="#contact" class="btn">Записаться</a>
+            <a href="#services" class="btn secondary">Смотреть услуги</a>
+          </div>
+        </div>
+        <div class="gem" aria-hidden="true">
+          <div class="gem-grid"></div>
+        </div>
+      </div>
+    </section><section class="section" id="services">
+  <h2>Услуги</h2>
+  <div class="services">
+
+```
+<article class="card">
+  <div class="icon" aria-hidden="true">
+    <svg viewBox="0 0 24 24">
+      <path d="M4 4l8 8M4 12l4 4M12 4l8 8M16 16l4 4" />
+      <path d="M14 10a2 2 0 1 0-2-2" />
+    </svg>
+  </div>
+  <h3>Парикмахерские</h3>
+  <p>Стрижки, укладки и окрашивание с ювелирной точностью: сияние цвета и идеальная форма, созданные под вашу фактуру волос.</p>
+</article>
+<article class="card">
+  <div class="icon" aria-hidden="true">
+    <svg viewBox="0 0 24 24">
+      <path d="M7 14c0-5 2-8 5-8s5 3 5 8v4H7v-4z" />
+      <path d="M9 14v4M12 14v4M15 14v4" />
+    </svg>
+  </div>
+  <h3>Ногтевой сервис</h3>
+  <p>Маникюр и педикюр премиум‑класса: чистая архитектура ногтей, стойкие покрытия и сияющие акценты для безупречного образа.</p>
+</article>
+<article class="card">
+  <div class="icon" aria-hidden="true">
+    <svg viewBox="0 0 24 24">
+      <path d="M4 12c0-4 3-7 8-7s8 3 8 7-3 7-8 7-8-3-8-7z" />
+      <path d="M8 12c1.5 1 3.5 1 5 0" />
+    </svg>
+  </div>
+  <h3>Косметологические</h3>
+  <p>Деликатный уход и аппаратные методики: свежесть, тонус и сияние кожи — результат продуманной бьюти‑рутины.</p>
+</article>
+```
+
+  </div>
+  <div class="contact" id="contact">
+    <div class="info">
+      <strong style="letter-spacing:.08em; text-transform:uppercase; font-weight:400; color:#fff;">Мы рядом</strong>
+      <span class="diamond-dot" aria-hidden="true"></span>
+      <span>г. Санкт‑Петербург, ул. Сапфировая, 12</span>
+      <span class="diamond-dot" aria-hidden="true"></span>
+      <a href="tel:+78125552342">+7 (812) 555‑23‑42</a>
+    </div>
+    <div class="cta-row">
+      <a href="#" class="btn">Онлайн‑запись</a>
+    </div>
+  </div>
+</section>
+
+  </main>  <footer>
+    © Сапфир, 2025. Все права защищены.
+  </footer>  <script>
+    // “Magic line” под пунктами меню — идея навигационного hover из подборок Prismic:
+    // https://prismic.io/blog/css-hover-effects (пример Magic line navbar)
+    (function(){
+      const nav = document.getElementById('primaryNav');
+      const underline = document.getElementById('navUnderline');
+      const links = Array.from(nav.querySelectorAll('a'));
+      let active = links.find(a => a.classList.contains('active')) || links[0];  function moveLine(el){
+    const rect = el.getBoundingClientRect();
+    const parentRect = nav.getBoundingClientRect();
+    underline.style.width = rect.width + 'px';
+    underline.style.left = (rect.left - parentRect.left) + 'px';
+  }
+  function setActive(el){
+    links.forEach(a => a.classList.remove('active'));
+    el.classList.add('active');
+    moveLine(el);
+  }
+  links.forEach(link=>{
+    link.addEventListener('mouseenter', ()=> moveLine(link));
+    link.addEventListener('focus', ()=> moveLine(link));
+    link.addEventListener('click', (e)=> { setActive(link); });
+  });
+  nav.addEventListener('mouseleave', ()=> moveLine(active));
+  window.addEventListener('resize', ()=> moveLine(active));
+  // init
+  moveLine(active);
+})();
+// Плавное появление карточек услуг при скролле
+const observer = new IntersectionObserver((entries)=>{
+  for(const entry of entries){
+    if(entry.isIntersecting){
+      entry.target.animate([
+        { opacity:0, transform:'translateY(12px) scale(.98)'},
+        { opacity:1, transform:'translateY(0) scale(1)'}
+      ], { duration:500, easing:'cubic-bezier(.2,.7,.2,1)', fill:'forwards' });
+      observer.unobserve(entry.target);
+    }
+  }
+}, { threshold:.15 });
+document.querySelectorAll('.card').forEach(el=> observer.observe(el));
+
+  </script>
+</body>
+</html>
