@@ -15,19 +15,15 @@
     :root{
       --bg-deep: #0B1533;
       --bg-deeper: #070e24;
-      --sapphire-900:#071a3a;
-      --sapphire-800:#0a2e6e;
-      --sapphire-700:#103d8d;
       --sapphire-500:#185adb;
       --sapphire-300:#5fa4ff;
       --silver-100:#F1F3F6;
       --silver-200:#E3E6EC;
       --silver-300:#D0D6DF;
       --silver-500:#AAB4C3;
-      --silver-700:#8C95A3;
       --ink:#dfe7ff;
       --muted:#9aa3b2;
-      --accent-6: var(--sapphire-300); /* Добавил переменную для вашей подписи */
+      --accent-6: var(--sapphire-300);
       --radius-xl: 18px;
       --radius-l: 14px;
       --shadow-soft: 0 10px 30px rgba(16,61,141,.25);
@@ -52,13 +48,15 @@
       line-height:1.6;
       scrollbar-gutter: stable;
     }
-    /* Стили скроллбара (без изменений) */
+    body.no-scroll {
+      overflow: hidden;
+    }
+    /* Стили скроллбара */
     html{ scrollbar-width: thin; scrollbar-color: var(--sapphire-500) rgba(255,255,255,.05); }
     ::-webkit-scrollbar{ width: 12px; }
-    ::-webkit-scrollbar-track{ background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02)); border-radius: 10px; box-shadow: inset 0 0 8px rgba(0,0,0,.25); }
-    ::-webkit-scrollbar-thumb{ border-radius: 10px; background: linear-gradient(180deg, rgba(255,255,255,.35), rgba(255,255,255,0) 40%) , linear-gradient(135deg, var(--sapphire-700), var(--sapphire-500)); box-shadow: inset 0 0 0 1px rgba(255,255,255,.25), 0 0 14px rgba(24,90,219,.45); background-size: 200% 200%; animation: thumbShine 4s ease-in-out infinite; }
-    ::-webkit-scrollbar-thumb:hover{ background: linear-gradient(180deg, rgba(255,255,255,.5), rgba(255,255,255,0) 40%) , linear-gradient(135deg, var(--sapphire-300), var(--sapphire-500)); box-shadow: inset 0 0 0 1px rgba(255,255,255,.35), 0 0 18px rgba(95,164,255,.55); }
-    @keyframes thumbShine{ 0%,100%{ background-position: 0% 0%, 0% 50%;} 50%{ background-position: 100% 100%, 100% 50%;} }
+    ::-webkit-scrollbar-track{ background: rgba(0,0,0,.1); }
+    ::-webkit-scrollbar-thumb{ border-radius: 10px; background: linear-gradient(135deg, var(--sapphire-700), var(--sapphire-500)); box-shadow: inset 0 0 0 1px rgba(255,255,255,.25), 0 0 14px rgba(24,90,219,.45); }
+    ::-webkit-scrollbar-thumb:hover{ background: linear-gradient(135deg, var(--sapphire-300), var(--sapphire-500)); box-shadow: inset 0 0 0 1px rgba(255,255,255,.35), 0 0 18px rgba(95,164,255,.55); }
 
     /* Верхняя плашка */
     .topbar{ position: relative; z-index: 5; display:flex; align-items:center; justify-content: flex-end; gap:22px; padding:10px 22px; border-bottom: 1px solid var(--line); backdrop-filter: blur(6px); background: linear-gradient(90deg, rgba(255,255,255,.06), rgba(255,255,255,0)); font-size: 13px; color: var(--muted); }
@@ -67,36 +65,35 @@
     .diamond-dot{ display:inline-block; width:7px; height:7px; background: linear-gradient(135deg, var(--silver-500), var(--silver-100)); transform: rotate(45deg); margin: 0 10px; box-shadow: 0 0 8px rgba(255,255,255,.35); }
     
     /* Хедер */
-    header.site-header{ position: sticky; top:0; z-index:10; background: rgba(7,14,36,.8); backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
+    header.site-header{ position: sticky; top:0; z-index:100; background: rgba(7,14,36,.8); backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
     .nav-wrap{ max-width: 1200px; margin: 0 auto; padding: 16px 22px; display:flex; align-items:center; justify-content: space-between; }
     .brand-link { text-decoration: none; }
     .brand{ display:flex; align-items:center; gap:12px; letter-spacing: .16em; text-transform: uppercase; font-weight: 300; font-size: 15px; color: var(--silver-300); }
     .brand-mark{ width:28px; height:28px; background: conic-gradient(from 0deg, #7da8ff, #cbd5e1, #185adb, #7da8ff); border-radius: 6px; transform: rotate(45deg); box-shadow: 0 0 20px rgba(24,90,219,.45), inset 0 0 12px rgba(255,255,255,.35); }
     
-    /* Навигация */
+    /* Навигация (Десктоп) */
     nav.primary{ position: relative; display:flex; gap: 24px; }
     nav.primary a{ position: relative; display:inline-block; padding: 10px 6px; color: var(--silver-200); text-decoration: none; font-weight: 300; letter-spacing: .04em; transition: color .3s ease, text-shadow .3s ease, transform .2s ease; }
     nav.primary a:hover{ color: #ffffff; text-shadow: 0 0 14px rgba(95,164,255,.5); transform: translateY(-1px); }
-    nav.primary a::before{ content:""; position:absolute; left:-12px; top:50%; width:6px; height:6px; transform: translateY(-50%) rotate(45deg) scale(.5); background: linear-gradient(135deg, var(--silver-500), var(--silver-100)); opacity:.0; transition: .3s ease; box-shadow: 0 0 10px rgba(255,255,255,.35); border: 1px solid rgba(255,255,255,.25); }
-    nav.primary a:hover::before{ opacity: .9; transform: translateY(-50%) rotate(45deg) scale(1); }
-    .nav-underline{ display: none; /* Скрываем на мобильных, управляем через JS */ }
+    .nav-underline{ position:absolute; left:0; bottom: -18px; height:2px; width: 0; background: linear-gradient(90deg, #a7b7cc, #5fa4ff, #a7b7cc); border-radius: 2px; box-shadow: 0 0 12px rgba(95,164,255,.55); transition: left .35s ease, width .35s ease; pointer-events: none; }
     
-    /* Кнопка-гамбургер */
+    /* Кнопка-гамбургер (скрыта на десктопе) */
     .nav-toggle { display: none; }
 
-    /* Основной контент (без изменений) */
-    .hero{ position: relative; overflow: hidden; padding: 96px 22px 56px; }
+    /* Основной контент */
+    .hero{ position: relative; overflow: hidden; padding: clamp(40px, 10vw, 96px) 22px 56px; }
     .hero-inner{ max-width: 1200px; margin: 0 auto; display:grid; grid-template-columns: 1.1fr 1fr; gap:40px; align-items: center; }
     .headline{ font-family: Georgia, "Times New Roman", serif; font-weight: 300; line-height: 1.05; letter-spacing: .18em; text-transform: uppercase; font-size: clamp(38px, 7vw, 88px); margin: 0 0 18px; background: linear-gradient(90deg, #cbd5e1 0%, #7da8ff 35%, #dfe7ff 65%, #9fb9ff 100%); -webkit-background-clip: text; background-clip: text; color: transparent; text-shadow: 0 0 22px rgba(125,168,255,.25); }
     .sub{ color: var(--silver-300); font-size: clamp(16px, 2.4vw, 18px); max-width: 58ch; margin-bottom: 28px; }
     .cta-row{ display:flex; gap:14px; flex-wrap: wrap; }
-    .btn{ position: relative; display:inline-flex; align-items:center; justify-content:center; gap:10px; padding: 14px 22px; border-radius: 999px; border: 1px solid rgba(255,255,255,.18); background: linear-gradient(180deg, rgba(95,164,255,.22), rgba(95,164,255,.12)); color: #fff; text-decoration: none; letter-spacing: .06em; font-weight: 500; box-shadow: var(--shadow-soft); overflow: hidden; transition: transform .2s ease, box-shadow .3s ease, background .3s ease, border-color .3s ease; cursor: pointer; }
+    .btn{ position: relative; display:inline-flex; align-items:center; justify-content:center; gap:10px; padding: 14px 22px; border-radius: 999px; border: 1px solid rgba(255,255,255,.18); background: linear-gradient(180deg, rgba(95,164,255,.22), rgba(95,164,255,.12)); color: #fff; text-decoration: none; letter-spacing: .06em; font-weight: 500; box-shadow: var(--shadow-soft); overflow: hidden; transition: transform .2s ease, box-shadow .3s ease, background .3s ease, border-color .3s ease; cursor: pointer; -webkit-tap-highlight-color: transparent; }
     .btn::after{ content:""; position:absolute; inset:-1px; background: linear-gradient(120deg, rgba(255,255,255,.65), rgba(255,255,255,0) 35%); transform: translateX(-120%); transition: transform .6s ease; mix-blend-mode: soft-light; }
     .btn:hover{ transform: translateY(-1px); box-shadow: 0 12px 36px rgba(95,164,255,.35); border-color: rgba(255,255,255,.35); background: linear-gradient(180deg, rgba(95,164,255,.3), rgba(95,164,255,.14)); }
     .btn:hover::after{ transform: translateX(0%); }
+    .btn:active { transform: translateY(0) scale(0.98); }
     .btn.secondary{ background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.02)); color: var(--silver-200); }
     .btn.secondary:hover{ color:#fff; box-shadow: 0 12px 36px rgba(170,180,195,.25); }
-    .gem{ position: relative; aspect-ratio: 1.1/1; border-radius: var(--radius-xl); background: conic-gradient(from 180deg, rgba(203,213,225,.2), rgba(125,168,255,.2), rgba(24,90,219,.3), rgba(11,21,51,.4), rgba(203,213,225,.2)); box-shadow: inset 0 0 40px rgba(255,255,255,.08), 0 20px 60px rgba(11,21,51,.6), 0 0 80px rgba(24,90,219,.35); overflow: hidden; border: 1px solid rgba(255,255,255,.12); }
+    .gem{ position: relative; aspect-ratio: 1.1/1; border-radius: var(--radius-xl); background: conic-gradient(from 180deg, rgba(203,213,225,.2), rgba(125,168,255,.2), rgba(24,90,219,.3), rgba(11,21,51,.4), rgba(203,213,255,.2)); box-shadow: inset 0 0 40px rgba(255,255,255,.08), 0 20px 60px rgba(11,21,51,.6), 0 0 80px rgba(24,90,219,.35); overflow: hidden; border: 1px solid rgba(255,255,255,.12); }
     .gem::before{ content:""; position:absolute; inset:-30%; background: radial-gradient(300px 180px at 25% 20%, rgba(255,255,255,.18), transparent 60%), radial-gradient(260px 160px at 80% 60%, rgba(95,164,255,.25), transparent 70%), radial-gradient(200px 120px at 40% 90%, rgba(255,255,255,.15), transparent 75%); filter: blur(10px); animation: gemDrift 12s ease-in-out infinite alternate; }
     @keyframes gemDrift{ 0%{ transform: rotate(0deg) translate(0,0) scale(1); opacity: .85;} 100%{ transform: rotate(10deg) translate(-10px, -6px) scale(1.02); opacity: 1;} }
     .gem-grid{ position:absolute; inset:0; background: linear-gradient(60deg, rgba(255,255,255,.08) 1px, transparent 1px) 0 0/ 32px 32px, linear-gradient(-60deg, rgba(255,255,255,.06) 1px, transparent 1px) 0 0/ 32px 32px; mix-blend-mode: overlay; opacity:.5; animation: gridSparkle 8s linear infinite; }
@@ -104,10 +101,8 @@
     .section{ max-width: 1200px; margin: 30px auto; padding: 0 22px; }
     .section h2{ font-family: Georgia, "Times New Roman", serif; font-weight: 300; letter-spacing: .14em; text-transform: uppercase; font-size: 24px; color: var(--silver-200); margin: 34px 0 18px; }
     .services{ display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 18px; }
-    .card{ position:relative; border-radius: var(--radius-xl); background: var(--glass-bg); border: var(--glass-border); padding: 22px; overflow:hidden; box-shadow: inset 0 0 0 1px rgba(255,255,255,.06); transform-style: preserve-3d; transition: transform .4s ease-out, box-shadow .4s ease, border-color .4s ease; }
-    .card:hover{ transform: translateY(-4px) perspective(1000px); box-shadow: var(--shadow-glow); border-color: rgba(255,255,255,.28); }
-    .card::after{ content:""; position:absolute; inset: 1px; border-radius: calc(var(--radius-xl) - 1px); background: radial-gradient(1000px 240px at -10% -20%, rgba(95,164,255,.18), transparent 60%); pointer-events:none; transition: opacity .35s ease; opacity: 0; }
-    .card:hover::after{ opacity:1; }
+    .card{ position:relative; border-radius: var(--radius-xl); background: var(--glass-bg); border: var(--glass-border); padding: 22px; overflow:hidden; box-shadow: inset 0 0 0 1px rgba(255,255,255,.06); transition: transform .4s ease-out, box-shadow .4s ease, border-color .4s ease; }
+    .card:hover{ transform: translateY(-4px); box-shadow: var(--shadow-glow); border-color: rgba(255,255,255,.28); }
     .card h3{ margin: 14px 0 8px; font-weight: 400; letter-spacing: .04em; color: #fff; }
     .card p{ margin: 0; color: var(--silver-300); }
     .icon{ width:48px; height:48px; border-radius: 14px; display:grid; place-items:center; background: linear-gradient(135deg, rgba(95,164,255,.22), rgba(95,164,255,.06)); border: 1px solid rgba(255,255,255,.16); box-shadow: inset 0 0 12px rgba(255,255,255,.05), 0 6px 16px rgba(24,90,219,.18); }
@@ -117,46 +112,55 @@
     #map{ width: 100%; height: 100%; filter: invert(95%) hue-rotate(180deg) brightness(1.1) contrast(.9); }
     .contact{ margin: 46px auto 20px; padding: 22px; border-radius: var(--radius-xl); background: var(--glass-bg); border: var(--glass-border); display:flex; align-items:center; justify-content: space-between; gap:20px; flex-wrap: wrap; }
     .contact .info{ display:flex; align-items:center; gap:18px; flex-wrap:wrap; color: var(--silver-300); }
-    .contact .info a{ color:#fff; text-decoration: none; opacity:.9; }
-    .contact .info a:hover{ opacity:1; text-shadow: 0 0 10px rgba(95,164,255,.5); }
     
     /* Подвал и подпись */
     footer{ border-top: 1px solid var(--line); color: var(--silver-300); font-size: 13px; padding: 22px; text-align: center; background: linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,0)); }
     .dev-signature { margin-top: 12px; font-size: 14px; color: var(--silver-500); }
     .brand-logo-char { font-family: "JetBrains Mono", monospace; font-weight: 700; color: var(--accent-6); font-size: 22px; line-height: 1; display: inline-block; vertical-align: middle; }
 
-    /* Анимация появления */
+    /* "Живые" анимации появления */
     [data-anim]{ opacity: 0; transform: translateY(20px); transition: opacity .6s cubic-bezier(.2,.7,.2,1), transform .6s cubic-bezier(.2,.7,.2,1); }
     [data-anim].is-visible{ opacity: 1; transform: translateY(0); }
+    /* Добавляем задержки для каскадного эффекта */
+    .hero [data-anim]:nth-child(2) { transition-delay: .1s; }
+    .hero [data-anim]:nth-child(3) { transition-delay: .2s; }
+    .services .card:nth-child(2) { transition-delay: .1s; }
+    .services .card:nth-child(3) { transition-delay: .2s; }
 
     /* ---- Стили модального окна ---- */
-    .modal-overlay { position: fixed; inset: 0; background: rgba(7, 14, 36, 0.7); backdrop-filter: blur(8px); z-index: 100; display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: opacity .3s ease, visibility .3s ease; }
+    .modal-overlay { position: fixed; inset: 0; background: rgba(7, 14, 36, 0.7); backdrop-filter: blur(8px); z-index: 1000; display: flex; align-items: center; justify-content: center; padding: 15px; opacity: 0; visibility: hidden; transition: opacity .3s ease, visibility .3s ease; }
     .modal-overlay.is-visible { opacity: 1; visibility: visible; }
-    .modal { background: var(--glass-bg); border: var(--glass-border); border-radius: var(--radius-xl); padding: 28px 32px; width: 90%; max-width: 400px; text-align: center; box-shadow: var(--shadow-glow); transform: scale(0.95); transition: transform .3s cubic-bezier(.2,.7,.2,1); }
-    .modal-overlay.is-visible .modal { transform: scale(1); }
+    .modal { position: relative; background: var(--glass-bg); border: var(--glass-border); border-radius: var(--radius-xl); padding: 28px 32px; width: 100%; max-width: 400px; text-align: center; box-shadow: var(--shadow-glow); transform: scale(0.95) translateY(10px); transition: transform .3s cubic-bezier(.2,.7,.2,1); }
+    .modal-overlay.is-visible .modal { transform: scale(1) translateY(0); }
     .modal h3 { margin: 0 0 12px; font-weight: 400; font-size: 20px; color: #fff; }
-    .modal-phone { font-size: 24px; font-weight: 500; color: var(--silver-100); letter-spacing: .05em; margin-bottom: 24px; }
+    .modal-phone { font-size: clamp(20px, 6vw, 24px); font-weight: 500; color: var(--silver-100); letter-spacing: .05em; margin-bottom: 24px; }
     .modal-actions { display: flex; flex-direction: column; gap: 12px; }
     .modal-close { position: absolute; top: 12px; right: 12px; background: none; border: none; color: var(--silver-300); font-size: 24px; line-height: 1; cursor: pointer; padding: 4px; opacity: .7; transition: opacity .2s ease, transform .2s ease; }
     .modal-close:hover { opacity: 1; transform: scale(1.1); }
 
-    /* ---- Адаптивность и мобильное меню ---- */
+    /* --- МОБИЛЬНАЯ ВЕРСИЯ (ОСНОВНОЙ АКЦЕНТ) --- */
     @media (max-width: 960px){
-      .hero-inner{ grid-template-columns: 1fr; }
-      .gem{ max-width: 400px; margin: 0 auto; }
+      .hero-inner{ grid-template-columns: 1fr; text-align: center; }
+      .cta-row { justify-content: center; }
+      .gem{ max-width: 400px; margin: 20px auto 0; }
     }
+
     @media (max-width: 768px){
-      .topbar { justify-content: center; flex-wrap:wrap; text-align: center; }
-      .nav-toggle { z-index: 1000; position: relative; display: block; width: 30px; height: 30px; background: transparent; border: none; cursor: pointer; padding: 0; }
+      .topbar { justify-content: center; flex-wrap:wrap; text-align: center; gap: 8px 16px; }
+      .diamond-dot { display: none; } /* Скрываем разделитель на мобильных */
+
+      /* Гамбургер */
+      .nav-toggle { display: block; z-index: 1002; position: relative; width: 30px; height: 30px; background: transparent; border: none; cursor: pointer; padding: 0; }
       .nav-toggle span { display: block; width: 24px; height: 2px; background: var(--silver-200); border-radius: 2px; margin: 5px auto; transition: transform 0.3s ease, opacity 0.3s ease; }
       .nav-toggle[aria-expanded="true"] span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
       .nav-toggle[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
       .nav-toggle[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
       
-      nav.primary { position: fixed; inset: 0; flex-direction: column; align-items: center; justify-content: center; background: rgba(7, 14, 36, 0.9); backdrop-filter: blur(12px); transform: translateX(100%); transition: transform 0.4s cubic-bezier(.2,.7,.2,1); z-index: 999; }
+      /* Полноэкранное меню */
+      nav.primary { position: fixed; inset: 0; flex-direction: column; align-items: center; justify-content: center; background: rgba(7, 14, 36, 0.9); backdrop-filter: blur(12px); transform: translateX(100%); transition: transform 0.4s cubic-bezier(.2,.7,.2,1); z-index: 1001; }
       nav.primary.is-visible { transform: translateX(0); }
-      nav.primary a { font-size: 20px; padding: 15px; }
-      .nav-underline { display: none !important; } /* Полностью скрываем линию на мобильных */
+      nav.primary a { font-size: 20px; padding: 15px; transform: none !important; } /* Убираем hover-эффект сдвига */
+      .nav-underline { display: none; } /* Полностью скрываем линию */
 
       .services{ grid-template-columns: 1fr; }
     }
@@ -184,7 +188,7 @@
         <a href="#" class="nav-contact-trigger">Контакты</a>
         <span class="nav-underline" id="navUnderline" aria-hidden="true"></span>
       </nav>
-      <button class="nav-toggle" aria-controls="primaryNav" aria-expanded="false">
+      <button class="nav-toggle" id="navToggle" aria-controls="primaryNav" aria-expanded="false" aria-label="Открыть меню">
         <span aria-hidden="true"></span>
         <span aria-hidden="true"></span>
         <span aria-hidden="true"></span>
@@ -215,23 +219,17 @@
       <h2 data-anim>Наши услуги</h2>
       <div class="services">
         <article class="card" data-anim>
-          <div class="icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24"><path d="M6.13 21.63l-4.2-4.2c-1-1-1.6-2.4-1.6-3.8 0-1.4.6-2.8 1.6-3.8l4.2-4.2c2.1-2.1 5.5-2.1 7.6 0l1.1 1.1M13 18H8.5c-1.4 0-2.5-1.1-2.5-2.5S7.1 13 8.5 13H13c.8 0 1.5-.7 1.5-1.5S13.8 10 13 10h-1M5 3l14 14"></path></svg>
-          </div>
+          <div class="icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6.13 21.63l-4.2-4.2c-1-1-1.6-2.4-1.6-3.8 0-1.4.6-2.8 1.6-3.8l4.2-4.2c2.1-2.1 5.5-2.1 7.6 0l1.1 1.1M13 18H8.5c-1.4 0-2.5-1.1-2.5-2.5S7.1 13 8.5 13H13c.8 0 1.5-.7 1.5-1.5S13.8 10 13 10h-1M5 3l14 14"></path></svg></div>
           <h3>Парикмахерские</h3>
           <p>Стрижки, укладки и окрашивание с ювелирной точностью: сияние цвета и идеальная форма, созданные под вашу фактуру волос.</p>
         </article>
         <article class="card" data-anim>
-          <div class="icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24"><path d="M13.3 3.4c.5-.9 1.8-1 2.7-.4l.9.5c.9.5 1 1.8.4 2.7l-3.3 5.4"></path><path d="M12.5 6.2L4 14.8c-.8.8-.8 2 0 2.8l2.7 2.7c.8.8 2 .8 2.8 0L18 11.5"></path><path d="M18 13l-8-8"></path><path d="M21.5 13.4a2.5 2.5 0 100-5 2.5 2.5 0 000 5z"></path></svg>
-          </div>
+          <div class="icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M13.3 3.4c.5-.9 1.8-1 2.7-.4l.9.5c.9.5 1 1.8.4 2.7l-3.3 5.4"></path><path d="M12.5 6.2L4 14.8c-.8.8-.8 2 0 2.8l2.7 2.7c.8.8 2 .8 2.8 0L18 11.5"></path><path d="M18 13l-8-8"></path><path d="M21.5 13.4a2.5 2.5 0 100-5 2.5 2.5 0 000 5z"></path></svg></div>
           <h3>Ногтевой сервис</h3>
           <p>Маникюр и педикюр премиум‑класса: чистая архитектура ногтей, стойкие покрытия и сияющие акценты для безупречного образа.</p>
         </article>
         <article class="card" data-anim>
-          <div class="icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24"><path d="M12 22a7 7 0 007-7h-4a3 3 0 00-3 3v4z"></path><path d="M12 2a7 7 0 017 7h-4a3 3 0 01-3-3V2z"></path><path d="M2 12a7 7 0 007 7v-4a3 3 0 00-3-3H2z"></path><path d="M22 12a7 7 0 01-7 7v-4a3 3 0 013-3h4z"></path></svg>
-          </div>
+          <div class="icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 22a7 7 0 007-7h-4a3 3 0 00-3 3v4z"></path><path d="M12 2a7 7 0 017 7h-4a3 3 0 01-3-3V2z"></path><path d="M2 12a7 7 0 007 7v-4a3 3 0 00-3-3H2z"></path><path d="M22 12a7 7 0 01-7 7v-4a3 3 0 013-3h4z"></path></svg></div>
           <h3>Косметология</h3>
           <p>Деликатный уход и аппаратные методики: свежесть, тонус и сияние кожи — результат продуманной бьюти‑рутины.</p>
         </article>
@@ -240,17 +238,14 @@
 
     <section class="section map-section" id="map-section">
         <h2 data-anim>Как нас найти</h2>
-        <div id="map-container" data-anim>
-            <div id="map"></div>
-        </div>
+        <div id="map-container" data-anim><div id="map"></div></div>
     </section>
 
     <section class="section">
         <div class="contact" id="contact" data-anim>
             <div class="info">
                 <strong style="letter-spacing:.08em; text-transform:uppercase; font-weight:400; color:#fff;">Свяжитесь с нами</strong>
-                <span class="diamond-dot" aria-hidden="true"></span>
-                <a href="tel:+79050190702">+7 905 019 07-02</a>
+                 <a href="tel:+79050190702" style="margin-left:auto;">+7 905 019 07-02</a>
             </div>
         </div>
     </section>
@@ -263,7 +258,6 @@
     </div>
   </footer>
 
-  
   <div class="modal-overlay" id="contactModal">
     <div class="modal">
       <button class="modal-close" aria-label="Закрыть окно">&times;</button>
@@ -277,154 +271,117 @@
   </div>
 
   <script>
-    // --- 1. “Magic line” (только для десктопа) ---
-    (function(){
-      const nav = document.getElementById('primaryNav');
-      if (!nav) return;
-      const underline = document.getElementById('navUnderline');
-      const links = Array.from(nav.querySelectorAll('a'));
-      let active = links[0];
-      
-      function moveLine(el){
-        if (window.innerWidth <= 768) {
-          underline.style.display = 'none';
-          return;
+    document.addEventListener('DOMContentLoaded', function() {
+
+      // --- 1. "Magic line" (только для десктопа) ---
+      (function(){
+        const nav = document.getElementById('primaryNav');
+        const underline = document.getElementById('navUnderline');
+        if (!nav || !underline) return;
+        const links = Array.from(nav.querySelectorAll('a'));
+        let activeLink = links[0];
+
+        function moveUnderline(element) {
+          if (window.innerWidth < 769) return;
+          const elRect = element.getBoundingClientRect();
+          const navRect = nav.getBoundingClientRect();
+          underline.style.width = `${elRect.width}px`;
+          underline.style.left = `${elRect.left - navRect.left}px`;
         }
-        underline.style.display = 'block';
-        const rect = el.getBoundingClientRect();
-        const parentRect = nav.getBoundingClientRect();
-        underline.style.width = rect.width + 'px';
-        underline.style.left = (rect.left - parentRect.left) + 'px';
-      }
-      
-      links.forEach(link => {
-        link.addEventListener('mouseenter', () => moveLine(link));
-        link.addEventListener('focus', () => moveLine(link));
-      });
-
-      nav.addEventListener('mouseleave', () => moveLine(active));
-      // Пересчитываем при изменении размера окна
-      window.addEventListener('resize', () => moveLine(active));
-      // Инициализация
-      moveLine(active);
-    })();
-
-    // --- 2. Анимация появления элементов при скролле ---
-    (function(){
-      const animatedElements = document.querySelectorAll('[data-anim]');
-      if (animatedElements.length === 0) return;
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('is-visible');
-            observer.unobserve(entry.target);
-          }
-        });
-      }, { threshold: 0.1 });
-      animatedElements.forEach(el => observer.observe(el));
-    })();
-
-    // --- 3. 3D-эффект для карточек (без изменений) ---
-    (function(){
-      const cards = document.querySelectorAll('.card');
-      if (cards.length === 0) return;
-      cards.forEach(card => {
-        card.addEventListener('mousemove', (e) => {
-          const rect = card.getBoundingClientRect();
-          const x = e.clientX - rect.left;
-          const y = e.clientY - rect.top;
-          const { width, height } = rect;
-          const rotateX = (y / height - 0.5) * -15;
-          const rotateY = (x / width - 0.5) * 15;
-          card.style.transition = 'transform .1s linear';
-          card.style.transform = `perspective(1000px) translateY(-2px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-        });
-        card.addEventListener('mouseleave', () => {
-          card.style.transition = 'transform .4s ease-out';
-          card.style.transform = 'perspective(1000px) translateY(0) rotateX(0deg) rotateY(0deg)';
-        });
-      });
-    })();
-
-    // --- 4. Логика мобильного меню (гамбургер) ---
-    (function(){
-      const navToggle = document.querySelector('.nav-toggle');
-      const primaryNav = document.getElementById('primaryNav');
-      if (!navToggle || !primaryNav) return;
-
-      navToggle.addEventListener('click', () => {
-        const isVisible = primaryNav.classList.toggle('is-visible');
-        navToggle.setAttribute('aria-expanded', isVisible);
-      });
-      // Закрывать меню при клике на ссылку
-      primaryNav.querySelectorAll('a').forEach(link => {
-        link.addEventListener('click', () => {
-          primaryNav.classList.remove('is-visible');
-          navToggle.setAttribute('aria-expanded', false);
-        });
-      });
-    })();
-
-    // --- 5. Логика модального окна ---
-    (function(){
-        const modal = document.getElementById('contactModal');
-        if (!modal) return;
-        const openTriggers = document.querySelectorAll('.modal-trigger, .nav-contact-trigger');
-        const closeBtn = modal.querySelector('.modal-close');
-        const copyBtn = document.getElementById('copyPhoneBtn');
-        const phoneToCopy = '+79050190702';
-
-        function openModal() {
-            modal.classList.add('is-visible');
-        }
-
-        function closeModal() {
-            modal.classList.remove('is-visible');
-        }
-
-        openTriggers.forEach(trigger => trigger.addEventListener('click', (e) => {
-            e.preventDefault();
-            openModal();
-        }));
         
-        closeBtn.addEventListener('click', closeModal);
-        modal.addEventListener('click', (e) => {
-            if (e.target === modal) {
-                closeModal();
+        links.forEach(link => {
+          link.addEventListener('mouseenter', () => moveUnderline(link));
+          link.addEventListener('click', (e) => {
+            if (link.getAttribute('href').startsWith('#')) {
+              activeLink = link;
             }
+          });
+        });
+
+        nav.addEventListener('mouseleave', () => moveUnderline(activeLink));
+        window.addEventListener('resize', () => moveUnderline(activeLink));
+        
+        moveUnderline(activeLink);
+      })();
+
+      // --- 2. Анимация появления элементов при скролле ---
+      (function(){
+        const animatedElements = document.querySelectorAll('[data-anim]');
+        if (animatedElements.length === 0) return;
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('is-visible');
+              observer.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.1 });
+        animatedElements.forEach(el => observer.observe(el));
+      })();
+
+      // --- 3. Мобильное меню (гамбургер) ---
+      (function(){
+        const navToggle = document.getElementById('navToggle');
+        const primaryNav = document.getElementById('primaryNav');
+        if (!navToggle || !primaryNav) return;
+
+        navToggle.addEventListener('click', () => {
+          const isVisible = primaryNav.classList.toggle('is-visible');
+          navToggle.setAttribute('aria-expanded', isVisible);
+          document.body.classList.toggle('no-scroll', isVisible);
         });
         
-        copyBtn.addEventListener('click', () => {
-            navigator.clipboard.writeText(phoneToCopy).then(() => {
-                const originalText = copyBtn.textContent;
-                copyBtn.textContent = 'Скопировано!';
-                setTimeout(() => {
-                    copyBtn.textContent = originalText;
-                }, 2000);
-            });
+        primaryNav.querySelectorAll('a').forEach(link => {
+          link.addEventListener('click', () => {
+            primaryNav.classList.remove('is-visible');
+            navToggle.setAttribute('aria-expanded', false);
+            document.body.classList.remove('no-scroll');
+          });
         });
-    })();
-    
-    // --- 6. Инициализация Яндекс.Карты ---
-    function initMap() {
-      const mapCenter = [53.5405, 49.3377]; // Координаты для Тольятти, ул. 70 лет Октября, 35
-      const myMap = new ymaps.Map("map", {
-        center: mapCenter,
-        zoom: 17,
-        controls: ['zoomControl']
-      });
-      const placemark = new ymaps.Placemark(mapCenter, {
-        balloonContentHeader: 'Салон красоты "Сапфир"',
-        balloonContentBody: 'ул. 70 лет Октября, 35<br>Ждём вас!',
-        hintContent: 'Салон "Сапфир"'
-      }, {
-        preset: 'islands#dotIcon',
-        iconColor: '#185adb'
-      });
-      myMap.geoObjects.add(placemark);
-      myMap.behaviors.disable('scrollZoom');
-    }
-    ymaps.ready(initMap);
+      })();
+
+      // --- 4. Модальное окно ---
+      (function(){
+          const modal = document.getElementById('contactModal');
+          if (!modal) return;
+          const openTriggers = document.querySelectorAll('.modal-trigger, .nav-contact-trigger');
+          const closeBtn = modal.querySelector('.modal-close');
+          const copyBtn = document.getElementById('copyPhoneBtn');
+          const phoneToCopy = '+79050190702';
+
+          function openModal(e) { e.preventDefault(); modal.classList.add('is-visible'); document.body.classList.add('no-scroll'); }
+          function closeModal() { modal.classList.remove('is-visible'); if(!document.getElementById('primaryNav').classList.contains('is-visible')) { document.body.classList.remove('no-scroll'); } }
+
+          openTriggers.forEach(trigger => trigger.addEventListener('click', openModal));
+          closeBtn.addEventListener('click', closeModal);
+          modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
+          
+          copyBtn.addEventListener('click', () => {
+              navigator.clipboard.writeText(phoneToCopy.replace(/\s|-/g, '')).then(() => {
+                  const originalText = copyBtn.textContent;
+                  copyBtn.textContent = 'Скопировано!';
+                  setTimeout(() => { copyBtn.textContent = originalText; }, 2000);
+              });
+          });
+      })();
+      
+      // --- 5. Инициализация Яндекс.Карты ---
+      function initMap() {
+        const mapContainer = document.getElementById('map');
+        if(!mapContainer) return;
+        
+        const mapCenter = [53.5405, 49.3377];
+        const myMap = new ymaps.Map(mapContainer, { center: mapCenter, zoom: 17, controls: ['zoomControl'] });
+        const placemark = new ymaps.Placemark(mapCenter, {
+          balloonContentHeader: 'Салон красоты "Сапфир"',
+          balloonContentBody: 'ул. 70 лет Октября, 35<br>Ждём вас!',
+          hintContent: 'Салон "Сапфир"'
+        }, { preset: 'islands#dotIcon', iconColor: '#185adb' });
+        myMap.geoObjects.add(placemark);
+        myMap.behaviors.disable('scrollZoom');
+      }
+      ymaps.ready(initMap);
+    });
   </script>
 </body>
 </html>
