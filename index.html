@@ -5,336 +5,308 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Сапфир — салон красоты в Тольятти</title>
-  <meta name="description" content="Салон красоты Сапфир в Тольятти — парикмахерские услуги, ногтевой сервис, косметология." />  <script src="https://api-maps.yandex.ru/2.1/?apikey=ВАШ_API_КЛЮЧ&lang=ru_RU" type="text/javascript"></script>  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <meta name="description" content="Салон красоты Сапфир в Тольятти — парикмахерские услуги, ногтевой сервис, косметология." />
+  <script src="https://api-maps.yandex.ru/2.1/?apikey=ВАШ_API_КЛЮЧ&lang=ru_RU" type="text/javascript"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@700&display=swap" rel="stylesheet">  <style>
-    :root{
-      /* Палитра (светлее, ювелирные акценты) */
-      --bg-1: #eaf2ff;
-      --bg-2: #f7fbff;
-      --sapphire-900:#0b1533;
-      --sapphire-700:#103d8d;
-      --sapphire-600:#144bb4;
-      --sapphire-500:#185adb;
-      --sapphire-300:#5fa4ff;
-      --garnet-600:#b0003a;
-      --garnet-500:#c2185b;
-      --emerald-600:#0e9f6e;
-      --emerald-500:#10b981;
-      --gold-400:#e8c981;
-      --silver-50:#fafbff;
-      --silver-100:#f3f6ff;
-      --silver-150:#eef2fb;
-      --silver-200:#dde7fb;
-      --silver-300:#cfd9ee;
-      --silver-500:#9fb0cf;
-      --ink:#152033;
-      --ink-soft:#3a4a66;  --radius-xl: 18px;
-  --shadow-soft: 0 12px 32px rgba(16,61,141,.18);
-  --shadow-glow: 0 0 30px rgba(24,90,219,.25), inset 0 0 12px rgba(255,255,255,.05);
-  --glass-bg: linear-gradient(180deg, rgba(255,255,255,.65), rgba(255,255,255,.35));
-  --glass-border: 1px solid rgba(24,90,219,.12);
-  --line: rgba(24,90,219,.12);
-  /* Акценты карточек */
-  --accent-hair: linear-gradient(135deg, #2b63e6, #5fa4ff);
-  --accent-nails: linear-gradient(135deg, #b0003a, #ff6a8a);
-  --accent-cosmo: linear-gradient(135deg, #0e9f6e, #34e3a1);
-  /* Градиент бэкграунда */
-  --bg-grad: linear-gradient(120deg, #ffffff 0%, #eef4ff 35%, #e8f2ff 55%, #f8fbff 100%);
-  --bg-anim-speed: 28s;
-}
-html{ scroll-behavior: smooth; }
-html,body{ height:100%; color: var(--ink); -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
-body{
-  margin:0;
-  font-family: "Segoe UI", Roboto, "Helvetica Neue", Arial, system-ui, -apple-system, "Noto Sans", "Liberation Sans", sans-serif;
-  line-height:1.6;
-  scrollbar-gutter: stable;
-  /* Мягкий светлый анимированный фон без «секторов» */
-  background: var(--bg-grad);
-  background-size: 200% 200%;
-  animation: bg-pan var(--bg-anim-speed) ease-in-out infinite;
-}
-@keyframes bg-pan {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-@media (prefers-reduced-motion: reduce) {
-  body{ animation: none; }
-}
-/* Стилизованный скроллбар */
-html{ scrollbar-width: thin; scrollbar-color: var(--sapphire-500) rgba(24,90,219,.08); }
-::-webkit-scrollbar{ width: 12px; }
-::-webkit-scrollbar-track{ background: rgba(24,90,219,.06); }
-::-webkit-scrollbar-thumb{
-  border-radius: 10px;
-  background: linear-gradient(135deg, var(--sapphire-600), var(--sapphire-300));
-  box-shadow: inset 0 0 0 1px rgba(255,255,255,.35), 0 0 14px rgba(24,90,219,.25);
-}
-body.no-scroll { overflow: hidden; }
-/* Верхняя информационная полоса: только адрес */
-.topbar{
-  position: relative; z-index: 5; display:flex; align-items:center; justify-content: center; gap:12px;
-  padding:10px 16px; border-bottom: 1px solid var(--line);
-  backdrop-filter: blur(6px);
-  background: linear-gradient(90deg, rgba(255,255,255,.65), rgba(255,255,255,0));
-  font-size: 13px; color: var(--ink-soft);
-}
-.diamond-dot{ display:inline-block; width:7px; height:7px; background: radial-gradient(circle at 40% 40%, #cbd5e1, #7da8ff); transform: rotate(45deg); margin: 0 6px; box-shadow: 0 0 8px rgba(24,90,219,.25); animation: diamond-pulse 3s infinite ease-in-out; }
-@keyframes diamond-pulse { 0%, 100% { transform: rotate(45deg) scale(1); } 50% { transform: rotate(45deg) scale(1.08); } }
-/* Хедер + нав */
-header.site-header{ position: sticky; top:0; z-index:100; background: rgba(255,255,255,.6); backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
-.nav-wrap{ max-width: 1200px; margin: 0 auto; padding: 14px 18px; display:flex; align-items:center; justify-content: space-between; }
-.brand-link { text-decoration: none; }
-.brand{ display:flex; align-items:center; gap:10px; letter-spacing: .16em; text-transform: uppercase; font-weight: 500; font-size: 14px; color: var(--sapphire-700); }
-.brand-mark{ width:24px; height:24px; background: conic-gradient(from 0deg, #7da8ff, #cbd5e1, #185adb, #7da8ff); border-radius: 6px; transform: rotate(45deg); box-shadow: 0 0 16px rgba(24,90,219,.25), inset 0 0 10px rgba(255,255,255,.4); transition: transform .5s ease; }
-.brand-link:hover .brand-mark { transform: rotate(45deg) scale(1.08) rotate(10deg); }
-nav.primary{ position: relative; display:flex; gap: 18px; }
-nav.primary a{ position: relative; display:inline-block; padding: 8px 6px; color: var(--ink); text-decoration: none; font-weight: 400; letter-spacing: .03em; transition: color .3s ease; }
-nav.primary a:hover{ color: var(--sapphire-600); }
-.nav-underline{ position:absolute; left:0; bottom: -10px; height:2px; width: 0; background: linear-gradient(90deg, #a7b7cc, #5fa4ff, #a7b7cc); border-radius: 2px; box-shadow: 0 0 8px rgba(24,90,219,.25); transition: left .35s ease, width .35s ease, opacity .3s ease; pointer-events: none; opacity: 0; }
-nav.primary:hover .nav-underline { opacity: 1; }
-.nav-toggle { display: none; }
-/* Герой */
-.hero{ position: relative; overflow: hidden; padding: clamp(28px, 12vh, 90px) 18px clamp(60px, 14vh, 120px); text-align: center; }
-.hero-inner{ max-width: 1200px; margin: 0 auto; display:flex; flex-direction: column; align-items: center; }
-/* Заголовок-«луна» с отражением на «воде» */
-.headline{
-  position: relative;
-  margin: 0;
-  line-height: 1;
-  letter-spacing: .05em;
-  text-transform: uppercase;
-  display: inline-block;
-  isolation: isolate;
-}
-.headline-main, .headline-reflection{
-  display:block;
-  font-family: Georgia, "Times New Roman", serif;
-  font-weight: 300;
-  /* Максимально крупно */
-  font-size: clamp(64px, 20vw, 240px);
-  background: linear-gradient(90deg, #6f8ecf 0%, #3c76ff 28%, #9fb9ff 60%, #6da2ff 100%);
-  -webkit-background-clip: text; background-clip: text; color: transparent;
-  text-shadow: 0 0 30px rgba(125,168,255,.35);
-  will-change: background-position;
-  animation: title-shine 8s linear infinite;
-  background-size: 220% 100%;
-}
-@keyframes title-shine { 
-  0% { background-position: 200% 0; } 
-  100% { background-position: -200% 0; } 
-}
-/* Отражение */
-.headline-reflection{
-  transform: scaleY(-1);
-  opacity: .35;
-  filter: url(#rippleFilter) blur(1.1px) saturate(1.05);
-  mask-image: linear-gradient(to bottom, rgba(0,0,0,.45), rgba(0,0,0,.0) 65%);
-  -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,.45), rgba(0,0,0,.0) 65%);
-  margin-top: .08em;
-}
-/* CTA ниже отражения, без дёрганых ховеров */
-.cta-row{ display:flex; gap:12px; flex-wrap: wrap; justify-content: center; margin-top: clamp(24px, 8vh, 72px); }
-.btn{
-  position: relative; display:inline-flex; align-items:center; justify-content:center; gap:10px;
-  padding: 14px 22px; border-radius: 999px;
-  border: 1px solid rgba(24,90,219,.18);
-  background: linear-gradient(180deg, rgba(95,164,255,.18), rgba(95,164,255,.08));
-  color: var(--sapphire-900); text-decoration: none; letter-spacing: .04em; font-weight: 600;
-  box-shadow: 0 6px 18px rgba(24,90,219,.18);
-  transition: transform .35s cubic-bezier(.22,.7,.18,1), box-shadow .35s cubic-bezier(.22,.7,.18,1), background .35s ease, border-color .35s ease;
-  -webkit-tap-highlight-color: transparent;
-}
-.btn svg{ width:18px; height:18px; }
-.btn::after{
-  content:""; position:absolute; inset:-1px;
-  background: linear-gradient(120deg, rgba(255,255,255,.65), rgba(255,255,255,0) 35%);
-  transform: translateX(-120%); transition: transform .9s ease; mix-blend-mode: soft-light; pointer-events:none;
-}
-.btn:hover{ transform: translateY(-2px); box-shadow: 0 12px 28px rgba(24,90,219,.22); border-color: rgba(24,90,219,.28); }
-.btn:hover::after{ transform: translateX(0%); }
-.btn:active { transform: translateY(0) scale(0.99); box-shadow: 0 4px 12px rgba(24,90,219,.15); }
-.btn.secondary{ background: linear-gradient(180deg, rgba(24,90,219,.08), rgba(24,90,219,.02)); color: var(--ink); border-color: rgba(24,90,219,.16); }
-/* Секции */
-.section{ max-width: 1200px; margin: 26px auto; padding: 0 18px; }
-.section h2{
-  font-family: Georgia, "Times New Roman", serif; font-weight: 400; letter-spacing: .14em; text-transform: uppercase; font-size: 22px; color: var(--sapphire-700); margin: 28px 0 16px; text-align: center;
-}
-/* Карточки услуг: ярче, с акцентами и иконками */
-.services{ display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
-.card-link { text-decoration: none; color: inherit; display: block; -webkit-tap-highlight-color: transparent; }
-.card{
-  position:relative; border-radius: var(--radius-xl);
-  background: var(--glass-bg);
-  border: var(--glass-border);
-  padding: 18px; overflow:hidden;
-  box-shadow: inset 0 0 0 1px rgba(24,90,219,.06), var(--shadow-soft);
-  transition: transform .4s ease, box-shadow .4s ease, border-color .4s ease, background .4s ease;
-}
-.card-accent{
-  position:absolute; inset:0; pointer-events:none;
-  background: radial-gradient(400px circle at var(--x, 50%) var(--y, 50%), var(--accent-color, #5fa4ff), transparent 42%);
-  opacity: 0; transition: opacity .45s ease;
-}
-.card .icon{
-  width:54px; height:54px; border-radius: 14px; display:grid; place-items:center;
-  background: rgba(255,255,255,.7);
-  border: 1px solid rgba(24,90,219,.16);
-  box-shadow: inset 0 0 12px rgba(255,255,255,.3), 0 6px 16px rgba(11,21,51,.12);
-  transition: transform .4s ease, box-shadow .4s ease;
-}
-.card .icon svg{ width:28px; height:28px; stroke-width:1.8; fill:none; stroke-linecap:round; stroke-linejoin:round; }
-.card h3{ margin: 14px 0 8px; font-weight: 600; letter-spacing: .02em; color: var(--sapphire-900); }
-.card p{ margin: 0; color: var(--ink-soft); }
-.card--hair { --accent-color:#5fa4ff; }
-.card--hair .icon svg{ stroke: #2b63e6; }
-.card--hair .ribbon{ background: var(--accent-hair); }
-.card--nails { --accent-color:#ff6a8a; }
-.card--nails .icon svg{ stroke: #b0003a; }
-.card--nails .ribbon{ background: var(--accent-nails); }
-.card--cosmo { --accent-color:#34e3a1; }
-.card--cosmo .icon svg{ stroke: #0e9f6e; }
-.card--cosmo .ribbon{ background: var(--accent-cosmo); }
-/* Декоративная «лентa» */
-.ribbon{
-  position:absolute; top:0; right:0; width: 40%; height:6px; opacity:.9;
-  box-shadow: 0 6px 18px rgba(0,0,0,.08), inset 0 -1px 0 rgba(255,255,255,.5);
-}
-/* Hover (desktop) — мягкий, не дёрганый */
-@media (hover: hover) {
-  .card-link:hover .card{
-    transform: translateY(-6px);
-    box-shadow: 0 10px 28px rgba(16,61,141,.18);
-    border-color: rgba(24,90,219,.28);
-    background: linear-gradient(180deg, rgba(255,255,255,.85), rgba(255,255,255,.55));
-  }
-  .card-link:hover .card-accent{ opacity: .28; }
-  .card-link:hover .icon{ transform: scale(1.08); box-shadow: inset 0 0 12px rgba(255,255,255,.4), 0 10px 24px rgba(16,61,141,.18); }
-}
-/* Мобильные карточки — постоянно «блуждающий огонёк» */
-@media (hover: none), (max-width: 768px) {
-  .card-accent{
-    opacity: .32;
-    animation: mobile-glow 8s infinite ease-in-out alternate;
-  }
-}
-@keyframes mobile-glow {
-  0% { --x: 0%; --y: 0%; }
-  25% { --x: 100%; --y: 20%; }
-  50% { --x: 80%; --y: 100%; }
-  75% { --x: 20%; --y: 80%; }
-  100% { --x: 0%; --y: 0%; }
-}
-/* Карта */
-.map-section{ margin-top: 40px; }
-#map-container{ border-radius: var(--radius-xl); overflow: hidden; border: 1px solid var(--line); box-shadow: var(--shadow-soft); height: 420px; background: #fff; }
-#map{ width: 100%; height: 100%; }
-/* Контакты-блок */
-.contact{ margin: 36px auto 18px; padding: 18px; border-radius: var(--radius-xl); background: var(--glass-bg); border: var(--glass-border); display:flex; align-items:center; justify-content: space-between; gap:16px; flex-wrap: wrap; }
-.contact .info{ display:flex; align-items:center; gap:14px; flex-wrap:wrap; color: var(--ink-soft); }
-.contact strong{ letter-spacing:.08em; text-transform:uppercase; font-weight:600; color: var(--sapphire-900); }
-/* Аккордеон «Как пройти» — плавное раскрытие */
-details.faq-item {
-  margin-top: 18px;
-  border-radius: var(--radius-xl);
-  background: var(--glass-bg);
-  border: var(--glass-border);
-  transition: border-color .3s ease;
-  overflow: clip;
-}
-details.faq-item[open] { border-color: rgba(24,90,219,.22); }
-details.faq-item summary {
-  position: relative;
-  padding: 16px 46px 16px 18px;
-  font-size: 16px; font-weight: 600; color: var(--sapphire-700);
-  cursor: pointer; list-style: none; user-select: none;
-}
-details.faq-item summary::-webkit-details-marker { display: none; }
-details.faq-item summary::after {
-  content: '';
-  position: absolute; right: 18px; top: 50%;
-  width: 8px; height: 8px; border-bottom: 2px solid var(--ink-soft); border-right: 2px solid var(--ink-soft);
-  transform: translateY(-60%) rotate(45deg); transition: transform .3s ease;
-}
-details.faq-item[open] summary::after { transform: translateY(-40%) rotate(225deg); }
-.faq-content-wrap{ height: 0; overflow: hidden; transition: height .4s ease; }
-.faq-content{ padding: 0 18px 16px; color: var(--ink-soft); }
-footer{ margin-top: 34px; border-top: 1px solid var(--line); color: var(--ink-soft); font-size: 13px; padding: 18px; text-align: center; background: linear-gradient(180deg, rgba(255,255,255,.65), rgba(255,255,255,0)); }
-.dev-signature { margin-top: 10px; font-size: 14px; color: var(--silver-500); }
-.brand-logo-char { font-family: "JetBrains Mono", monospace; font-weight: 700; color: var(--sapphire-600); font-size: 22px; line-height: 1; display: inline-block; vertical-align: middle; }
-/* Анимации появления */
-[data-anim]{ opacity: 0; transform: translateY(16px) scale(0.99); transition: opacity .6s cubic-bezier(.25, 1, .5, 1), transform .6s cubic-bezier(.25, 1, .5, 1); }
-[data-anim].is-visible{ opacity: 1; transform: translateY(0) scale(1); }
-.hero [data-anim]:nth-child(2) { transition-delay: .1s; }
-.hero [data-anim]:nth-child(3) { transition-delay: .2s; }
-/* Модалка */
-.modal-overlay { position: fixed; inset: 0; background: rgba(7, 14, 36, 0.35); backdrop-filter: blur(8px); z-index: 1000; display: flex; align-items: center; justify-content: center; padding: 14px; opacity: 0; visibility: hidden; transition: opacity .3s ease, visibility .3s ease; }
-.modal-overlay.is-visible { opacity: 1; visibility: visible; }
-.modal { position: relative; background: linear-gradient(180deg, rgba(255,255,255,.9), rgba(255,255,255,.7)); border: 1px solid rgba(24,90,219,.2); border-radius: var(--radius-xl); padding: 24px 28px; width: 100%; max-width: 400px; text-align: center; box-shadow: var(--shadow-glow); transform: scale(0.97) translateY(8px); transition: transform .3s cubic-bezier(.2,.7,.2,1); }
-.modal-overlay.is-visible .modal { transform: scale(1) translateY(0); }
-.modal h3 { margin: 0 0 10px; font-weight: 600; font-size: 20px; color: var(--sapphire-900); }
-.modal-phone { font-size: clamp(20px, 6vw, 24px); font-weight: 700; color: var(--sapphire-700); letter-spacing: .05em; margin-bottom: 18px; }
-.modal-actions { display: flex; flex-direction: column; gap: 10px; }
-.modal-close { position: absolute; top: 10px; right: 10px; background: none; border: none; color: var(--ink-soft); font-size: 24px; line-height: 1; cursor: pointer; padding: 4px; opacity: .8; transition: opacity .2s ease, transform .2s ease; }
-.modal-close:hover { opacity: 1; transform: scale(1.05) rotate(90deg); }
-/* Мобильное меню — скрыто по умолчанию, без дубляжа */
-.nav-toggle { display: none; z-index: 1002; position: relative; width: 34px; height: 34px; background: transparent; border: none; cursor: pointer; padding: 0; -webkit-tap-highlight-color: transparent; }
-.nav-toggle span { display: block; width: 24px; height: 2px; background: var(--sapphire-700); border-radius: 2px; margin: 6px auto; transition: transform 0.3s ease, opacity 0.3s ease, background-color .3s ease; }
-.nav-toggle:hover span { background: var(--sapphire-600); }
-.nav-toggle.is-active span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
-.nav-toggle.is-active span:nth-child(2) { opacity: 0; transform: scale(0); }
-.nav-toggle.is-active span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
-.mobile-nav {
-  position: fixed; inset: 0; z-index: 1001;
-  display: none; flex-direction: column; align-items: center; justify-content: center;
-  gap: 20px;
-  opacity: 0; visibility: hidden;
-  transition: opacity .3s ease, visibility .3s ease;
-  pointer-events: none;
-  /* Мягкий анимированный фон без «секторов» */
-  background: radial-gradient(1200px circle at 20% 20%, rgba(24,90,219,.15), transparent 60%), radial-gradient(1000px circle at 80% 80%, rgba(16,61,141,.12), transparent 55%), var(--bg-grad);
-  background-size: 200% 200%;
-  animation: bg-pan var(--bg-anim-speed) ease-in-out infinite;
-}
-.mobile-nav.is-open { display:flex; opacity: 1; visibility: visible; pointer-events: auto; }
-.mobile-nav-close {
-  position: absolute; top: 14px; right: 16px;
-  width: 44px; height: 44px;
-  background: none; border: none;
-  color: var(--sapphire-700); font-size: 36px; line-height: 1;
-  cursor: pointer; opacity: 0.9;
-  transition: opacity .3s, transform .3s;
-}
-.mobile-nav-close:hover { opacity: 1; transform: rotate(90deg); }
-.mobile-nav a {
-  color: var(--sapphire-900); text-decoration: none; font-size: 22px; padding: 10px 20px;
-  opacity: 0; transform: translateY(12px) skewY(3deg);
-  transition: opacity .3s ease, transform .3s ease, color .3s ease;
-  background: rgba(255,255,255,.65);
-  border: 1px solid rgba(24,90,219,.18);
-  border-radius: 999px;
-  box-shadow: 0 6px 18px rgba(24,90,219,.15);
-}
-.mobile-nav a:active { color: var(--sapphire-600); }
-.mobile-nav.is-open a { opacity: 1; transform: translateY(0) skewY(0deg); }
-.mobile-nav.is-open a:nth-child(2) { transition-delay: .15s; }
-.mobile-nav.is-open a:nth-child(3) { transition-delay: .22s; }
-.mobile-nav.is-open a:nth-child(4) { transition-delay: .29s; }
-/* Респонсив */
-@media (max-width: 768px){
-  .topbar { justify-content: center; flex-wrap:wrap; text-align: center; gap: 8px 12px; }
-  .diamond-dot { display: none; }
-  nav.primary { display: none; }
-  .nav-toggle { display: block; }
-  .services{ grid-template-columns: 1fr; }
-  .section h2 { font-size: 20px; }
-}
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      /* Новая тёмная ювелирная палитра */
+      --bg-dark-start: #0a071a;
+      --bg-dark-mid: #100a2b;
+      --bg-dark-end: #1d103b;
+      --sapphire-glow: #3a5aff;
+      --amethyst-glow: #8e44ad;
+      --gold-accent: #e8c981;
+      --text-primary: #e8eaf6;
+      --text-secondary: #a7b0d1;
+      --glass-bg: rgba(25, 20, 55, 0.45);
+      --glass-border-color: rgba(142, 110, 255, 0.2);
+      --glow-border-start: #6a82ff;
+      --glow-border-end: #a76aff;
+      --ink-brand: #c5d2ff;
 
+      /* Акценты для карточек */
+      --accent-hair-start: #3a7bd5;
+      --accent-hair-end: #3a5aff;
+      --accent-nails-start: #d31e6a;
+      --accent-nails-end: #b0003a;
+      --accent-cosmo-start: #10b981;
+      --accent-cosmo-end: #0e9f6e;
+
+      --radius-xl: 18px;
+      --shadow-soft: 0 16px 40px rgba(0,0,0,.3);
+      --shadow-glow: 0 0 40px rgba(74, 85, 255, 0.25);
+    }
+
+    html { scroll-behavior: smooth; }
+    html, body { height: 100%; color: var(--text-primary); -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Roboto, "Helvetica Neue", Arial, system-ui, -apple-system, "Noto Sans", "Liberation Sans", sans-serif;
+      line-height: 1.6;
+      scrollbar-gutter: stable;
+      /* Анимированный фон "Северное сияние" */
+      background: linear-gradient(135deg, var(--bg-dark-start), var(--bg-dark-mid), var(--bg-dark-end));
+      background-size: 400% 400%;
+      animation: gradient-pan 20s ease-in-out infinite;
+      overflow-x: hidden;
+    }
+
+    @keyframes gradient-pan {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      body { animation: none; }
+    }
+
+    /* Стилизованный скроллбар */
+    html { scrollbar-width: thin; scrollbar-color: var(--sapphire-glow) rgba(0,0,0,.1); }
+    ::-webkit-scrollbar { width: 10px; }
+    ::-webkit-scrollbar-track { background: rgba(0,0,0,.1); }
+    ::-webkit-scrollbar-thumb {
+      border-radius: 10px;
+      background: linear-gradient(135deg, var(--sapphire-glow), var(--amethyst-glow));
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.15);
+    }
+    body.no-scroll { overflow: hidden; }
+
+    /* Верхняя полоса */
+    .topbar {
+      position: relative; z-index: 5; display: flex; align-items: center; justify-content: center; gap: 12px;
+      padding: 10px 18px; border-bottom: 1px solid var(--glass-border-color);
+      font-size: 13px; color: var(--text-secondary);
+    }
+    .diamond-dot { display: inline-block; width: 6px; height: 6px; background: radial-gradient(circle at 40% 40%, #fff, var(--sapphire-glow)); transform: rotate(45deg); margin: 0 6px; box-shadow: 0 0 8px var(--sapphire-glow); animation: diamond-pulse 3s infinite ease-in-out; }
+    @keyframes diamond-pulse { 0%, 100% { transform: rotate(45deg) scale(1); opacity: 0.8; } 50% { transform: rotate(45deg) scale(1.1); opacity: 1; } }
+
+    /* Шапка сайта */
+    header.site-header {
+      position: sticky; top: 0; z-index: 100;
+      background: var(--glass-bg);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--glass-border-color);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+    }
+    .nav-wrap { max-width: 1200px; margin: 0 auto; padding: 14px 18px; display: flex; align-items: center; justify-content: space-between; }
+    .brand-link { text-decoration: none; }
+    .brand { display: flex; align-items: center; gap: 10px; letter-spacing: .16em; text-transform: uppercase; font-weight: 500; font-size: 14px; color: var(--ink-brand); }
+    .brand-mark { width: 24px; height: 24px; background: conic-gradient(from 0deg, #7da8ff, #d1d9e6, #3a5aff, #7da8ff); border-radius: 6px; transform: rotate(45deg); box-shadow: 0 0 16px rgba(74, 85, 255, 0.4), inset 0 0 10px rgba(255,255,255,.2); transition: transform .5s ease; }
+    .brand-link:hover .brand-mark { transform: rotate(45deg) scale(1.08) rotate(10deg); }
+    nav.primary { display: flex; gap: 18px; }
+    nav.primary a { position: relative; display: inline-block; padding: 8px 6px; color: var(--text-primary); text-decoration: none; font-weight: 400; letter-spacing: .03em; transition: color .3s ease; }
+    nav.primary a:hover { color: var(--gold-accent); }
+    nav.primary a::after {
+        content: ''; position: absolute; left: 50%; bottom: -2px; width: 0; height: 2px;
+        background: linear-gradient(90deg, var(--glow-border-start), var(--glow-border-end));
+        border-radius: 2px; box-shadow: 0 0 8px var(--sapphire-glow);
+        transform: translateX(-50%); transition: width .3s ease;
+    }
+    nav.primary a:hover::after { width: 100%; }
+
+    /* Герой-блок */
+    .hero { position: relative; overflow: hidden; padding: clamp(40px, 12vh, 100px) 18px clamp(80px, 14vh, 140px); text-align: center; }
+    .hero-inner { max-width: 1200px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; }
+
+    .headline { position: relative; margin: 0; line-height: 1; letter-spacing: .05em; text-transform: uppercase; display: inline-block; }
+    .headline-main, .headline-reflection {
+      display: block; font-family: Georgia, "Times New Roman", serif; font-weight: 300; font-size: clamp(64px, 20vw, 240px);
+      background: linear-gradient(90deg, #cfd9ff 0%, #a7b7ff 28%, #e8eaff 60%, #a3baff 100%);
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+      text-shadow: 0 0 40px rgba(125, 168, 255, .45);
+      animation: title-shine 8s linear infinite; background-size: 220% 100%;
+    }
+    @keyframes title-shine { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+    .headline-reflection { transform: scaleY(-1); opacity: .2; filter: blur(1.5px); mask-image: linear-gradient(to bottom, rgba(0,0,0,.45), rgba(0,0,0,.0) 65%); -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,.45), rgba(0,0,0,.0) 65%); margin-top: .08em; }
+
+    /* Кнопки */
+    .cta-row { display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; margin-top: clamp(30px, 8vh, 80px); }
+    .btn {
+      position: relative; display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+      padding: 16px 28px; border-radius: 999px;
+      border: 1px solid var(--glass-border-color);
+      background: var(--glass-bg);
+      color: var(--text-primary); text-decoration: none; letter-spacing: .04em; font-weight: 600;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.05), 0 8px 24px rgba(0,0,0,.3);
+      transition: transform .3s ease, box-shadow .3s ease;
+      overflow: hidden; -webkit-tap-highlight-color: transparent;
+    }
+    .btn svg { width: 18px; height: 18px; }
+    .btn::before {
+      content: ""; position: absolute; inset: -1px; z-index: -1;
+      border-radius: 999px;
+      background: linear-gradient(120deg, var(--glow-border-start), var(--glow-border-end));
+      opacity: 0; transition: opacity .4s ease;
+    }
+    .btn:hover { transform: translateY(-3px); box-shadow: inset 0 0 0 1px rgba(255,255,255,0.1), 0 12px 32px rgba(0,0,0,.4), 0 0 20px rgba(74, 85, 255, 0.3); }
+    .btn:hover::before { opacity: 1; }
+    .btn:active { transform: translateY(0) scale(0.98); }
+    .btn.secondary { background: transparent; }
+    .btn.secondary:hover { background: var(--glass-bg); }
+
+    /* Секции */
+    .section { max-width: 1200px; margin: 30px auto; padding: 0 18px; }
+    .section h2 {
+      font-family: Georgia, "Times New Roman", serif; font-weight: 400; letter-spacing: .14em; text-transform: uppercase;
+      font-size: 24px; color: var(--text-primary); margin: 30px 0 20px; text-align: center;
+      text-shadow: 0 0 15px rgba(125, 168, 255, .3);
+    }
+
+    /* Карточки услуг */
+    .services { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; }
+    .card-link { text-decoration: none; color: inherit; display: block; -webkit-tap-highlight-color: transparent; }
+    .card {
+      position: relative; border-radius: var(--radius-xl);
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border-color);
+      padding: 24px; overflow: hidden;
+      box-shadow: var(--shadow-soft);
+      transition: transform .4s ease, box-shadow .4s ease;
+    }
+    .card-glow {
+        content: ''; position: absolute; inset: -1px; z-index: -1;
+        border-radius: var(--radius-xl);
+        background: radial-gradient(400px circle at var(--x, 50%) var(--y, 50%), var(--accent-color, #5fa4ff), transparent 45%);
+        opacity: 0; transition: opacity .4s ease;
+    }
+    .card::before {
+        content: ''; position: absolute; inset: -1px; z-index: -1;
+        border-radius: var(--radius-xl);
+        background: linear-gradient(135deg, var(--accent-start), var(--accent-end));
+        opacity: 0; transition: opacity .4s ease; pointer-events: none;
+    }
+    @media (hover: hover) {
+      .card-link:hover .card {
+        transform: translateY(-8px);
+        box-shadow: 0 20px 50px rgba(0,0,0,.4);
+      }
+      .card-link:hover .card::before { opacity: 1; }
+      .card-link:hover .card-glow { opacity: .2; }
+    }
+    .card .icon {
+      width: 54px; height: 54px; border-radius: 14px; display: grid; place-items: center;
+      background: rgba(10, 7, 26, 0.5);
+      border: 1px solid var(--glass-border-color);
+      box-shadow: inset 0 0 12px rgba(0,0,0,.3);
+      transition: transform .4s ease;
+    }
+    .card-link:hover .icon { transform: scale(1.1); }
+    .card .icon svg { width: 28px; height: 28px; stroke-width: 1.8; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+    .card h3 { margin: 16px 0 8px; font-weight: 600; letter-spacing: .02em; color: var(--text-primary); }
+    .card p { margin: 0; color: var(--text-secondary); }
+
+    .card--hair { --accent-start: var(--accent-hair-start); --accent-end: var(--accent-hair-end); --accent-color: #3a7bd5; }
+    .card--hair .icon svg { stroke: #87b2f3; }
+    .card--nails { --accent-start: var(--accent-nails-start); --accent-end: var(--accent-nails-end); --accent-color: #d31e6a; }
+    .card--nails .icon svg { stroke: #f794b9; }
+    .card--cosmo { --accent-start: var(--accent-cosmo-start); --accent-end: var(--accent-cosmo-end); --accent-color: #10b981; }
+    .card--cosmo .icon svg { stroke: #6aeeb9; }
+
+    /* Карта и контакты */
+    .map-section { margin-top: 40px; }
+    #map-container { border-radius: var(--radius-xl); overflow: hidden; border: 1px solid var(--glass-border-color); box-shadow: var(--shadow-soft); height: 420px; background: #fff; }
+    #map { width: 100%; height: 100%; }
+
+    .contact { margin: 36px auto 18px; padding: 24px; border-radius: var(--radius-xl); background: var(--glass-bg); border: 1px solid var(--glass-border-color); display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+    .contact .info { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; color: var(--text-secondary); }
+    .contact strong { letter-spacing: .08em; text-transform: uppercase; font-weight: 600; color: var(--text-primary); }
+
+    details.faq-item {
+      margin-top: 18px; border-radius: var(--radius-xl); background: var(--glass-bg); border: 1px solid var(--glass-border-color);
+      transition: border-color .3s ease; overflow: clip;
+    }
+    details.faq-item[open] { border-color: var(--sapphire-glow); }
+    details.faq-item summary {
+      position: relative; padding: 16px 46px 16px 18px; font-size: 16px; font-weight: 600; color: var(--text-primary);
+      cursor: pointer; list-style: none; user-select: none;
+    }
+    details.faq-item summary::-webkit-details-marker { display: none; }
+    details.faq-item summary::after {
+      content: ''; position: absolute; right: 18px; top: 50%; width: 8px; height: 8px;
+      border-bottom: 2px solid var(--text-secondary); border-right: 2px solid var(--text-secondary);
+      transform: translateY(-60%) rotate(45deg); transition: transform .3s ease;
+    }
+    details.faq-item[open] summary::after { transform: translateY(-40%) rotate(225deg); }
+    .faq-content-wrap { height: 0; overflow: hidden; transition: height .4s ease; }
+    .faq-content { padding: 0 18px 16px; color: var(--text-secondary); }
+
+    /* Футер */
+    footer { margin-top: 34px; border-top: 1px solid var(--glass-border-color); color: var(--text-secondary); font-size: 13px; padding: 24px 18px; text-align: center; }
+    .dev-signature { margin-top: 10px; font-size: 14px; color: var(--text-secondary); }
+    .brand-logo-char { font-family: "JetBrains Mono", monospace; font-weight: 700; color: var(--ink-brand); font-size: 22px; line-height: 1; display: inline-block; vertical-align: middle; }
+
+    /* Анимации появления */
+    [data-anim] { opacity: 0; transform: translateY(20px); transition: opacity .6s ease-out, transform .6s ease-out; }
+    [data-anim].is-visible { opacity: 1; transform: translateY(0); }
+    .hero [data-anim]:nth-child(2) { transition-delay: .1s; }
+    .services a:nth-child(1) { transition-delay: .1s; }
+    .services a:nth-child(2) { transition-delay: .2s; }
+    .services a:nth-child(3) { transition-delay: .3s; }
+
+    /* Модальное окно */
+    .modal-overlay { position: fixed; inset: 0; background: rgba(7, 14, 36, 0.5); backdrop-filter: blur(10px); z-index: 1000; display: flex; align-items: center; justify-content: center; padding: 14px; opacity: 0; visibility: hidden; transition: opacity .3s ease, visibility .3s ease; }
+    .modal-overlay.is-visible { opacity: 1; visibility: visible; }
+    .modal {
+      position: relative; background: linear-gradient(180deg, rgba(30, 25, 60, 0.8), rgba(20, 15, 45, 0.8));
+      border: 1px solid var(--glass-border-color); border-radius: var(--radius-xl); padding: 28px;
+      width: 100%; max-width: 400px; text-align: center; box-shadow: var(--shadow-glow);
+      transform: scale(0.97); transition: transform .3s cubic-bezier(.2,.7,.2,1);
+    }
+    .modal-overlay.is-visible .modal { transform: scale(1); }
+    .modal h3 { margin: 0 0 10px; font-weight: 600; font-size: 20px; color: var(--text-primary); }
+    .modal-phone { font-size: clamp(20px, 6vw, 24px); font-weight: 700; color: var(--gold-accent); letter-spacing: .05em; margin-bottom: 20px; }
+    .modal-actions { display: flex; flex-direction: column; gap: 12px; }
+    .modal-close { position: absolute; top: 10px; right: 10px; background: none; border: none; color: var(--text-secondary); font-size: 24px; line-height: 1; cursor: pointer; padding: 4px; opacity: .8; transition: opacity .2s ease, transform .2s ease; }
+    .modal-close:hover { opacity: 1; transform: scale(1.1) rotate(90deg); }
+
+    /* Мобильная навигация */
+    .nav-toggle { display: none; z-index: 1002; position: relative; width: 34px; height: 34px; background: transparent; border: none; cursor: pointer; padding: 0; -webkit-tap-highlight-color: transparent; }
+    .nav-toggle span { display: block; width: 24px; height: 2px; background: var(--text-primary); border-radius: 2px; margin: 6px auto; transition: transform 0.3s ease, opacity 0.3s ease; }
+    .nav-toggle.is-active span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+    .nav-toggle.is-active span:nth-child(2) { opacity: 0; }
+    .nav-toggle.is-active span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+
+    .mobile-nav {
+      position: fixed; inset: 0; z-index: 1001;
+      display: none; flex-direction: column; align-items: center; justify-content: center;
+      gap: 20px; opacity: 0; visibility: hidden;
+      transition: opacity .3s ease, visibility .3s ease;
+      pointer-events: none;
+      background: rgba(10, 7, 26, 0.8);
+      backdrop-filter: blur(16px);
+    }
+    .mobile-nav.is-open { display: flex; opacity: 1; visibility: visible; pointer-events: auto; }
+    .mobile-nav a {
+      color: var(--text-primary); text-decoration: none; font-size: 24px; font-weight: 500; padding: 12px 24px;
+      opacity: 0; transform: translateY(15px);
+      transition: opacity .3s ease, transform .3s ease, color .3s ease;
+    }
+    .mobile-nav.is-open a { opacity: 1; transform: translateY(0); }
+    .mobile-nav.is-open a:nth-child(2) { transition-delay: .1s; }
+    .mobile-nav.is-open a:nth-child(3) { transition-delay: .2s; }
+    .mobile-nav.is-open a:nth-child(4) { transition-delay: .3s; }
+
+    /* Адаптивность */
+    @media (max-width: 768px) {
+      .topbar { justify-content: center; flex-wrap: wrap; text-align: center; gap: 8px 12px; }
+      .diamond-dot { display: none; }
+      nav.primary { display: none; }
+      .nav-toggle { display: block; }
+      .services { grid-template-columns: 1fr; }
+      .section h2 { font-size: 22px; }
+      .cta-row { flex-direction: column; align-items: stretch; }
+      .contact { flex-direction: column; text-align: center; }
+    }
   </style>
 </head>
-<body>  <svg width="0" height="0" style="position:absolute">
+<body>
+
+  <svg width="0" height="0" style="position:absolute">
     <defs>
       <filter id="rippleFilter">
         <feTurbulence type="fractalNoise" baseFrequency="0.012 0.02" numOctaves="2" seed="2" result="noise">
@@ -346,10 +318,14 @@ footer{ margin-top: 34px; border-top: 1px solid var(--line); color: var(--ink-so
         </feDisplacementMap>
       </filter>
     </defs>
-  </svg>  <div class="topbar">
+  </svg>
+
+  <div class="topbar">
     <span>г. Тольятти, ул. 70 лет Октября, 35</span>
     <span class="diamond-dot" aria-hidden="true"></span>
-  </div>  <header class="site-header">
+  </div>
+
+  <header class="site-header">
     <div class="nav-wrap">
       <a href="#" class="brand-link" aria-label="На главную">
         <div class="brand">
@@ -361,7 +337,6 @@ footer{ margin-top: 34px; border-top: 1px solid var(--line); color: var(--ink-so
         <a href="#services">Услуги</a>
         <a href="#map-section">Карта</a>
         <a href="#" class="nav-contact-trigger">Контакты</a>
-        <span class="nav-underline" id="navUnderline" aria-hidden="true"></span>
       </nav>
       <button class="nav-toggle" id="navToggle" aria-label="Открыть меню" aria-expanded="false" aria-controls="mobileNav">
         <span aria-hidden="true"></span>
@@ -369,12 +344,15 @@ footer{ margin-top: 34px; border-top: 1px solid var(--line); color: var(--ink-so
         <span aria-hidden="true"></span>
       </button>
     </div>
-  </header>  <div class="mobile-nav" id="mobileNav" aria-hidden="true">
-      <button class="mobile-nav-close" id="navClose" aria-label="Закрыть меню">&times;</button>
+  </header>
+
+  <div class="mobile-nav" id="mobileNav" aria-hidden="true">
       <a href="#services">Услуги</a>
       <a href="#map-section">Карта</a>
       <a href="#" class="nav-contact-trigger">Контакты</a>
-  </div>  <main>
+  </div>
+
+  <main>
     <section class="hero">
       <div class="hero-inner">
         <h1 class="headline" data-anim aria-label="Сапфир">
@@ -383,94 +361,87 @@ footer{ margin-top: 34px; border-top: 1px solid var(--line); color: var(--ink-so
         </h1>
         <div class="cta-row" data-anim>
           <button class="btn modal-trigger">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.08 4.18 2 2 0 0 1 4.06 2h3a2 2 0 0 1 2 1.72c.12.9.33 1.78.62 2.63a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.45-1.14a2 2 0 0 1 2.11-.45c.85.29 1.73.5 2.63.62A2 2 0 0 1 22 16.92Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        Записаться
-      </button>
-      <a href="#services" class="btn secondary">
-
-```
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    Смотреть услуги
-  </a>
-</div>
-```
-
-  </div>
-</section>
-<section class="section" id="services">
-  <h2 data-anim>Наши услуги</h2>
-  <div class="services">
-    <a href="cut.html" class="card-link" data-anim>
-      <article class="card card--hair">
-        <div class="ribbon" aria-hidden="true"></div>
-        <div class="card-accent" aria-hidden="true"></div>
-        <div class="icon" aria-hidden="true">
-
-```
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><circle cx="6" cy="6" r="3"></circle><path d="M8.12 8.12 12 12"></path><circle cx="6" cy="18" r="3"></circle><path d="M14.8 14.8 22 22"></path><path d="m22 2-8.95 8.95"></path><path d="M8.12 15.88 12 12"></path></svg>
-    </div>
-    <h3>Парикмахерские</h3>
-    <p>Стрижки, окрашивание любой сложности и уходовые процедуры для здоровья ваших волос.</p>
-  </article>
-</a>
-<a href="nails.html" class="card-link" data-anim>
-  <article class="card card--nails">
-    <div class="ribbon" aria-hidden="true"></div>
-    <div class="card-accent" aria-hidden="true"></div>
-    <div class="icon" aria-hidden="true">
-      
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m8.83 7.04.85-2.28a2.5 2.5 0 1 1 4.64 2.28l-.85 2.28"></path><path d="M12.5 6.2 4 14.8a2 2 0 0 0 0 2.8l2.8 2.8a2 2 0 0 0 2.8 0L18 11.5"></path><path d="M12 12h.01"></path><path d="M4.6 11.2 3 9c-2-2.5-1.2-5.5 1.4-6.4"></path><path d="M18 13l-1.5-7.5"></path></svg>
-    </div>
-    <h3>Ногтевой сервис</h3>
-    <p>Маникюр и педикюр (классический и аппаратный), стойкое покрытие и оригинальный дизайн.</p>
-  </article>
-</a>
-<a href="brows.html" class="card-link" data-anim>
-  <article class="card card--cosmo">
-    <div class="ribbon" aria-hidden="true"></div>
-    <div class="card-accent" aria-hidden="true"></div>
-    <div class="icon" aria-hidden="true">
-      
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-    </div>
-    <h3>Косметология</h3>
-    <p>Чистки, пилинги, омолаживающие программы и профессиональный уход за кожей.</p>
-  </article>
-</a>
-```
-
-  </div>
-</section>
-<section class="section map-section" id="map-section">
-  <h2 data-anim>Как нас найти</h2>
-  <div id="map-container" data-anim><div id="map" aria-label="Карта проезда"></div></div>
-  <details class="faq-item" data-anim>
-    <summary>Как пройти от остановки?</summary>
-    <div class="faq-content-wrap" aria-hidden="true">
-      <div class="faq-content">
-        <p>Выйдите на ближайшей остановке, двигайтесь вдоль ул. 70 лет Октября к дому №35. Вход в салон под сапфировой вывеской «Сапфир».</p>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.08 4.18 2 2 0 0 1 4.06 2h3a2 2 0 0 1 2 1.72c.12.9.33 1.78.62 2.63a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.45-1.14a2 2 0 0 1 2.11-.45c.85.29 1.73.5 2.63.62A2 2 0 0 1 22 16.92Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Записаться
+          </button>
+          <a href="#services" class="btn secondary">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Смотреть услуги
+          </a>
+        </div>
       </div>
-    </div>
-  </details>
-</section>
-<section class="section">
-  <div class="contact" id="contact" data-anim>
-    <div class="info">
-      <strong>Свяжитесь с нами</strong>
-    </div>
-    <a href="tel:+79050190702" class="btn" aria-label="Позвонить в салон">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.08 4.18 2 2 0 0 1 4.06 2h3a2 2 0 0 1 2 1.72c.12.9.33 1.78.62 2.63a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.45-1.14a2 2 0 0 1 2.11-.45c.85.29 1.73.5 2.63.62A2 2 0 0 1 22 16.92Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      +7 905 019 07-02
-    </a>
-  </div>
-</section>
+    </section>
 
-  </main>  <footer>
+    <section class="section" id="services">
+      <h2 data-anim>Наши услуги</h2>
+      <div class="services">
+        <a href="cut.html" class="card-link" data-anim>
+          <article class="card card--hair">
+            <div class="card-glow" aria-hidden="true"></div>
+            <div class="icon" aria-hidden="true">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><circle cx="6" cy="6" r="3"></circle><path d="M8.12 8.12 12 12"></path><circle cx="6" cy="18" r="3"></circle><path d="M14.8 14.8 22 22"></path><path d="m22 2-8.95 8.95"></path><path d="M8.12 15.88 12 12"></path></svg>
+            </div>
+            <h3>Парикмахерские</h3>
+            <p>Стрижки, окрашивание любой сложности и уходовые процедуры для здоровья ваших волос.</p>
+          </article>
+        </a>
+        <a href="nails.html" class="card-link" data-anim>
+          <article class="card card--nails">
+            <div class="card-glow" aria-hidden="true"></div>
+            <div class="icon" aria-hidden="true">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m8.83 7.04.85-2.28a2.5 2.5 0 1 1 4.64 2.28l-.85 2.28"></path><path d="M12.5 6.2 4 14.8a2 2 0 0 0 0 2.8l2.8 2.8a2 2 0 0 0 2.8 0L18 11.5"></path><path d="M12 12h.01"></path><path d="M4.6 11.2 3 9c-2-2.5-1.2-5.5 1.4-6.4"></path><path d="M18 13l-1.5-7.5"></path></svg>
+            </div>
+            <h3>Ногтевой сервис</h3>
+            <p>Маникюр и педикюр (классический и аппаратный), стойкое покрытие и оригинальный дизайн.</p>
+          </article>
+        </a>
+        <a href="brows.html" class="card-link" data-anim>
+          <article class="card card--cosmo">
+            <div class="card-glow" aria-hidden="true"></div>
+            <div class="icon" aria-hidden="true">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+            </div>
+            <h3>Косметология</h3>
+            <p>Чистки, пилинги, омолаживающие программы и профессиональный уход за кожей.</p>
+          </article>
+        </a>
+      </div>
+    </section>
+
+    <section class="section map-section" id="map-section">
+      <h2 data-anim>Как нас найти</h2>
+      <div id="map-container" data-anim><div id="map" aria-label="Карта проезда"></div></div>
+      <details class="faq-item" data-anim>
+        <summary>Как пройти от остановки?</summary>
+        <div class="faq-content-wrap" aria-hidden="true">
+          <div class="faq-content">
+            <p>Выйдите на ближайшей остановке, двигайтесь вдоль ул. 70 лет Октября к дому №35. Вход в салон под сапфировой вывеской «Сапфир».</p>
+          </div>
+        </div>
+      </details>
+    </section>
+
+    <section class="section">
+      <div class="contact" id="contact" data-anim>
+        <div class="info">
+          <strong>Свяжитесь с нами</strong>
+        </div>
+        <a href="tel:+79050190702" class="btn" aria-label="Позвонить в салон">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.08 4.18 2 2 0 0 1 4.06 2h3a2 2 0 0 1 2 1.72c.12.9.33 1.78.62 2.63a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.45-1.14a2 2 0 0 1 2.11-.45c.85.29 1.73.5 2.63.62A2 2 0 0 1 22 16.92Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          +7 905 019 07-02
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
     © Сапфир, 2025.
     <div class="dev-signature">
       Сайт разработал Алексей <span class="brand-logo-char">Э.</span> Бронников
     </div>
-  </footer>  <div class="modal-overlay" id="contactModal" aria-hidden="true">
+  </footer>
+
+  <div class="modal-overlay" id="contactModal" aria-hidden="true">
     <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
       <button class="modal-close" aria-label="Закрыть окно">&times;</button>
       <h3 id="modalTitle">Запись по телефону</h3>
@@ -480,173 +451,138 @@ footer{ margin-top: 34px; border-top: 1px solid var(--line); color: var(--ink-so
         <button class="btn secondary" id="copyPhoneBtn">Скопировать номер</button>
       </div>
     </div>
-  </div>  <script>
-    document.addEventListener('DOMContentLoaded', function() {  // Подчеркивание активной ссылки при ховере (desktop)
-  (function(){
-    const nav = document.getElementById('primaryNav');
-    const underline = document.getElementById('navUnderline');
-    if (!nav || !underline) return;
-    const links = Array.from(nav.querySelectorAll('a'));
-    links.forEach(link => {
-      link.addEventListener('mouseenter', (e) => {
-        if (window.innerWidth < 769) return;
-        const elRect = e.currentTarget.getBoundingClientRect();
-        const navRect = nav.getBoundingClientRect();
-        underline.style.width = `${elRect.width}px`;
-        underline.style.left = `${elRect.left - navRect.left}px`;
-      });
-    });
-    nav.addEventListener('mouseleave', () => {
-      underline.style.width = `0px`;
-    });
-  })();
-  // Анимации появления при скролле
-  (function(){
-    const animatedElements = document.querySelectorAll('[data-anim]');
-    if (!animatedElements.length) return;
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('is-visible');
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.12 });
-    animatedElements.forEach(el => observer.observe(el));
-  })();
-  // Мобильное меню (без «дублирования» — скрыто display:none, включаем только при is-open)
-  (function(){
-    const navToggle = document.getElementById('navToggle');
-    const mobileNav = document.getElementById('mobileNav');
-    const navClose = document.getElementById('navClose');
-    if (!navToggle || !mobileNav || !navClose) return;
-    function toggleMenu(force){
-      const isOpen = typeof force === 'boolean' ? force : !mobileNav.classList.contains('is-open');
-      mobileNav.classList.toggle('is-open', isOpen);
-      mobileNav.setAttribute('aria-hidden', !isOpen);
-      navToggle.classList.toggle('is-active', isOpen);
-      navToggle.setAttribute('aria-expanded', isOpen);
-      document.body.classList.toggle('no-scroll', isOpen);
-    }
-    navToggle.addEventListener('click', () => toggleMenu());
-    navClose.addEventListener('click', () => toggleMenu(false));
-    mobileNav.querySelectorAll('a').forEach(link => {
-      link.addEventListener('click', () => toggleMenu(false));
-    });
-    // Закрытие Esc
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && mobileNav.classList.contains('is-open')) toggleMenu(false);
-    });
-  })();
-  // Модалка контактов
-  (function(){
-    const modal = document.getElementById('contactModal');
-    if (!modal) return;
-    const openTriggers = document.querySelectorAll('.modal-trigger, .nav-contact-trigger');
-    const closeBtn = modal.querySelector('.modal-close');
-    const copyBtn = document.getElementById('copyPhoneBtn');
-    const phoneToCopy = '+79050190702';
-    function openModal(e) { if(e) e.preventDefault(); modal.classList.add('is-visible'); modal.setAttribute('aria-hidden', 'false'); document.body.classList.add('no-scroll'); }
-    function closeModal() { modal.classList.remove('is-visible'); modal.setAttribute('aria-hidden', 'true'); if(!document.getElementById('mobileNav').classList.contains('is-open')) { document.body.classList.remove('no-scroll'); } }
-    openTriggers.forEach(trigger => trigger.addEventListener('click', openModal));
-    closeBtn.addEventListener('click', closeModal);
-    modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
-    document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && modal.classList.contains('is-visible')) closeModal(); });
-    if (copyBtn) {
-      copyBtn.addEventListener('click', () => {
-        navigator.clipboard.writeText(phoneToCopy.replace(/\s|-/g, '')).then(() => {
-          const originalText = copyBtn.textContent;
-          copyBtn.textContent = 'Скопировано!';
-          setTimeout(() => { copyBtn.textContent = originalText; }, 2000);
-        });
-      });
-    }
-  })();
-  // Подсветка карточек курсором (desktop)
-  (function() {
-    if (window.matchMedia('(hover: hover) and (min-width: 769px)').matches) {
-      document.querySelectorAll('.card').forEach(card => {
-        const accent = card.querySelector('.card-accent');
-        card.addEventListener('mousemove', e => {
-          const rect = card.getBoundingClientRect();
-          const x = e.clientX - rect.left;
-          const y = e.clientY - rect.top;
-          card.style.setProperty('--x', `${x}px`);
-          card.style.setProperty('--y', `${y}px`);
-          if (accent) accent.style.opacity = .28;
-        });
-        card.addEventListener('mouseleave', () => {
-          if (accent) accent.style.opacity = 0;
-        });
-      });
-    }
-  })();
-  // Плавный аккордеон (details)
-  (function(){
-    const items = document.querySelectorAll('details.faq-item');
-    items.forEach(details => {
-      const wrap = details.querySelector('.faq-content-wrap');
-      if (!wrap) return;
-      details.addEventListener('toggle', () => {
-        const isOpen = details.open;
-        if (isOpen) {
-          wrap.style.height = 'auto';
-          const h = wrap.scrollHeight + 'px';
-          wrap.style.height = '0px';
-          requestAnimationFrame(() => {
-            wrap.style.height = h;
-          });
-        } else {
-          wrap.style.height = wrap.scrollHeight + 'px';
-          requestAnimationFrame(() => {
-            wrap.style.height = '0px';
-          });
-        }
-      });
-      wrap.addEventListener('transitionend', () => {
-        if (details.open) {
-          wrap.style.height = 'auto';
-          wrap.setAttribute('aria-hidden', 'false');
-        } else {
-          wrap.setAttribute('aria-hidden', 'true');
-        }
-      });
-    });
-  })();
-  // Карта: геокод адреса и точная метка на здании
-  function initMap() {
-    const mapContainer = document.getElementById('map');
-    if(!mapContainer || !window.ymaps) return;
-    const address = 'Тольятти, ул. 70 лет Октября, 35';
-    ymaps.geocode(address, { results: 1 }).then(res => {
-      const geoObject = res.geoObjects.get(0);
-      const coords = geoObject && geoObject.geometry.getCoordinates ? geoObject.geometry.getCoordinates() : [53.54075, 49.3377];
-      const bounds = geoObject && geoObject.properties.get('boundedBy');
-      const myMap = new ymaps.Map(mapContainer, {
-        center: coords,
-        zoom: 17,
-        controls: ['zoomControl']
-      });
-      if (bounds) {
-        myMap.setBounds(bounds, { checkZoomRange: true, zoomMargin: 40 }).catch(() => {});
-      } else {
-        myMap.setCenter(coords, 18);
-      }
-      const placemark = new ymaps.Placemark(coords, {
-        balloonContentHeader: 'Салон красоты «Сапфир»',
-        balloonContentBody: 'ул. 70 лет Октября, 35<br>Ждём вас!',
-        hintContent: 'Салон «Сапфир»'
-      }, {
-        preset: 'islands#dotIcon',
-        iconColor: '#185adb'
-      });
-      myMap.geoObjects.add(placemark);
-      myMap.behaviors.disable('scrollZoom');
-    });
-  }
-  ymaps.ready(initMap);
-});
+  </div>
 
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Анимации появления при скролле
+      (function(){
+        const animatedElements = document.querySelectorAll('[data-anim]');
+        if (!animatedElements.length) return;
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('is-visible');
+              observer.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.1 });
+        animatedElements.forEach(el => observer.observe(el));
+      })();
+
+      // Мобильное меню
+      (function(){
+        const navToggle = document.getElementById('navToggle');
+        const mobileNav = document.getElementById('mobileNav');
+        if (!navToggle || !mobileNav) return;
+        function toggleMenu(force){
+          const isOpen = typeof force === 'boolean' ? force : !mobileNav.classList.contains('is-open');
+          mobileNav.classList.toggle('is-open', isOpen);
+          mobileNav.setAttribute('aria-hidden', !isOpen);
+          navToggle.classList.toggle('is-active', isOpen);
+          navToggle.setAttribute('aria-expanded', isOpen);
+          document.body.classList.toggle('no-scroll', isOpen);
+        }
+        navToggle.addEventListener('click', () => toggleMenu());
+        mobileNav.querySelectorAll('a').forEach(link => {
+          link.addEventListener('click', () => toggleMenu(false));
+        });
+        document.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape' && mobileNav.classList.contains('is-open')) toggleMenu(false);
+        });
+      })();
+
+      // Модальное окно контактов
+      (function(){
+        const modal = document.getElementById('contactModal');
+        if (!modal) return;
+        const openTriggers = document.querySelectorAll('.modal-trigger, .nav-contact-trigger');
+        const closeBtn = modal.querySelector('.modal-close');
+        const copyBtn = document.getElementById('copyPhoneBtn');
+        const phoneToCopy = '+79050190702';
+        function openModal(e) { if(e) e.preventDefault(); modal.classList.add('is-visible'); modal.setAttribute('aria-hidden', 'false'); document.body.classList.add('no-scroll'); }
+        function closeModal() { modal.classList.remove('is-visible'); modal.setAttribute('aria-hidden', 'true'); if(!document.getElementById('mobileNav').classList.contains('is-open')) { document.body.classList.remove('no-scroll'); } }
+        openTriggers.forEach(trigger => trigger.addEventListener('click', openModal));
+        closeBtn.addEventListener('click', closeModal);
+        modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
+        document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && modal.classList.contains('is-visible')) closeModal(); });
+        if (copyBtn) {
+          copyBtn.addEventListener('click', () => {
+            navigator.clipboard.writeText(phoneToCopy.replace(/\s|-/g, '')).then(() => {
+              const originalText = copyBtn.textContent;
+              copyBtn.textContent = 'Скопировано!';
+              setTimeout(() => { copyBtn.textContent = originalText; }, 2000);
+            });
+          });
+        }
+      })();
+      
+      // Подсветка карточек курсором (desktop)
+      (function() {
+        if (window.matchMedia('(hover: hover) and (min-width: 769px)').matches) {
+            document.querySelectorAll('.card').forEach(card => {
+                card.addEventListener('mousemove', e => {
+                    const rect = card.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    card.style.setProperty('--x', `${x}px`);
+                    card.style.setProperty('--y', `${y}px`);
+                });
+            });
+        }
+      })();
+
+      // Плавный аккордеон
+      (function(){
+        const items = document.querySelectorAll('details.faq-item');
+        items.forEach(details => {
+          const wrap = details.querySelector('.faq-content-wrap');
+          if (!wrap) return;
+          details.addEventListener('toggle', () => {
+            const isOpen = details.open;
+            if (isOpen) {
+              wrap.style.height = 'auto';
+              const h = wrap.scrollHeight + 'px';
+              wrap.style.height = '0px';
+              requestAnimationFrame(() => { wrap.style.height = h; });
+            } else {
+              wrap.style.height = wrap.scrollHeight + 'px';
+              requestAnimationFrame(() => { wrap.style.height = '0px'; });
+            }
+          });
+          wrap.addEventListener('transitionend', () => {
+            if (details.open) { wrap.style.height = 'auto'; }
+          });
+        });
+      })();
+
+      // Яндекс.Карта
+      function initMap() {
+        const mapContainer = document.getElementById('map');
+        if(!mapContainer || !window.ymaps) return;
+        const address = 'Тольятти, ул. 70 лет Октября, 35';
+        ymaps.geocode(address, { results: 1 }).then(res => {
+          const geoObject = res.geoObjects.get(0);
+          const coords = geoObject.geometry.getCoordinates();
+          const myMap = new ymaps.Map(mapContainer, {
+            center: coords,
+            zoom: 17,
+            controls: ['zoomControl']
+          });
+          const placemark = new ymaps.Placemark(coords, {
+            balloonContentHeader: 'Салон красоты «Сапфир»',
+            balloonContentBody: 'ул. 70 лет Октября, 35<br>Ждём вас!',
+            hintContent: 'Салон «Сапфир»'
+          }, {
+            preset: 'islands#dotIcon',
+            iconColor: '#3a5aff'
+          });
+          myMap.geoObjects.add(placemark);
+          myMap.behaviors.disable('scrollZoom');
+        });
+      }
+      ymaps.ready(initMap);
+    });
   </script>
 </body>
 </html>
