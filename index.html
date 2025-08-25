@@ -5,7 +5,8 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Сапфир — салон красоты в Тольятти</title>
-  <meta name="description" content="Салон красоты Сапфир в Тольятти — парикмахерские услуги, ногтевой сервис, косметология." />
+  <meta name="description" content="Салон красоты Сапфир в Тольятти — парикмахерские услуги, ногтевой сервис, косметология и коррекция бровей." />
+  
   <script src="https://api-maps.yandex.ru/2.1/?apikey=ВАШ_API_КЛЮЧ&lang=ru_RU" type="text/javascript"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -21,19 +22,18 @@
       --gold-accent: #e8c981;
       --text-primary: #e8eaf6;
       --text-secondary: #a7b0d1;
-      --glass-bg: rgba(25, 20, 55, 0.45);
+      --glass-bg: rgba(25, 20, 55, 0.55);
       --glass-border-color: rgba(142, 110, 255, 0.2);
       --glow-border-start: #6a82ff;
       --glow-border-end: #a76aff;
       --ink-brand: #c5d2ff;
 
       /* Акценты для карточек */
-      --accent-hair-start: #3a7bd5;
-      --accent-hair-end: #3a5aff;
-      --accent-nails-start: #d31e6a;
-      --accent-nails-end: #b0003a;
-      --accent-cosmo-start: #10b981;
-      --accent-cosmo-end: #0e9f6e;
+      --accent-hair-start: #3a7bd5; --accent-hair-end: #3a5aff;
+      --accent-nails-start: #d31e6a; --accent-nails-end: #b0003a;
+      --accent-cosmo-start: #10b981; --accent-cosmo-end: #0e9f6e;
+      --accent-brows-start: #dab785; --accent-brows-end: #d5896f;
+
 
       --radius-xl: 18px;
       --shadow-soft: 0 16px 40px rgba(0,0,0,.3);
@@ -48,10 +48,10 @@
       font-family: "Segoe UI", Roboto, "Helvetica Neue", Arial, system-ui, -apple-system, "Noto Sans", "Liberation Sans", sans-serif;
       line-height: 1.6;
       scrollbar-gutter: stable;
-      /* Анимированный фон "Северное сияние" */
-      background: linear-gradient(135deg, var(--bg-dark-start), var(--bg-dark-mid), var(--bg-dark-end));
+      /* Ускоренный и более выразительный фон "Северное сияние" */
+      background: linear-gradient(135deg, var(--bg-dark-start), var(--bg-dark-mid), var(--amethyst-glow), var(--bg-dark-end), var(--sapphire-glow));
       background-size: 400% 400%;
-      animation: gradient-pan 20s ease-in-out infinite;
+      animation: gradient-pan 16s ease-in-out infinite;
       overflow-x: hidden;
     }
 
@@ -62,7 +62,7 @@
     }
 
     @media (prefers-reduced-motion: reduce) {
-      body { animation: none; }
+      body, .mobile-nav { animation: none; }
     }
 
     /* Стилизованный скроллбар */
@@ -129,25 +129,34 @@
     .btn {
       position: relative; display: inline-flex; align-items: center; justify-content: center; gap: 10px;
       padding: 16px 28px; border-radius: 999px;
-      border: 1px solid var(--glass-border-color);
-      background: var(--glass-bg);
+      border: 1px solid transparent;
+      background-color: var(--glass-bg);
+      background-clip: padding-box;
       color: var(--text-primary); text-decoration: none; letter-spacing: .04em; font-weight: 600;
       box-shadow: inset 0 0 0 1px rgba(255,255,255,0.05), 0 8px 24px rgba(0,0,0,.3);
-      transition: transform .3s ease, box-shadow .3s ease;
+      transition: transform .25s ease, box-shadow .25s ease;
       overflow: hidden; -webkit-tap-highlight-color: transparent;
     }
-    .btn svg { width: 18px; height: 18px; }
     .btn::before {
       content: ""; position: absolute; inset: -1px; z-index: -1;
       border-radius: 999px;
       background: linear-gradient(120deg, var(--glow-border-start), var(--glow-border-end));
-      opacity: 0; transition: opacity .4s ease;
+      opacity: 0; transition: opacity .25s ease;
+      animation: pulse-glow 3s infinite ease-in-out;
     }
-    .btn:hover { transform: translateY(-3px); box-shadow: inset 0 0 0 1px rgba(255,255,255,0.1), 0 12px 32px rgba(0,0,0,.4), 0 0 20px rgba(74, 85, 255, 0.3); }
-    .btn:hover::before { opacity: 1; }
+    @keyframes pulse-glow {
+      0%, 100% { opacity: 0.6; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.03); }
+    }
+    @media (hover: hover) {
+      .btn::before { animation: none; opacity: 0; }
+      .btn:hover { transform: translateY(-3px); box-shadow: inset 0 0 0 1px rgba(255,255,255,0.1), 0 12px 32px rgba(0,0,0,.4), 0 0 20px rgba(74, 85, 255, 0.3); }
+      .btn:hover::before { opacity: 1; }
+    }
     .btn:active { transform: translateY(0) scale(0.98); }
     .btn.secondary { background: transparent; }
     .btn.secondary:hover { background: var(--glass-bg); }
+    .btn svg { width: 18px; height: 18px; }
 
     /* Секции */
     .section { max-width: 1200px; margin: 30px auto; padding: 0 18px; }
@@ -158,7 +167,7 @@
     }
 
     /* Карточки услуг */
-    .services { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; }
+    .services { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px; }
     .card-link { text-decoration: none; color: inherit; display: block; -webkit-tap-highlight-color: transparent; }
     .card {
       position: relative; border-radius: var(--radius-xl);
@@ -166,19 +175,13 @@
       border: 1px solid var(--glass-border-color);
       padding: 24px; overflow: hidden;
       box-shadow: var(--shadow-soft);
-      transition: transform .4s ease, box-shadow .4s ease;
-    }
-    .card-glow {
-        content: ''; position: absolute; inset: -1px; z-index: -1;
-        border-radius: var(--radius-xl);
-        background: radial-gradient(400px circle at var(--x, 50%) var(--y, 50%), var(--accent-color, #5fa4ff), transparent 45%);
-        opacity: 0; transition: opacity .4s ease;
+      transition: transform .3s ease, box-shadow .3s ease;
     }
     .card::before {
         content: ''; position: absolute; inset: -1px; z-index: -1;
         border-radius: var(--radius-xl);
         background: linear-gradient(135deg, var(--accent-start), var(--accent-end));
-        opacity: 0; transition: opacity .4s ease; pointer-events: none;
+        opacity: 0; transition: opacity .3s ease; pointer-events: none;
     }
     @media (hover: hover) {
       .card-link:hover .card {
@@ -186,7 +189,6 @@
         box-shadow: 0 20px 50px rgba(0,0,0,.4);
       }
       .card-link:hover .card::before { opacity: 1; }
-      .card-link:hover .card-glow { opacity: .2; }
     }
     .card .icon {
       width: 54px; height: 54px; border-radius: 14px; display: grid; place-items: center;
@@ -196,20 +198,22 @@
       transition: transform .4s ease;
     }
     .card-link:hover .icon { transform: scale(1.1); }
-    .card .icon svg { width: 28px; height: 28px; stroke-width: 1.8; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+    .card .icon svg { width: 28px; height: 28px; fill: none; stroke-linecap: round; stroke-linejoin: round; }
     .card h3 { margin: 16px 0 8px; font-weight: 600; letter-spacing: .02em; color: var(--text-primary); }
     .card p { margin: 0; color: var(--text-secondary); }
 
-    .card--hair { --accent-start: var(--accent-hair-start); --accent-end: var(--accent-hair-end); --accent-color: #3a7bd5; }
-    .card--hair .icon svg { stroke: #87b2f3; }
-    .card--nails { --accent-start: var(--accent-nails-start); --accent-end: var(--accent-nails-end); --accent-color: #d31e6a; }
-    .card--nails .icon svg { stroke: #f794b9; }
-    .card--cosmo { --accent-start: var(--accent-cosmo-start); --accent-end: var(--accent-cosmo-end); --accent-color: #10b981; }
-    .card--cosmo .icon svg { stroke: #6aeeb9; }
+    .card--hair { --accent-start: var(--accent-hair-start); --accent-end: var(--accent-hair-end); }
+    .card--hair .icon svg { stroke: #87b2f3; stroke-width: 1.5; }
+    .card--nails { --accent-start: var(--accent-nails-start); --accent-end: var(--accent-nails-end); }
+    .card--nails .icon svg { stroke: #f794b9; stroke-width: 1.5; }
+    .card--cosmo { --accent-start: var(--accent-cosmo-start); --accent-end: var(--accent-cosmo-end); }
+    .card--cosmo .icon svg { stroke: #6aeeb9; stroke-width: 1.5; }
+    .card--brows { --accent-start: var(--accent-brows-start); --accent-end: var(--accent-brows-end); }
+    .card--brows .icon svg { stroke: #dab785; stroke-width: 1.8; }
 
     /* Карта и контакты */
     .map-section { margin-top: 40px; }
-    #map-container { border-radius: var(--radius-xl); overflow: hidden; border: 1px solid var(--glass-border-color); box-shadow: var(--shadow-soft); height: 420px; background: #fff; }
+    #map-container { border-radius: var(--radius-xl); overflow: hidden; border: 1px solid var(--glass-border-color); box-shadow: var(--shadow-soft); height: 420px; background-color: var(--bg-dark-start); }
     #map { width: 100%; height: 100%; }
 
     .contact { margin: 36px auto 18px; padding: 24px; border-radius: var(--radius-xl); background: var(--glass-bg); border: 1px solid var(--glass-border-color); display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
@@ -217,7 +221,7 @@
     .contact strong { letter-spacing: .08em; text-transform: uppercase; font-weight: 600; color: var(--text-primary); }
 
     details.faq-item {
-      margin-top: 18px; border-radius: var(--radius-xl); background: var(--glass-bg); border: 1px solid var(--glass-border-color);
+      margin-top: 18px; border-radius: var(--radius-xl); background: rgba(25, 20, 55, 0.65); border: 1px solid var(--glass-border-color);
       transition: border-color .3s ease; overflow: clip;
     }
     details.faq-item[open] { border-color: var(--sapphire-glow); }
@@ -247,6 +251,7 @@
     .services a:nth-child(1) { transition-delay: .1s; }
     .services a:nth-child(2) { transition-delay: .2s; }
     .services a:nth-child(3) { transition-delay: .3s; }
+    .services a:nth-child(4) { transition-delay: .4s; }
 
     /* Модальное окно */
     .modal-overlay { position: fixed; inset: 0; background: rgba(7, 14, 36, 0.5); backdrop-filter: blur(10px); z-index: 1000; display: flex; align-items: center; justify-content: center; padding: 14px; opacity: 0; visibility: hidden; transition: opacity .3s ease, visibility .3s ease; }
@@ -277,19 +282,26 @@
       gap: 20px; opacity: 0; visibility: hidden;
       transition: opacity .3s ease, visibility .3s ease;
       pointer-events: none;
-      background: rgba(10, 7, 26, 0.8);
-      backdrop-filter: blur(16px);
+      background: linear-gradient(135deg, var(--bg-dark-start), var(--bg-dark-mid), var(--amethyst-glow), var(--bg-dark-end), var(--sapphire-glow));
+      background-size: 400% 400%;
+      animation: gradient-pan 16s ease-in-out infinite;
     }
     .mobile-nav.is-open { display: flex; opacity: 1; visibility: visible; pointer-events: auto; }
+    .mobile-nav-close {
+      position: absolute; top: 14px; right: 16px; width: 44px; height: 44px;
+      background: none; border: none; color: var(--text-primary); font-size: 36px;
+      line-height: 1; cursor: pointer; opacity: 0.9; transition: opacity .3s, transform .3s;
+    }
+    .mobile-nav-close:hover { opacity: 1; transform: rotate(90deg); }
     .mobile-nav a {
       color: var(--text-primary); text-decoration: none; font-size: 24px; font-weight: 500; padding: 12px 24px;
       opacity: 0; transform: translateY(15px);
       transition: opacity .3s ease, transform .3s ease, color .3s ease;
     }
     .mobile-nav.is-open a { opacity: 1; transform: translateY(0); }
-    .mobile-nav.is-open a:nth-child(2) { transition-delay: .1s; }
-    .mobile-nav.is-open a:nth-child(3) { transition-delay: .2s; }
-    .mobile-nav.is-open a:nth-child(4) { transition-delay: .3s; }
+    .mobile-nav.is-open a:nth-child(3) { transition-delay: .1s; }
+    .mobile-nav.is-open a:nth-child(4) { transition-delay: .2s; }
+    .mobile-nav.is-open a:nth-child(5) { transition-delay: .3s; }
 
     /* Адаптивность */
     @media (max-width: 768px) {
@@ -297,34 +309,16 @@
       .diamond-dot { display: none; }
       nav.primary { display: none; }
       .nav-toggle { display: block; }
-      .services { grid-template-columns: 1fr; }
       .section h2 { font-size: 22px; }
       .cta-row { flex-direction: column; align-items: stretch; }
       .contact { flex-direction: column; text-align: center; }
     }
+    @media (max-width: 580px) {
+        .services { grid-template-columns: 1fr; }
+    }
   </style>
 </head>
 <body>
-
-  <svg width="0" height="0" style="position:absolute">
-    <defs>
-      <filter id="rippleFilter">
-        <feTurbulence type="fractalNoise" baseFrequency="0.012 0.02" numOctaves="2" seed="2" result="noise">
-          <animate attributeName="baseFrequency" dur="10s" values="0.012 0.02; 0.016 0.028; 0.012 0.02" repeatCount="indefinite" />
-          <animate attributeName="seed" dur="12s" values="2;5;2" repeatCount="indefinite" />
-        </feTurbulence>
-        <feDisplacementMap in="SourceGraphic" in2="noise" scale="8" xChannelSelector="R" yChannelSelector="G">
-          <animate attributeName="scale" dur="12s" values="6;10;6" repeatCount="indefinite" />
-        </feDisplacementMap>
-      </filter>
-    </defs>
-  </svg>
-
-  <div class="topbar">
-    <span>г. Тольятти, ул. 70 лет Октября, 35</span>
-    <span class="diamond-dot" aria-hidden="true"></span>
-  </div>
-
   <header class="site-header">
     <div class="nav-wrap">
       <a href="#" class="brand-link" aria-label="На главную">
@@ -347,6 +341,7 @@
   </header>
 
   <div class="mobile-nav" id="mobileNav" aria-hidden="true">
+      <button class="mobile-nav-close" id="navClose" aria-label="Закрыть меню">&times;</button>
       <a href="#services">Услуги</a>
       <a href="#map-section">Карта</a>
       <a href="#" class="nav-contact-trigger">Контакты</a>
@@ -377,9 +372,8 @@
       <div class="services">
         <a href="cut.html" class="card-link" data-anim>
           <article class="card card--hair">
-            <div class="card-glow" aria-hidden="true"></div>
             <div class="icon" aria-hidden="true">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><circle cx="6" cy="6" r="3"></circle><path d="M8.12 8.12 12 12"></path><circle cx="6" cy="18" r="3"></circle><path d="M14.8 14.8 22 22"></path><path d="m22 2-8.95 8.95"></path><path d="M8.12 15.88 12 12"></path></svg>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 10.2c0 2.3-1.9 4.2-4.2 4.2H8.2C5.9 14.4 4 12.5 4 10.2S5.9 6 8.2 6h7.6c2.3 0 4.2 1.9 4.2 4.2zM7 18v-2.4M17 18v-2.4M12 18v-3.6M9.5 6V4.2C9.5 3 10.6 2 12 2s2.5 1 2.5 2.2V6"/></svg>
             </div>
             <h3>Парикмахерские</h3>
             <p>Стрижки, окрашивание любой сложности и уходовые процедуры для здоровья ваших волос.</p>
@@ -387,22 +381,29 @@
         </a>
         <a href="nails.html" class="card-link" data-anim>
           <article class="card card--nails">
-            <div class="card-glow" aria-hidden="true"></div>
             <div class="icon" aria-hidden="true">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m8.83 7.04.85-2.28a2.5 2.5 0 1 1 4.64 2.28l-.85 2.28"></path><path d="M12.5 6.2 4 14.8a2 2 0 0 0 0 2.8l2.8 2.8a2 2 0 0 0 2.8 0L18 11.5"></path><path d="M12 12h.01"></path><path d="M4.6 11.2 3 9c-2-2.5-1.2-5.5 1.4-6.4"></path><path d="M18 13l-1.5-7.5"></path></svg>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12.2 4.6a2.2 2.2 0 0 1 3.1 3.1L5.8 17.2c-.4.4-.9.6-1.4.6H3v-1.4c0-.5.2-1 .6-1.4l9.6-9.5zM12.2 4.6l5.2 5.2c.8.8.8 2 0 2.8l-2.8 2.8c-.8.8-2 .8-2.8 0L6.6 9.8"/></svg>
             </div>
             <h3>Ногтевой сервис</h3>
             <p>Маникюр и педикюр (классический и аппаратный), стойкое покрытие и оригинальный дизайн.</p>
           </article>
         </a>
-        <a href="brows.html" class="card-link" data-anim>
+        <a href="cosmo.html" class="card-link" data-anim>
           <article class="card card--cosmo">
-            <div class="card-glow" aria-hidden="true"></div>
             <div class="icon" aria-hidden="true">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 21a9 9 0 0 1-9-9c0-4.2 2.8-7.9 6.7-8.8C10.6 2 11.3 2.5 11.3 3.3v.2c0 .6-.4 1.1-1 1.2-2.4.5-4.3 2.7-4.3 5.3 0 3 2.4 5.4 5.4 5.4s5.4-2.4 5.4-5.4c0-2.6-1.8-4.8-4.3-5.3-.6-.1-1-.6-1-1.2v-.2c0-.7.6-1.3 1.5-1.2C18.2 3.1 21 6.8 21 11a9 9 0 0 1-9 10z"/></svg>
             </div>
             <h3>Косметология</h3>
             <p>Чистки, пилинги, омолаживающие программы и профессиональный уход за кожей.</p>
+          </article>
+        </a>
+        <a href="brows.html" class="card-link" data-anim>
+          <article class="card card--brows">
+            <div class="icon" aria-hidden="true">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21.5 9.8c-1-.2-2.1.3-2.6 1.3-.5 1-.2 2.1.8 2.6 1 .5 2.1-.3 2.6-1.3.5-1 .2-2.1-.8-2.6zM2.5 9.8c1-.2 2.1.3 2.6 1.3.5 1 .2 2.1-.8 2.6-1 .5-2.1-.3-2.6-1.3-.5-1-.2-2.1.8-2.6zM22 6c-2.5 0-4.5 2-4.5 4.5 0 1.2.5 2.3 1.2 3.2-1.2.8-2.6 1.3-4.2 1.3s-3.1-.5-4.2-1.3c.8-.9 1.2-2 1.2-3.2C11.5 8 9.5 6 7 6s-4.5 2-4.5 4.5c0 1.2.5 2.3 1.2 3.2C2.6 14.5 1 15 0 15"/></svg>
+            </div>
+            <h3>Коррекция бровей</h3>
+            <p>Профессиональное оформление, окрашивание и ламинирование бровей для идеального взгляда.</p>
           </article>
         </a>
       </div>
@@ -474,7 +475,8 @@
       (function(){
         const navToggle = document.getElementById('navToggle');
         const mobileNav = document.getElementById('mobileNav');
-        if (!navToggle || !mobileNav) return;
+        const navClose = document.getElementById('navClose');
+        if (!navToggle || !mobileNav || !navClose) return;
         function toggleMenu(force){
           const isOpen = typeof force === 'boolean' ? force : !mobileNav.classList.contains('is-open');
           mobileNav.classList.toggle('is-open', isOpen);
@@ -484,6 +486,7 @@
           document.body.classList.toggle('no-scroll', isOpen);
         }
         navToggle.addEventListener('click', () => toggleMenu());
+        navClose.addEventListener('click', () => toggleMenu(false));
         mobileNav.querySelectorAll('a').forEach(link => {
           link.addEventListener('click', () => toggleMenu(false));
         });
@@ -517,21 +520,6 @@
         }
       })();
       
-      // Подсветка карточек курсором (desktop)
-      (function() {
-        if (window.matchMedia('(hover: hover) and (min-width: 769px)').matches) {
-            document.querySelectorAll('.card').forEach(card => {
-                card.addEventListener('mousemove', e => {
-                    const rect = card.getBoundingClientRect();
-                    const x = e.clientX - rect.left;
-                    const y = e.clientY - rect.top;
-                    card.style.setProperty('--x', `${x}px`);
-                    card.style.setProperty('--y', `${y}px`);
-                });
-            });
-        }
-      })();
-
       // Плавный аккордеон
       (function(){
         const items = document.querySelectorAll('details.faq-item');
@@ -539,8 +527,7 @@
           const wrap = details.querySelector('.faq-content-wrap');
           if (!wrap) return;
           details.addEventListener('toggle', () => {
-            const isOpen = details.open;
-            if (isOpen) {
+            if (details.open) {
               wrap.style.height = 'auto';
               const h = wrap.scrollHeight + 'px';
               wrap.style.height = '0px';
@@ -559,9 +546,9 @@
       // Яндекс.Карта
       function initMap() {
         const mapContainer = document.getElementById('map');
-        if(!mapContainer || !window.ymaps) return;
+        if(!mapContainer || typeof ymaps === 'undefined') return;
         const address = 'Тольятти, ул. 70 лет Октября, 35';
-        ymaps.geocode(address, { results: 1 }).then(res => {
+        ymaps.geocode(address, { results: 1 }).then(function (res) {
           const geoObject = res.geoObjects.get(0);
           const coords = geoObject.geometry.getCoordinates();
           const myMap = new ymaps.Map(mapContainer, {
@@ -579,6 +566,8 @@
           });
           myMap.geoObjects.add(placemark);
           myMap.behaviors.disable('scrollZoom');
+        }).catch(function (err) {
+            console.warn('Ошибка при инициализации Яндекс.Карт:', err);
         });
       }
       ymaps.ready(initMap);
