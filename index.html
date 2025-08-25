@@ -13,7 +13,7 @@
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@700&display=swap" rel="stylesheet">
   <style>
     :root {
-      /* Новая тёмная ювелирная палитра */
+      /* Палитра */
       --bg-dark-start: #0a071a;
       --bg-dark-mid: #100a2b;
       --bg-dark-end: #1d103b;
@@ -34,13 +34,17 @@
       --accent-cosmo-start: #10b981; --accent-cosmo-end: #0e9f6e;
       --accent-brows-start: #dab785; --accent-brows-end: #d5896f;
 
-
       --radius-xl: 18px;
       --shadow-soft: 0 16px 40px rgba(0,0,0,.3);
       --shadow-glow: 0 0 40px rgba(74, 85, 255, 0.25);
     }
 
-    html { scroll-behavior: smooth; }
+    html {
+      scroll-behavior: smooth;
+      /* Стилизация скроллбара для Firefox */
+      scrollbar-width: thin;
+      scrollbar-color: var(--amethyst-glow) transparent;
+    }
     html, body { height: 100%; color: var(--text-primary); -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
 
     body {
@@ -48,8 +52,8 @@
       font-family: "Segoe UI", Roboto, "Helvetica Neue", Arial, system-ui, -apple-system, "Noto Sans", "Liberation Sans", sans-serif;
       line-height: 1.6;
       scrollbar-gutter: stable;
-      /* Ускоренный и более выразительный фон "Северное сияние" */
-      background: linear-gradient(135deg, var(--bg-dark-start), var(--bg-dark-mid), var(--amethyst-glow), var(--bg-dark-end), var(--sapphire-glow));
+      /* Улучшенный градиент, одинаковый на всех устройствах */
+      background: linear-gradient(160deg, var(--bg-dark-start) 0%, var(--sapphire-glow) 40%, var(--amethyst-glow) 60%, var(--bg-dark-end) 100%);
       background-size: 400% 400%;
       animation: gradient-pan 16s ease-in-out infinite;
       overflow-x: hidden;
@@ -62,17 +66,15 @@
     }
 
     @media (prefers-reduced-motion: reduce) {
-      body, .mobile-nav { animation: none; }
+      body, .mobile-nav, .card::after { animation: none !important; }
     }
 
-    /* Стилизованный скроллбар */
-    html { scrollbar-width: thin; scrollbar-color: var(--sapphire-glow) rgba(0,0,0,.1); }
-    ::-webkit-scrollbar { width: 10px; }
-    ::-webkit-scrollbar-track { background: rgba(0,0,0,.1); }
+    /* Стилизация скроллбара для WebKit (Chrome, Safari) */
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: transparent; }
     ::-webkit-scrollbar-thumb {
       border-radius: 10px;
       background: linear-gradient(135deg, var(--sapphire-glow), var(--amethyst-glow));
-      box-shadow: inset 0 0 0 1px rgba(255,255,255,.15);
     }
     body.no-scroll { overflow: hidden; }
 
@@ -114,7 +116,7 @@
     .hero-inner { max-width: 1200px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; }
 
     .headline { position: relative; margin: 0; line-height: 1; letter-spacing: .05em; text-transform: uppercase; display: inline-block; }
-    .headline-main, .headline-reflection {
+    .headline-main {
       display: block; font-family: Georgia, "Times New Roman", serif; font-weight: 300; font-size: clamp(64px, 20vw, 240px);
       background: linear-gradient(90deg, #cfd9ff 0%, #a7b7ff 28%, #e8eaff 60%, #a3baff 100%);
       -webkit-background-clip: text; background-clip: text; color: transparent;
@@ -122,7 +124,7 @@
       animation: title-shine 8s linear infinite; background-size: 220% 100%;
     }
     @keyframes title-shine { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
-    .headline-reflection { transform: scaleY(-1); opacity: .2; filter: blur(1.5px); mask-image: linear-gradient(to bottom, rgba(0,0,0,.45), rgba(0,0,0,.0) 65%); -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,.45), rgba(0,0,0,.0) 65%); margin-top: .08em; }
+    .headline-reflection { display: block; font-family: Georgia, "Times New Roman", serif; font-weight: 300; font-size: clamp(64px, 20vw, 240px); background: linear-gradient(90deg, #cfd9ff 0%, #a7b7ff 28%, #e8eaff 60%, #a3baff 100%); -webkit-background-clip: text; background-clip: text; color: transparent; text-shadow: 0 0 40px rgba(125, 168, 255, .45); animation: title-shine 8s linear infinite; background-size: 220% 100%; transform: scaleY(-1); opacity: .2; filter: blur(1.5px); mask-image: linear-gradient(to bottom, rgba(0,0,0,.45), rgba(0,0,0,.0) 65%); -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,.45), rgba(0,0,0,.0) 65%); margin-top: .08em; }
 
     /* Кнопки */
     .cta-row { display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; margin-top: clamp(30px, 8vh, 80px); }
@@ -141,7 +143,6 @@
       content: ""; position: absolute; inset: -1px; z-index: -1;
       border-radius: 999px;
       background: linear-gradient(120deg, var(--glow-border-start), var(--glow-border-end));
-      opacity: 0; transition: opacity .25s ease;
       animation: pulse-glow 3s infinite ease-in-out;
     }
     @keyframes pulse-glow {
@@ -149,7 +150,7 @@
       50% { opacity: 1; transform: scale(1.03); }
     }
     @media (hover: hover) {
-      .btn::before { animation: none; opacity: 0; }
+      .btn::before { animation: none; opacity: 0; transition: opacity .25s ease; }
       .btn:hover { transform: translateY(-3px); box-shadow: inset 0 0 0 1px rgba(255,255,255,0.1), 0 12px 32px rgba(0,0,0,.4), 0 0 20px rgba(74, 85, 255, 0.3); }
       .btn:hover::before { opacity: 1; }
     }
@@ -168,7 +169,7 @@
 
     /* Карточки услуг */
     .services { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px; }
-    .card-link { text-decoration: none; color: inherit; display: block; -webkit-tap-highlight-color: transparent; }
+    .card-link { text-decoration: none; color: inherit; display: block; -webkit-tap-highlight-color: transparent; position: relative; }
     .card {
       position: relative; border-radius: var(--radius-xl);
       background: var(--glass-bg);
@@ -176,19 +177,47 @@
       padding: 24px; overflow: hidden;
       box-shadow: var(--shadow-soft);
       transition: transform .3s ease, box-shadow .3s ease;
+      z-index: 1;
     }
-    .card::before {
-        content: ''; position: absolute; inset: -1px; z-index: -1;
-        border-radius: var(--radius-xl);
-        background: linear-gradient(135deg, var(--accent-start), var(--accent-end));
-        opacity: 0; transition: opacity .3s ease; pointer-events: none;
+    /* Новый ховер-эффект для ПК - свечение рамки */
+    .card-border-glow {
+      position: absolute; inset: -1px;
+      border-radius: var(--radius-xl);
+      background: linear-gradient(135deg, var(--accent-start), var(--accent-end));
+      opacity: 0;
+      transition: opacity .3s ease;
+      z-index: 0;
     }
     @media (hover: hover) {
       .card-link:hover .card {
-        transform: translateY(-8px);
+        transform: translateY(-6px) scale(1.02);
         box-shadow: 0 20px 50px rgba(0,0,0,.4);
       }
-      .card-link:hover .card::before { opacity: 1; }
+      .card-link:hover .card-border-glow { opacity: 1; }
+    }
+    /* Анимация "блуждающего огонька" для мобильных */
+    .card::after {
+      content: '';
+      position: absolute;
+      top: var(--y, -50%); left: var(--x, -50%);
+      width: 200px; height: 200px;
+      background: radial-gradient(circle, var(--accent-start), transparent 70%);
+      opacity: 0;
+      z-index: -1;
+      filter: blur(40px);
+    }
+    @media (hover: none) and (max-width: 768px) {
+      .card::after {
+        opacity: 0.3;
+        animation: mobile-glow 8s infinite ease-in-out alternate;
+      }
+    }
+    @keyframes mobile-glow {
+      0% { transform: translate(0%, 0%); }
+      25% { transform: translate(100%, 20%); }
+      50% { transform: translate(80%, 100%); }
+      75% { transform: translate(20%, 80%); }
+      100% { transform: translate(0%, 0%); }
     }
     .card .icon {
       width: 54px; height: 54px; border-radius: 14px; display: grid; place-items: center;
@@ -201,7 +230,6 @@
     .card .icon svg { width: 28px; height: 28px; fill: none; stroke-linecap: round; stroke-linejoin: round; }
     .card h3 { margin: 16px 0 8px; font-weight: 600; letter-spacing: .02em; color: var(--text-primary); }
     .card p { margin: 0; color: var(--text-secondary); }
-
     .card--hair { --accent-start: var(--accent-hair-start); --accent-end: var(--accent-hair-end); }
     .card--hair .icon svg { stroke: #87b2f3; stroke-width: 1.5; }
     .card--nails { --accent-start: var(--accent-nails-start); --accent-end: var(--accent-nails-end); }
@@ -215,11 +243,9 @@
     .map-section { margin-top: 40px; }
     #map-container { border-radius: var(--radius-xl); overflow: hidden; border: 1px solid var(--glass-border-color); box-shadow: var(--shadow-soft); height: 420px; background-color: var(--bg-dark-start); }
     #map { width: 100%; height: 100%; }
-
     .contact { margin: 36px auto 18px; padding: 24px; border-radius: var(--radius-xl); background: var(--glass-bg); border: 1px solid var(--glass-border-color); display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
     .contact .info { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; color: var(--text-secondary); }
     .contact strong { letter-spacing: .08em; text-transform: uppercase; font-weight: 600; color: var(--text-primary); }
-
     details.faq-item {
       margin-top: 18px; border-radius: var(--radius-xl); background: rgba(25, 20, 55, 0.65); border: 1px solid var(--glass-border-color);
       transition: border-color .3s ease; overflow: clip;
@@ -282,7 +308,7 @@
       gap: 20px; opacity: 0; visibility: hidden;
       transition: opacity .3s ease, visibility .3s ease;
       pointer-events: none;
-      background: linear-gradient(135deg, var(--bg-dark-start), var(--bg-dark-mid), var(--amethyst-glow), var(--bg-dark-end), var(--sapphire-glow));
+      background: linear-gradient(160deg, var(--bg-dark-start) 0%, var(--sapphire-glow) 40%, var(--amethyst-glow) 60%, var(--bg-dark-end) 100%);
       background-size: 400% 400%;
       animation: gradient-pan 16s ease-in-out infinite;
     }
@@ -371,6 +397,7 @@
       <h2 data-anim>Наши услуги</h2>
       <div class="services">
         <a href="cut.html" class="card-link" data-anim>
+          <div class="card-border-glow"></div>
           <article class="card card--hair">
             <div class="icon" aria-hidden="true">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 10.2c0 2.3-1.9 4.2-4.2 4.2H8.2C5.9 14.4 4 12.5 4 10.2S5.9 6 8.2 6h7.6c2.3 0 4.2 1.9 4.2 4.2zM7 18v-2.4M17 18v-2.4M12 18v-3.6M9.5 6V4.2C9.5 3 10.6 2 12 2s2.5 1 2.5 2.2V6"/></svg>
@@ -380,6 +407,7 @@
           </article>
         </a>
         <a href="nails.html" class="card-link" data-anim>
+          <div class="card-border-glow"></div>
           <article class="card card--nails">
             <div class="icon" aria-hidden="true">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12.2 4.6a2.2 2.2 0 0 1 3.1 3.1L5.8 17.2c-.4.4-.9.6-1.4.6H3v-1.4c0-.5.2-1 .6-1.4l9.6-9.5zM12.2 4.6l5.2 5.2c.8.8.8 2 0 2.8l-2.8 2.8c-.8.8-2 .8-2.8 0L6.6 9.8"/></svg>
@@ -389,6 +417,7 @@
           </article>
         </a>
         <a href="cosmo.html" class="card-link" data-anim>
+          <div class="card-border-glow"></div>
           <article class="card card--cosmo">
             <div class="icon" aria-hidden="true">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 21a9 9 0 0 1-9-9c0-4.2 2.8-7.9 6.7-8.8C10.6 2 11.3 2.5 11.3 3.3v.2c0 .6-.4 1.1-1 1.2-2.4.5-4.3 2.7-4.3 5.3 0 3 2.4 5.4 5.4 5.4s5.4-2.4 5.4-5.4c0-2.6-1.8-4.8-4.3-5.3-.6-.1-1-.6-1-1.2v-.2c0-.7.6-1.3 1.5-1.2C18.2 3.1 21 6.8 21 11a9 9 0 0 1-9 10z"/></svg>
@@ -398,6 +427,7 @@
           </article>
         </a>
         <a href="brows.html" class="card-link" data-anim>
+          <div class="card-border-glow"></div>
           <article class="card card--brows">
             <div class="icon" aria-hidden="true">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21.5 9.8c-1-.2-2.1.3-2.6 1.3-.5 1-.2 2.1.8 2.6 1 .5 2.1-.3 2.6-1.3.5-1 .2-2.1-.8-2.6zM2.5 9.8c1-.2 2.1.3 2.6 1.3.5 1 .2 2.1-.8 2.6-1 .5-2.1-.3-2.6-1.3-.5-1-.2-2.1.8-2.6zM22 6c-2.5 0-4.5 2-4.5 4.5 0 1.2.5 2.3 1.2 3.2-1.2.8-2.6 1.3-4.2 1.3s-3.1-.5-4.2-1.3c.8-.9 1.2-2 1.2-3.2C11.5 8 9.5 6 7 6s-4.5 2-4.5 4.5c0 1.2.5 2.3 1.2 3.2C2.6 14.5 1 15 0 15"/></svg>
