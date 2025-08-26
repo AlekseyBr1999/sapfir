@@ -132,7 +132,7 @@
       text-shadow: 0 0 15px rgba(125, 168, 255, .3);
     }
     
-    /* --- НОВЫЕ СТИЛИ ДЛЯ СТРАНИЦЫ УСЛУГ --- */
+    /* --- СТИЛИ ДЛЯ СТРАНИЦЫ УСЛУГ --- */
     
     .services-grid {
       display: grid;
@@ -230,7 +230,7 @@
     .service-card--emerald { --accent-color: var(--accent-cosmo); }
     .service-card--gold { --accent-color: var(--accent-brows); }
     
-    /* --- УНИКАЛЬНЫЕ АНИМАЦИИ --- */
+    /* --- АНИМАЦИИ --- */
 
     /* 1. Сапфировая волна */
     .service-card--sapphire::before {
@@ -238,18 +238,20 @@
         position: absolute;
         bottom: 0; left: 0; right: 0;
         height: 0;
-        background: linear-gradient(to top, rgba(74, 125, 255, 0.5), transparent);
+        /* ИЗМЕНЕНИЕ 2: Градиент сделан более насыщенным (0.7 вместо 0.5) */
+        background: linear-gradient(to top, rgba(74, 125, 255, 0.7), transparent);
         z-index: 1;
-        transition: height 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        transition: height 0.4s ease-out;
     }
-    .service-card-link:hover .service-card--sapphire,
-    .service-card-link:active .service-card--sapphire {
-        transform: translateY(-8px);
-        box-shadow: 0 20px 50px rgba(0,0,0,.4), 0 0 25px var(--accent-color);
-    }
-    .service-card-link:hover .service-card--sapphire::before,
-    .service-card-link:active .service-card--sapphire::before {
-        height: 100%;
+    
+    @media (hover: hover) {
+      .service-card-link:hover .service-card--sapphire {
+          transform: translateY(-8px);
+          box-shadow: 0 20px 50px rgba(0,0,0,.4), 0 0 25px var(--accent-color);
+      }
+      .service-card-link:hover .service-card--sapphire::before {
+          height: 100%;
+      }
     }
 
     /* 2. Гранатовая вспышка */
@@ -263,14 +265,15 @@
       z-index: 1;
       transition: opacity 0.4s ease-out;
     }
-    .service-card-link:hover .service-card--garnet,
-    .service-card-link:active .service-card--garnet {
-        transform: scale(1.03);
-        box-shadow: 0 20px 50px rgba(0,0,0,.4), 0 0 25px var(--accent-color);
-    }
-    .service-card-link:hover .service-card--garnet::before,
-    .service-card-link:active .service-card--garnet::before {
-        opacity: 1;
+    
+    @media (hover: hover) {
+      .service-card-link:hover .service-card--garnet {
+          transform: scale(1.03);
+          box-shadow: 0 20px 50px rgba(0,0,0,.4), 0 0 25px var(--accent-color);
+      }
+      .service-card-link:hover .service-card--garnet::before {
+          opacity: 1;
+      }
     }
 
     /* 3. Изумрудное сияние */
@@ -279,10 +282,11 @@
       50% { box-shadow: 0 16px 40px rgba(0,0,0,.3), 0 0 35px rgba(16, 185, 129, 0.8); }
       100% { box-shadow: 0 16px 40px rgba(0,0,0,.3), 0 0 15px rgba(16, 185, 129, 0.4); }
     }
-    .service-card-link:hover .service-card--emerald,
-    .service-card-link:active .service-card--emerald {
-        animation: pulse-glow 2.5s infinite ease-in-out;
-        transform: translateY(-5px);
+    @media (hover: hover) {
+      .service-card-link:hover .service-card--emerald {
+          animation: pulse-glow 2.5s infinite ease-in-out;
+          transform: translateY(-5px);
+      }
     }
 
     /* 4. Золотой блеск */
@@ -296,16 +300,44 @@
       z-index: 1;
       transition: left 0.6s cubic-bezier(0.6, 0.04, 0.98, 0.335);
     }
-    .service-card-link:hover .service-card--gold,
-    .service-card-link:active .service-card--gold {
-        box-shadow: 0 20px 50px rgba(0,0,0,.4), 0 0 25px var(--accent-color);
-    }
-    .service-card-link:hover .service-card--gold::before,
-    .service-card-link:active .service-card--gold::before {
-      left: 120%;
+    @media (hover: hover) {
+      .service-card-link:hover .service-card--gold {
+          box-shadow: 0 20px 50px rgba(0,0,0,.4), 0 0 25px var(--accent-color);
+      }
+      .service-card-link:hover .service-card--gold::before {
+        left: 120%;
+      }
     }
     
-    /* --- КОНЕЦ НОВЫХ СТИЛЕЙ --- */
+    /* ИЗМЕНЕНИЕ 1: Пассивные анимации для мобильных устройств */
+    @media (hover: none) {
+      .service-card-link.is-animating .service-card--sapphire {
+        transform: translateY(-8px);
+        box-shadow: 0 20px 50px rgba(0,0,0,.4), 0 0 25px var(--accent-color);
+      }
+      .service-card-link.is-animating .service-card--sapphire::before {
+        height: 100%;
+      }
+      .service-card-link.is-animating .service-card--garnet {
+        transform: scale(1.03);
+        box-shadow: 0 20px 50px rgba(0,0,0,.4), 0 0 25px var(--accent-color);
+      }
+      .service-card-link.is-animating .service-card--garnet::before {
+        opacity: 1;
+      }
+      .service-card-link.is-animating .service-card--emerald {
+        animation: pulse-glow 2.5s infinite ease-in-out;
+        transform: translateY(-5px);
+      }
+      .service-card-link.is-animating .service-card--gold {
+        box-shadow: 0 20px 50px rgba(0,0,0,.4), 0 0 25px var(--accent-color);
+      }
+      .service-card-link.is-animating .service-card--gold::before {
+        left: 120%;
+      }
+    }
+
+    /* --- КОНЕЦ СТИЛЕЙ УСЛУГ --- */
 
     /* Футер */
     footer { 
@@ -319,7 +351,9 @@
     .modal-overlay { 
       position: fixed; inset: 0; background: rgba(5, 8, 24, 0.5); backdrop-filter: blur(10px); z-index: 1000; 
       display: flex; align-items: center; justify-content: center; padding: 14px; 
-      opacity: 0; visibility: hidden; transition: opacity .3s cubic-bezier(0.4, 0, 0.2, 1), visibility .3s cubic-bezier(0.4, 0, 0.2, 1); 
+      opacity: 0; visibility: hidden; transition: opacity .3s cubic-bezier(0.4, 0, 0.2, 1), visibility .3s cubic-bezier(0.4, 0, 0.2, 1);
+      /* ИЗМЕНЕНИЕ 3: Подсказка браузеру для плавной анимации */
+      will-change: opacity;
     }
     .modal-overlay.is-visible { opacity: 1; visibility: visible; }
     .modal { 
@@ -327,7 +361,9 @@
       border: 1px solid var(--glass-border-color); border-radius: var(--radius-xl); 
       padding: 28px; width: 100%; max-width: 480px; text-align: center; box-shadow: 0 0 40px var(--sapphire-highlight); 
       transform: translateY(20px) scale(0.98);
-      transition: transform .3s cubic-bezier(0.4, 0, 0.2, 1); 
+      transition: transform .3s cubic-bezier(0.4, 0, 0.2, 1);
+      /* ИЗМЕНЕНИЕ 3: Подсказка браузеру для плавной анимации */
+      will-change: transform, opacity;
     }
     .modal-overlay.is-visible .modal { transform: translateY(0) scale(1); }
     .modal h3 { margin: 0 0 20px; font-weight: 600; font-size: 20px; color: var(--text-primary); }
@@ -567,6 +603,30 @@
         document.addEventListener('keydown', (e) => e.key === 'Escape' && modal.classList.contains('is-visible') && closeModal());
       })();
       
+      // ИЗМЕНЕНИЕ 1: Пассивные анимации для мобильных
+      (function() {
+        // Проверяем, поддерживает ли устройство hover. Если да, то ничего не делаем.
+        if (window.matchMedia('(hover: hover)').matches) {
+          return;
+        }
+
+        const cards = document.querySelectorAll('.service-card-link');
+        if (cards.length === 0) return;
+
+        let currentIndex = 0;
+
+        setInterval(() => {
+          // Убираем класс с предыдущей карточки
+          cards.forEach(card => card.classList.remove('is-animating'));
+          
+          // Добавляем класс к текущей
+          cards[currentIndex].classList.add('is-animating');
+          
+          // Переключаемся на следующую
+          currentIndex = (currentIndex + 1) % cards.length;
+        }, 3000); // Интервал в 3 секунды
+      })();
+
       // Анимация частиц
       (function(){
         if (typeof tsParticles === 'undefined') { console.error('tsParticles not loaded'); return; }
