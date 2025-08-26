@@ -45,12 +45,13 @@
       margin: 0;
       font-family: "Segoe UI", Roboto, "Helvetica Neue", Arial, system-ui, -apple-system, "Noto Sans", "Liberation Sans", sans-serif;
       line-height: 1.6;
-      /* ИЗМЕНЕНИЕ 5: Резервируем место под скроллбар, чтобы избежать "прыжка" контента */
       scrollbar-gutter: stable;
       background: linear-gradient(180deg, var(--bg-dark) 0%, var(--sapphire-deep) 70%, var(--bg-dark) 100%);
       background-size: 100% 200%;
       animation: gradient-pan 12s ease-in-out infinite alternate;
       overflow-x: hidden;
+      /* ИЗМЕНЕНИЕ 1: Предотвращает "оттягивание" и дергание страницы при скролле до конца на мобильных */
+      overscroll-behavior-y: contain;
     }
 
     @keyframes gradient-pan {
@@ -309,7 +310,7 @@
       }
     }
     
-    /* ИЗМЕНЕНИЕ 1: Пассивные анимации и исправление "дергания" */
+    /* Пассивные анимации */
     @keyframes pulse-once {
       0% { transform: translateY(0) scale(1); box-shadow: var(--shadow-soft); }
       50% { transform: translateY(-5px) scale(1.03); box-shadow: 0 20px 50px rgba(0,0,0,.4), 0 0 35px var(--accent-color); }
@@ -428,7 +429,6 @@
 
   <header class="site-header">
     <div class="nav-wrap">
-      
       <a href="index.html" class="brand-link" aria-label="На главную">
         <div class="brand">
           <span class="brand-mark" aria-hidden="true"></span>
@@ -436,7 +436,6 @@
         </div>
       </a>
       <nav class="primary" id="primaryNav">
-        
         <a href="index.html">Главная</a>
         <a href="index.html#services">Услуги</a>
         <a href="index.html#map-section">Карта</a>
@@ -450,7 +449,6 @@
 
   <div class="mobile-nav" id="mobileNav" aria-hidden="true">
       <button class="mobile-nav-close" id="navClose" aria-label="Закрыть меню">&times;</button>
-      
       <a href="index.html">Главная</a>
       <a href="index.html#services">Услуги</a>
       <a href="index.html#map-section">Карта</a>
@@ -460,7 +458,6 @@
   <main>
     
     <section class="section" id="services">
-      
       <h1 data-anim>Услуги</h1>
       <div class="services-grid">
         
@@ -528,13 +525,14 @@
     </section>
 
   </main>
+  
+  
+  <div style="text-align: center; padding: 20px 18px 0;">
+    <a href="index.html" class="btn secondary">На главную</a>
+  </div>
 
   <footer>
     © Сапфир, 2025.
-     
-    <div style="margin-top: 15px;">
-      <a href="index.html" class="btn secondary">На главную</a>
-    </div>
     <div class="dev-signature">Сайт разработал Алексей <span class="brand-logo-char">Э.</span> Бронников</div>
   </footer>
 
@@ -588,7 +586,7 @@
         document.querySelectorAll('[data-anim]').forEach(el => observer.observe(el));
       })();
 
-      // ИЗМЕНЕНИЕ 5: Улучшенная логика блокировки скролла
+      // Улучшенная логика блокировки скролла
       const scrollLocker = (function() {
         let lockCount = 0;
         return {
@@ -644,16 +642,20 @@
         document.addEventListener('keydown', (e) => e.key === 'Escape' && modal.classList.contains('is-visible') && closeModal());
       })();
       
-      // Пассивные анимации для мобильных
+      // ИЗМЕНЕНИЕ 2: Пассивные анимации (одновременные)
       (function() {
         if (window.matchMedia('(hover: hover)').matches) return;
         const cards = document.querySelectorAll('.service-card-link');
         if (cards.length === 0) return;
-        let currentIndex = 0;
+
         setInterval(() => {
-          cards.forEach(card => card.classList.remove('is-animating'));
-          cards[currentIndex].classList.add('is-animating');
-          currentIndex = (currentIndex + 1) % cards.length;
+          // Запускаем анимацию на всех карточках
+          cards.forEach(card => card.classList.add('is-animating'));
+          
+          // Через 2 секунды убираем класс, чтобы анимация могла повториться
+          setTimeout(() => {
+            cards.forEach(card => card.classList.remove('is-animating'));
+          }, 2000);
         }, 3000);
       })();
 
