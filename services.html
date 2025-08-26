@@ -426,8 +426,8 @@
             <h3>Парикмахерские услуги</h3>
             <p>От классических стрижек до смелых креативных окрашиваний. Мы используем премиальные уходовые средства для восстановления, питания и придания блеска вашим волосам. Наши мастера помогут подобрать идеальный образ.</p>
             <div class="service-card__actions">
-              <span class="btn secondary">Узнать прайс</span>
-              <span class="btn modal-trigger">Записаться</span>
+              <button class="btn secondary">Узнать прайс</button>
+              <button class="btn modal-trigger">Записаться</button>
             </div>
           </article>
         </a>
@@ -441,8 +441,8 @@
             <h3>Ногтевой сервис</h3>
             <p>Идеальный маникюр и педикюр с использованием современных техник. Предлагаем широкую палитру стойких покрытий, а также услуги по укреплению и дизайну ногтей любой сложности.</p>
             <div class="service-card__actions">
-              <span class="btn secondary">Узнать прайс</span>
-              <span class="btn modal-trigger">Записаться</span>
+              <button class="btn secondary">Узнать прайс</button>
+              <button class="btn modal-trigger">Записаться</button>
             </div>
           </article>
         </a>
@@ -456,8 +456,8 @@
             <h3>Косметология</h3>
             <p>Профессиональный уход за кожей лица и тела. Индивидуальный подбор программ: от глубоких чисток и пилингов до антивозрастных процедур и массажа, направленных на омоложение и сияние вашей кожи.</p>
             <div class="service-card__actions">
-              <span class="btn secondary">Узнать прайс</span>
-              <span class="btn modal-trigger">Записаться</span>
+              <button class="btn secondary">Узнать прайс</button>
+              <button class="btn modal-trigger">Записаться</button>
             </div>
           </article>
         </a>
@@ -471,8 +471,8 @@
             <h3>Коррекция бровей</h3>
             <p>Создание идеальной формы бровей, которая подчеркнет вашу индивидуальность. Мы предлагаем услуги по коррекции, окрашиванию стойкими красителями, а также долговременную укладку (ламинирование).</p>
             <div class="service-card__actions">
-              <span class="btn secondary">Узнать прайс</span>
-              <span class="btn modal-trigger">Записаться</span>
+              <button class="btn secondary">Узнать прайс</button>
+              <button class="btn modal-trigger">Записаться</button>
             </div>
           </article>
         </a>
@@ -489,5 +489,105 @@
 
   <div class="modal-overlay" id="contactModal" aria-hidden="true">
     <div class="modal" role="dialog" aria-labelledby="modalTitle">
-      <button class="modal-close" aria-label="Закрыть окно">&times;</button
+      <button class="modal-close" aria-label="Закрыть окно">&times;</button>
+      <h3 id="modalTitle">Запись по телефону</h3>
+      <div class="contact-list">
+        <div class="contact-item">
+          <a href="tel:+79171234567" class="contact-item__phone">
+            <span class="contact-item__title">Парикмахерские услуги</span>
+            <span class="contact-item__number">+7 (917) 123-45-67</span>
+          </a>
+        </div>
+        <div class="contact-item">
+          <a href="tel:+79272345678" class="contact-item__phone">
+            <span class="contact-item__title">Ногтевой сервис</span>
+            <span class="contact-item__number">+7 (927) 234-56-78</span>
+          </a>
+        </div>
+        <div class="contact-item">
+          <a href="tel:+79373456789" class="contact-item__phone">
+            <span class="contact-item__title">Косметология</span>
+            <span class="contact-item__number">+7 (937) 345-67-89</span>
+          </a>
+        </div>
+        <div class="contact-item">
+          <a href="tel:+79874567890" class="contact-item__phone">
+            <span class="contact-item__title">Коррекция бровей</span>
+            <span class="contact-item__number">+7 (987) 456-78-90</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
 
+  <script src="https://cdn.jsdelivr.net/npm/tsparticles@2.12.0/tsparticles.bundle.min.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Анимации появления при скролле
+      (function(){
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('is-visible');
+              observer.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('[data-anim]').forEach(el => observer.observe(el));
+      })();
+
+      // Мобильное меню
+      (function(){
+        const navToggle = document.getElementById('navToggle');
+        const mobileNav = document.getElementById('mobileNav');
+        const navClose = document.getElementById('navClose');
+        const toggleMenu = (force) => {
+          const isOpen = typeof force === 'boolean' ? force : !mobileNav.classList.contains('is-open');
+          mobileNav.classList.toggle('is-open', isOpen);
+          navToggle.classList.toggle('is-active', isOpen);
+          document.body.classList.toggle('no-scroll', isOpen);
+        };
+        navToggle.addEventListener('click', () => toggleMenu());
+        navClose.addEventListener('click', () => toggleMenu(false));
+        mobileNav.querySelectorAll('a').forEach(link => link.addEventListener('click', () => toggleMenu(false)));
+        document.addEventListener('keydown', (e) => e.key === 'Escape' && mobileNav.classList.contains('is-open') && toggleMenu(false));
+      })();
+
+      // Модальное окно
+      (function(){
+        const modal = document.getElementById('contactModal');
+        const openTriggers = document.querySelectorAll('.modal-trigger, .nav-contact-trigger');
+        const closeBtn = modal.querySelector('.modal-close');
+        const openModal = (e) => { e.preventDefault(); modal.classList.add('is-visible'); document.body.classList.add('no-scroll'); };
+        const closeModal = () => { modal.classList.remove('is-visible'); if(!document.getElementById('mobileNav').classList.contains('is-open')) document.body.classList.remove('no-scroll'); };
+        openTriggers.forEach(trigger => trigger.addEventListener('click', openModal));
+        closeBtn.addEventListener('click', closeModal);
+        modal.addEventListener('click', (e) => e.target === modal && closeModal());
+        document.addEventListener('keydown', (e) => e.key === 'Escape' && modal.classList.contains('is-visible') && closeModal());
+      })();
+      
+      // Анимация частиц
+      (function(){
+        if (typeof tsParticles === 'undefined') { console.error('tsParticles not loaded'); return; }
+        tsParticles.load("particles-bg", {
+          fullScreen: { enable: false },
+          particles: {
+            number: { value: 50, density: { enable: true, value_area: 800 } },
+            shape: { type: "image", image: { src: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 72'%3E%3Cdefs%3E%3CradialGradient id='a' cx='50%25' cy='50%25' r='50%25'%3E%3Cstop offset='0%25' stop-color='%23c5d2ff'/%3E%3Cstop offset='100%25' stop-color='%231a3a9a'/%3E%3C/radialGradient%3E%3C/defs%3E%3Cpath d='M40 0L80 22L40 72L0 22L40 0Z' fill='url(%23a)'/%3E%3Cpath d='M40 0L0 22L40 26Z' fill='%23e8eaf6' fill-opacity='0.6'/%3E%3Cpath d='M40 0L80 22L40 26Z' fill='%237da8ff' fill-opacity='0.6'/%3E%3Cpath d='M0 22L40 72L40 26Z' fill='%230d1a4f' fill-opacity='0.7'/%3E%3Cpath d='M80 22L40 72L40 26Z' fill='%231a3a9a' fill-opacity='0.7'/%3E%3Cpath d='M40 5L20 16L40 24L60 16L40 5Z' fill='%23fff' fill-opacity='0.3'/%3E%3Cpath d='M40 26L20 16L0 22L40 26Z' fill='%23a7b0d1' fill-opacity='0.3'/%3E%3C/svg%3E" } },
+            opacity: { value: { min: 0.4, max: 0.9 }, animation: { enable: true, speed: 2.5, sync: false } },
+            size: { value: { min: 12, max: 28 } },
+            shadow: { enable: true, blur: 15, color: "#4a7dff" },
+            rotate: { value: { min: 0, max: 360 }, direction: "random", animation: { enable: true, speed: 5, sync: false } },
+            twinkle: { particles: { enable: true, frequency: 0.1, opacity: 1, color: "#fff5cc" } },
+            move: { enable: true, speed: { min: 0.8, max: 2 }, direction: "bottom", straight: true, outModes: { default: "out" } }
+          },
+          interactivity: { events: { onHover: { enable: false }, onClick: { enable: false } } },
+          detectRetina: true
+        });
+      })();
+
+    });
+  </script>
+</body>
+</html>
