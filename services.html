@@ -50,7 +50,6 @@
       background-size: 100% 200%;
       animation: gradient-pan 12s ease-in-out infinite alternate;
       overflow-x: hidden;
-      /* ИЗМЕНЕНИЕ 1: Предотвращает "оттягивание" и дергание страницы при скролле до конца на мобильных */
       overscroll-behavior-y: contain;
     }
 
@@ -526,7 +525,6 @@
 
   </main>
   
-  
   <div style="text-align: center; padding: 20px 18px 0;">
     <a href="index.html" class="btn secondary">На главную</a>
   </div>
@@ -573,16 +571,24 @@
 
   <script>
     document.addEventListener('DOMContentLoaded', function() {
-      // Анимации появления при скролле
+      // ИЗМЕНЕНИЕ: Анимации появления и однократная анимация карточек
       (function(){
         const observer = new IntersectionObserver((entries) => {
           entries.forEach(entry => {
             if (entry.isIntersecting) {
+              // 1. Запускаем базовую анимацию появления (fade-in)
               entry.target.classList.add('is-visible');
+              
+              // 2. Если это мобильное устройство и карточка услуги, запускаем уникальную анимацию
+              if (!window.matchMedia('(hover: hover)').matches && entry.target.classList.contains('service-card-link')) {
+                entry.target.classList.add('is-animating');
+              }
+              
+              // 3. Перестаем следить за элементом, чтобы анимация не повторялась
               observer.unobserve(entry.target);
             }
           });
-        }, { threshold: 0.1 });
+        }, { threshold: 0.2 }); // Немного увеличил порог для более четкого срабатывания
         document.querySelectorAll('[data-anim]').forEach(el => observer.observe(el));
       })();
 
@@ -606,7 +612,7 @@
             if (lockCount <= 0) {
               document.body.classList.remove('no-scroll');
               document.body.style.paddingRight = '';
-              lockCount = 0; // На случай ошибок
+              lockCount = 0;
             }
           }
         };
@@ -642,23 +648,6 @@
         document.addEventListener('keydown', (e) => e.key === 'Escape' && modal.classList.contains('is-visible') && closeModal());
       })();
       
-      // ИЗМЕНЕНИЕ 2: Пассивные анимации (одновременные)
-      (function() {
-        if (window.matchMedia('(hover: hover)').matches) return;
-        const cards = document.querySelectorAll('.service-card-link');
-        if (cards.length === 0) return;
-
-        setInterval(() => {
-          // Запускаем анимацию на всех карточках
-          cards.forEach(card => card.classList.add('is-animating'));
-          
-          // Через 2 секунды убираем класс, чтобы анимация могла повториться
-          setTimeout(() => {
-            cards.forEach(card => card.classList.remove('is-animating'));
-          }, 2000);
-        }, 3000);
-      })();
-
       // Анимация частиц
       (function(){
         if (typeof tsParticles === 'undefined') { console.error('tsParticles not loaded'); return; }
