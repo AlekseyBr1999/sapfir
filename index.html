@@ -2,7 +2,7 @@
 
 <html lang="ru">
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-t" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Сапфир — салон красоты в Тольятти</title>
   <meta name="description" content="Салон красоты Сапфир в Тольятти — парикмахерские услуги, ногтевой сервис, косметология и коррекция бровей." />
@@ -355,7 +355,7 @@
         </div>
       </a>
       <nav class="primary" id="primaryNav">
-        <a href="#services">Услуги</a>
+        <a href="services.html">Услуги</a>
         <a href="#map-section">Карта</a>
         <a href="#" class="nav-contact-trigger">Контакты</a>
       </nav>
@@ -367,7 +367,7 @@
 
   <div class="mobile-nav" id="mobileNav" aria-hidden="true">
       <button class="mobile-nav-close" id="navClose" aria-label="Закрыть меню">&times;</button>
-      <a href="#services">Услуги</a>
+      <a href="services.html">Услуги</a>
       <a href="#map-section">Карта</a>
       <a href="#" class="nav-contact-trigger">Контакты</a>
   </div>
@@ -536,7 +536,12 @@
         };
         navToggle.addEventListener('click', () => toggleMenu());
         navClose.addEventListener('click', () => toggleMenu(false));
-        mobileNav.querySelectorAll('a').forEach(link => link.addEventListener('click', () => toggleMenu(false)));
+        mobileNav.querySelectorAll('a').forEach(link => {
+            // Закрываем меню при клике, только если это не ссылка на другую страницу
+            if (link.getAttribute('href').startsWith('#')) {
+                link.addEventListener('click', () => toggleMenu(false));
+            }
+        });
         document.addEventListener('keydown', (e) => e.key === 'Escape' && mobileNav.classList.contains('is-open') && toggleMenu(false));
       })();
 
