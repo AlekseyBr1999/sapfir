@@ -76,6 +76,7 @@
     
     #particles-bg {
       position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; 
+      will-change: transform; /* ИСПРАВЛЕНИЕ: Оптимизация для скролла */
     }
 
     /* Шапка сайта */
@@ -284,8 +285,10 @@
     }
     @media (hover: hover) {
       .service-card-link:hover .service-card--emerald {
-          animation: pulse-glow 2.5s infinite ease-in-out;
           transform: translateY(-5px);
+          /* ИСПРАВЛЕНИЕ: Добавляем box-shadow напрямую, чтобы избежать конфликта с transition и запустить анимацию */
+          box-shadow: 0 20px 50px rgba(0,0,0,.4), 0 0 15px rgba(16, 185, 129, 0.4);
+          animation: pulse-glow 2.5s infinite ease-in-out;
       }
     }
 
@@ -538,15 +541,12 @@
 
   <script>
     document.addEventListener('DOMContentLoaded', function() {
-      // ИЗМЕНЕНИЕ: Анимации появления
+      // Анимации появления
       (function(){
         const observer = new IntersectionObserver((entries) => {
           entries.forEach(entry => {
             if (entry.isIntersecting) {
-              // 1. Запускаем базовую анимацию появления (fade-in)
               entry.target.classList.add('is-visible');
-              
-              // 2. Перестаем следить за элементом, чтобы анимация не повторялась
               observer.unobserve(entry.target);
             }
           });
