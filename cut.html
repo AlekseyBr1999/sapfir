@@ -47,20 +47,37 @@
       font-family: "Segoe UI", Roboto, "Helvetica Neue", Arial, system-ui, -apple-system, "Noto Sans", "Liberation Sans", sans-serif;
       line-height: 1.6;
       scrollbar-gutter: stable;
-      background: linear-gradient(180deg, var(--bg-dark) 0%, var(--sapphire-deep) 70%, var(--bg-dark) 100%);
-      background-size: 100% 200%;
-      animation: gradient-pan 12s ease-in-out infinite alternate;
+      background-color: var(--bg-dark);
+      background-image: linear-gradient(180deg, var(--bg-dark) 0%, var(--sapphire-deep) 70%, var(--bg-dark) 100%);
       overflow-x: hidden;
       overscroll-behavior-y: contain;
     }
+    
+    /* --- ИЗМЕНЕНИЕ #1: Новый анимированный фон "Северное сияние" --- */
+    #aurora-bg {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      z-index: -1;
+      --aurora-color-1: rgba(74, 125, 255, 0.3);
+      --aurora-color-2: rgba(13, 26, 79, 0.4);
+      --aurora-color-3: rgba(26, 58, 154, 0.35);
+      background:
+        radial-gradient(ellipse at 20% 25%, var(--aurora-color-1) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 15%, var(--aurora-color-2) 0%, transparent 50%),
+        radial-gradient(ellipse at 60% 80%, var(--aurora-color-3) 0%, transparent 50%),
+        radial-gradient(ellipse at 30% 90%, var(--aurora-color-1) 0%, transparent 50%);
+      background-size: 200% 200%;
+      animation: aurora-pan 25s ease-in-out infinite alternate;
+      opacity: 0.8;
+    }
 
-    @keyframes gradient-pan {
-      from { background-position: 0% 0%; }
-      to { background-position: 0% 100%; }
+    @keyframes aurora-pan {
+      from { background-position: 0% 0%; transform: rotate(0deg) scale(1.2); }
+      to { background-position: 100% 100%; transform: rotate(15deg) scale(1.2); }
     }
 
     @media (prefers-reduced-motion: reduce) {
-      body, .mobile-nav, .btn::before, #particles-bg, .modal, .modal-overlay, .accordion-content-wrap { 
+      body, .mobile-nav, .btn::before, #aurora-bg, .modal, .modal-overlay, .accordion-content-wrap, .lightbox-overlay { 
         animation: none !important; 
         transition: none !important;
       }
@@ -73,11 +90,6 @@
       background: linear-gradient(180deg, var(--sapphire-highlight), var(--sapphire-mid));
     }
     body.no-scroll { overflow: hidden; }
-    
-    #particles-bg {
-      position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; 
-      will-change: transform;
-    }
 
     /* Шапка сайта */
     header.site-header {
@@ -110,8 +122,6 @@
       font-size: clamp(32px, 6vw, 48px); color: var(--text-primary); margin: 30px 0 40px; text-align: center;
       text-shadow: 0 0 20px var(--accent-hair);
     }
-    
-    /* --- СТИЛИ ДЛЯ СТРАНИЦЫ УСЛУГ (АККОРДЕОН) --- */
     
     .accordion-group {
         display: flex;
@@ -236,22 +246,15 @@
         padding-bottom: 20px;
     }
     
-    /* --- ИЗМЕНЕНИЕ #3: Новая верстка для карточки услуги --- */
+    /* Стили для аккордеонов услуг */
     .service-item-content {
-        display: flex;
-        flex-direction: column; /* Теперь элементы расположены друг под другом */
-        gap: 16px;
-        padding-top: 20px;
-    }
-    .service-item-top-row {
         display: flex;
         flex-wrap: wrap;
         gap: 16px;
         align-items: center;
         justify-content: space-between;
+        padding-top: 20px;
     }
-    /* --- КОНЕЦ ИЗМЕНЕНИЯ #3 --- */
-
     .service-info {
         display: flex;
         flex-direction: column;
@@ -295,8 +298,15 @@
     
     /* Вложенный аккордеон */
     .service-details-accordion {
+        margin-top: 10px;
         border-color: rgba(74, 125, 255, 0.5);
         background: rgba(5, 8, 24, 0.7);
+    }
+    
+    @media (max-width: 500px) {
+        .service-details-accordion {
+            flex-basis: 100%;
+        }
     }
     
     .service-details-accordion summary {
@@ -307,22 +317,22 @@
         border-radius: 12px;
     }
     
-    /* --- ИЗМЕНЕНИЕ #1 и #2: Улучшенная верстка контента "Подробнее" --- */
+    /* --- ИЗМЕНЕНИЕ #2: Новая вёрстка контента "Подробнее" --- */
     .service-details-content {
-        display: grid;
-        grid-template-columns: 120px 1fr; /* Фото меньше, текст рядом */
-        align-items: start;
+        display: flex;
+        flex-direction: column; /* Мобильная версия: одна колонка по умолчанию */
         gap: 16px;
         padding-top: 20px;
     }
-    @media (min-width: 600px) {
-        .service-details-content {
-            grid-template-columns: 150px 1fr; /* На десктопе фото чуть больше */
-            gap: 24px;
-        }
+    .service-photo-wrapper {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        align-items: center;
     }
     .service-photo-placeholder {
         width: 100%;
+        max-width: 250px;
         aspect-ratio: 1 / 1;
         border-radius: 12px;
         background-color: #050818;
@@ -330,26 +340,41 @@
         display: grid;
         place-items: center;
         font-size: 14px;
+        line-height: 1.4;
         color: var(--text-secondary);
         text-align: center;
         padding: 10px;
-        cursor: zoom-in; /* Указывает, что на фото можно нажать */
-        transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
-    .service-photo-placeholder:hover {
-        transform: scale(1.05);
-        box-shadow: 0 0 15px var(--accent-hair);
+    .service-photo-placeholder span {
+      font-weight: 600;
+      color: var(--text-primary);
     }
-    .service-details-content p {
-        margin: 0; /* Убираем отступ по умолчанию */
-        padding: 12px 16px;
-        border: 1px solid var(--glass-border-color);
-        border-radius: 12px;
-        background: rgba(5, 8, 24, 0.5); /* Фон для рамки */
-        font-size: 15px;
-        line-height: 1.5;
+    .btn--zoom-photo {
+        padding: 8px 16px;
+        font-size: 14px;
+        width: auto;
     }
-    /* --- КОНЕЦ ИЗМЕНЕНИЙ #1 и #2 --- */
+    .service-text-content p {
+        margin: 0;
+        font-size: 16px;
+        line-height: 1.7;
+        color: var(--text-secondary);
+    }
+
+    @media (min-width: 640px) {
+        .service-details-content {
+            display: grid;
+            grid-template-columns: 250px 1fr; /* Декстоп: две колонки */
+            align-items: start;
+            gap: 32px; /* Увеличенный разрыв на десктопе */
+        }
+        .service-photo-wrapper {
+            align-items: stretch;
+        }
+        .service-photo-placeholder {
+            max-width: none;
+        }
+    }
     
     /* Кнопки */
     .btn {
@@ -380,7 +405,7 @@
     .dev-signature { margin-top: 10px; }
     .brand-logo-char { font-family: "JetBrains Mono", monospace; font-weight: 700; color: var(--ink-brand); font-size: 22px; line-height: 1; display: inline-block; vertical-align: middle; }
     
-    /* Модальное окно */
+    /* Модальное окно (основное) */
     .modal-overlay { 
       position: fixed; inset: 0; background: rgba(5, 8, 24, 0.5); backdrop-filter: blur(10px); z-index: 1000; 
       display: flex; align-items: center; justify-content: center; padding: 14px; 
@@ -406,63 +431,6 @@
     .contact-item__number { display: block; font-size: 18px; font-weight: 600; letter-spacing: 0.02em; color: var(--text-primary); transition: color 0.3s ease; }
     .contact-item__phone:hover .contact-item__number { color: var(--gold-accent); }
     
-    /* --- ИЗМЕНЕНИЕ #1: Стили для лайтбокса (увеличение фото) --- */
-    .lightbox-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(5, 8, 24, 0.7);
-      backdrop-filter: blur(10px);
-      z-index: 9999;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-      opacity: 0;
-      visibility: hidden;
-      transition: opacity 0.3s ease, visibility 0.3s ease;
-      cursor: zoom-out;
-    }
-    .lightbox-overlay.is-visible {
-      opacity: 1;
-      visibility: visible;
-    }
-    .lightbox-image {
-      display: block;
-      max-width: 95vw;
-      max-height: 90vh;
-      object-fit: contain;
-      border-radius: 12px;
-      box-shadow: 0 0 50px var(--accent-hair);
-      transform: scale(0.95);
-      transition: transform 0.3s ease;
-      cursor: default;
-    }
-    .lightbox-overlay.is-visible .lightbox-image {
-      transform: scale(1);
-    }
-    .lightbox-close {
-      position: absolute;
-      top: 20px;
-      right: 20px;
-      width: 40px;
-      height: 40px;
-      background: rgba(13, 26, 79, 0.8);
-      border: 1px solid var(--glass-border-color);
-      color: var(--text-primary);
-      border-radius: 50%;
-      font-size: 28px;
-      line-height: 1;
-      cursor: pointer;
-      display: grid;
-      place-items: center;
-      transition: transform 0.2s ease, background-color 0.2s ease;
-    }
-    .lightbox-close:hover {
-      transform: scale(1.1) rotate(90deg);
-      background-color: var(--sapphire-deep);
-    }
-    /* --- КОНЕЦ ИЗМЕНЕНИЯ #1 --- */
-
     /* Мобильная навигация */
     .nav-toggle { display: none; z-index: 1002; position: relative; width: 34px; height: 34px; background: transparent; border: none; cursor: pointer; padding: 0; -webkit-tap-highlight-color: transparent; }
     .nav-toggle span { display: block; width: 24px; height: 2px; background: var(--text-primary); border-radius: 2px; margin: 6px auto; transition: transform 0.3s ease, opacity 0.3s ease; }
@@ -495,12 +463,77 @@
     /* Анимации появления */
     [data-anim] { opacity: 0; transform: translateY(20px); transition: opacity .6s ease-out, transform .6s ease-out; }
     [data-anim].is-visible { opacity: 1; transform: translateY(0); }
+    
+    /* --- Модальное окно для фото (Лайтбокс) --- */
+    .lightbox-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(5, 8, 24, 0.7);
+      backdrop-filter: blur(10px);
+      z-index: 2000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity .3s ease, visibility .3s ease;
+    }
+    .lightbox-overlay.is-visible {
+      opacity: 1;
+      visibility: visible;
+    }
+    .lightbox-content {
+      position: relative;
+      width: 100%;
+      max-width: 600px;
+      transform: scale(0.95);
+      transition: transform .3s ease;
+    }
+    .lightbox-overlay.is-visible .lightbox-content {
+      transform: scale(1);
+    }
+    .lightbox-image-placeholder {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      border-radius: var(--radius-xl);
+      background-color: #050818;
+      border: 2px solid var(--accent-hair);
+      box-shadow: 0 0 30px var(--accent-hair);
+      display: grid;
+      place-items: center;
+      font-size: 24px;
+      color: var(--text-primary);
+      text-align: center;
+      padding: 20px;
+    }
+    .lightbox-close {
+      position: absolute;
+      top: -15px;
+      right: -15px;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--bg-dark);
+      border: 1px solid var(--glass-border-color);
+      color: var(--text-primary);
+      font-size: 28px;
+      line-height: 1;
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+      transition: transform .2s ease, background-color .2s ease;
+    }
+    .lightbox-close:hover {
+      transform: scale(1.1) rotate(90deg);
+      background-color: var(--sapphire-deep);
+    }
 
   </style>
 </head>
 <body>
 
-  <div id="particles-bg"></div>
+  <div id="aurora-bg"></div>
 
   <header class="site-header">
     <div class="nav-wrap">
@@ -557,27 +590,26 @@
       
       <div class="accordion-group">
         
-        
-        <details class="accordion" data-anim><summary>Женская модельная стрижка</summary><div class="accordion-content-wrap"><div class="accordion-content"><div class="service-item-content"><div class="service-item-top-row"><div class="service-info--masters"><span class="service-info__label">Мастера</span><div class="masters-list"><span class="master-tag">Екатерина Смирнова</span><span class="master-tag">Мария Лебедева</span></div></div><div class="service-info"><span class="service-info__label">Цена</span><span class="service-info__value service-info__value--price">2500 ₽</span></div></div><details class="accordion service-details-accordion"><summary>Подробнее</summary><div class="accordion-content-wrap"><div class="accordion-content service-details-content"><div class="service-photo-placeholder" role="button" tabindex="0" data-src="female.model.cut.jpg">Фото</div><p>Индивидуальный подбор формы стрижки с учетом особенностей вашей внешности и структуры волос. Включает мытье головы, стрижку и легкую укладку.</p></div></div></details></div></div></div></details>
-        <details class="accordion" data-anim><summary>Мужская модельная стрижка</summary><div class="accordion-content-wrap"><div class="accordion-content"><div class="service-item-content"><div class="service-item-top-row"><div class="service-info--masters"><span class="service-info__label">Мастера</span><div class="masters-list"><span class="master-tag">Александр Волков</span></div></div><div class="service-info"><span class="service-info__label">Цена</span><span class="service-info__value service-info__value--price">1800 ₽</span></div></div><details class="accordion service-details-accordion"><summary>Подробнее</summary><div class="accordion-content-wrap"><div class="accordion-content service-details-content"><div class="service-photo-placeholder" role="button" tabindex="0" data-src="male.model.cut.jpg">Фото</div><p>Создание стильного мужского образа от классики до современных трендов. Включает мытье, стрижку и укладку с использованием профессиональных стайлинговых средств.</p></div></div></details></div></div></div></details>
-        <details class="accordion" data-anim><summary>Детская стрижка</summary><div class="accordion-content-wrap"><div class="accordion-content"><div class="service-item-content"><div class="service-item-top-row"><div class="service-info--masters"><span class="service-info__label">Мастера</span><div class="masters-list"><span class="master-tag">Мария Лебедева</span><span class="master-tag">Александр Волков</span></div></div><div class="service-info"><span class="service-info__label">Цена</span><span class="service-info__value service-info__value--price">900 ₽</span></div></div><details class="accordion service-details-accordion"><summary>Подробнее</summary><div class="accordion-content-wrap"><div class="accordion-content service-details-content"><div class="service-photo-placeholder" role="button" tabindex="0" data-src="child.cut.jpg">Фото</div><p>Аккуратная и быстрая стрижка для самых маленьких клиентов в дружелюбной атмосфере. Мы найдем подход к любому ребенку.</p></div></div></details></div></div></div></details>
-        <details class="accordion" data-anim><summary>Окрашивание в один тон</summary><div class="accordion-content-wrap"><div class="accordion-content"><div class="service-item-content"><div class="service-item-top-row"><div class="service-info--masters"><span class="service-info__label">Мастера</span><div class="masters-list"><span class="master-tag">Екатерина Смирнова</span><span class="master-tag">Мария Лебедева</span></div></div><div class="service-info"><span class="service-info__label">Цена</span><span class="service-info__value service-info__value--price">4500 ₽</span></div></div><details class="accordion service-details-accordion"><summary>Подробнее</summary><div class="accordion-content-wrap"><div class="accordion-content service-details-content"><div class="service-photo-placeholder" role="button" tabindex="0" data-src="single.tone.coloring.jpg">Фото</div><p>Классическое окрашивание для создания равномерного и насыщенного цвета по всей длине волос. Используем только щадящие красители премиум-класса.</p></div></div></details></div></div></div></details>
-        <details class="accordion" data-anim><summary>Сложное окрашивание</summary><div class="accordion-content-wrap"><div class="accordion-content"><div class="service-item-content"><div class="service-item-top-row"><div class="service-info--masters"><span class="service-info__label">Мастера</span><div class="masters-list"><span class="master-tag">Екатерина Смирнова</span></div></div><div class="service-info"><span class="service-info__label">Цена</span><span class="service-info__value service-info__value--price">8000 ₽</span></div></div><details class="accordion service-details-accordion"><summary>Подробнее</summary><div class="accordion-content-wrap"><div class="accordion-content service-details-content"><div class="service-photo-placeholder" role="button" tabindex="0" data-src="complex.coloring.jpg">Фото</div><p>Техники Airtouch, балаяж, шатуш. Создание плавных переходов цвета, эффекта выгоревших волос и многогранных оттенков для визуального объема и глубины.</p></div></div></details></div></div></div></details>
-        <details class="accordion" data-anim><summary>Мелирование</summary><div class="accordion-content-wrap"><div class="accordion-content"><div class="service-item-content"><div class="service-item-top-row"><div class="service-info--masters"><span class="service-info__label">Мастера</span><div class="masters-list"><span class="master-tag">Мария Лебедева</span><span class="master-tag">Екатерина Смирнова</span></div></div><div class="service-info"><span class="service-info__label">Цена</span><span class="service-info__value service-info__value--price">5500 ₽</span></div></div><details class="accordion service-details-accordion"><summary>Подробнее</summary><div class="accordion-content-wrap"><div class="accordion-content service-details-content"><div class="service-photo-placeholder" role="button" tabindex="0" data-src="highlighting.jpg">Фото</div><p>Осветление отдельных прядей для придания прическе свежести и динамики. Классическое и зональное мелирование с последующим тонированием.</p></div></div></details></div></div></div></details>
-        <details class="accordion" data-anim><summary>Тонирование волос</summary><div class="accordion-content-wrap"><div class="accordion-content"><div class="service-item-content"><div class="service-item-top-row"><div class="service-info--masters"><span class="service-info__label">Мастера</span><div class="masters-list"><span class="master-tag">Екатерина Смирнова</span><span class="master-tag">Мария Лебедева</span></div></div><div class="service-info"><span class="service-info__label">Цена</span><span class="service-info__value service-info__value--price">3000 ₽</span></div></div><details class="accordion service-details-accordion"><summary>Подробнее</summary><div class="accordion-content-wrap"><div class="accordion-content service-details-content"><div class="service-photo-placeholder" role="button" tabindex="0" data-src="toning.jpg">Фото</div><p>Придание волосам желаемого оттенка с помощью безаммиачных красителей. Нейтрализует желтизну, добавляет блеск и глубину цвета.</p></div></div></details></div></div></div></details>
-        <details class="accordion" data-anim><summary>Вечерняя укладка</summary><div class="accordion-content-wrap"><div class="accordion-content"><div class="service-item-content"><div class="service-item-top-row"><div class="service-info--masters"><span class="service-info__label">Мастера</span><div class="masters-list"><span class="master-tag">Мария Лебедева</span><span class="master-tag">Екатерина Смирнова</span></div></div><div class="service-info"><span class="service-info__label">Цена</span><span class="service-info__value service-info__value--price">3500 ₽</span></div></div><details class="accordion service-details-accordion"><summary>Подробнее</summary><div class="accordion-content-wrap"><div class="accordion-content service-details-content"><div class="service-photo-placeholder" role="button" tabindex="0" data-src="evening.styling.jpg">Фото</div><p>Создание элегантного образа для особого случая: локоны, волны, гладкие прически. Используем профессиональные средства для максимальной стойкости.</p></div></div></details></div></div></div></details>
-        <details class="accordion" data-anim><summary>Свадебная прическа</summary><div class="accordion-content-wrap"><div class="accordion-content"><div class="service-item-content"><div class="service-item-top-row"><div class="service-info--masters"><span class="service-info__label">Мастера</span><div class="masters-list"><span class="master-tag">Екатерина Смирнова</span><span class="master-tag">Мария Лебедева</span></div></div><div class="service-info"><span class="service-info__label">Цена</span><span class="service-info__value service-info__value--price">6000 ₽</span></div></div><details class="accordion service-details-accordion"><summary>Подробнее</summary><div class="accordion-content-wrap"><div class="accordion-content service-details-content"><div class="service-photo-placeholder" role="button" tabindex="0" data-src="wedding.hairstyle.jpg">Фото</div><p>Воплощение вашей мечты об идеальной свадебной прическе. Проводим предварительную репетицию для создания безупречного и гармоничного образа невесты.</p></div></div></details></div></div></div></details>
-        <details class="accordion" data-anim><summary>Химическая завивка</summary><div class="accordion-content-wrap"><div class="accordion-content"><div class="service-item-content"><div class="service-item-top-row"><div class="service-info--masters"><span class="service-info__label">Мастера</span><div class="masters-list"><span class="master-tag">Мария Лебедева</span></div></div><div class="service-info"><span class="service-info__label">Цена</span><span class="service-info__value service-info__value--price">4800 ₽</span></div></div><details class="accordion service-details-accordion"><summary>Подробнее</summary><div class="accordion-content-wrap"><div class="accordion-content service-details-content"><div class="service-photo-placeholder" role="button" tabindex="0" data-src="perm.wave.jpg">Фото</div><p>Создание упругих и стойких локонов на длительный срок. Современные составы позволяют минимизировать вред для волос, сохраняя их эластичность.</p></div></div></details></div></div></div></details>
-        <details class="accordion" data-anim><summary>Биозавивка</summary><div class="accordion-content-wrap"><div class="accordion-content"><div class="service-item-content"><div class="service-item-top-row"><div class="service-info--masters"><span class="service-info__label">Мастера</span><div class="masters-list"><span class="master-tag">Екатерина Смирнова</span><span class="master-tag">Мария Лебедева</span></div></div><div class="service-info"><span class="service-info__label">Цена</span><span class="service-info__value service-info__value--price">5200 ₽</span></div></div><details class="accordion service-details-accordion"><summary>Подробнее</summary><div class="accordion-content-wrap"><div class="accordion-content service-details-content"><div class="service-photo-placeholder" role="button" tabindex="0" data-src="bio.perm.jpg">Фото</div><p>Более щадящий вариант завивки с использованием натуральных компонентов. Создает мягкие, естественные кудри и волны, не повреждая структуру волоса.</p></div></div></details></div></div></div></details>
-        <details class="accordion" data-anim><summary>Кератиновое выпрямление</summary><div class="accordion-content-wrap"><div class="accordion-content"><div class="service-item-content"><div class="service-item-top-row"><div class="service-info--masters"><span class="service-info__label">Мастера</span><div class="masters-list"><span class="master-tag">Мария Лебедева</span></div></div><div class="service-info"><span class="service-info__label">Цена</span><span class="service-info__value service-info__value--price">7500 ₽</span></div></div><details class="accordion service-details-accordion"><summary>Подробнее</summary><div class="accordion-content-wrap"><div class="accordion-content service-details-content"><div class="service-photo-placeholder" role="button" tabindex="0" data-src="keratin.straightening.jpg">Фото</div><p>Процедура для выпрямления и восстановления волос. Насыщает волосы кератином, делая их гладкими, блестящими и послушными на срок до 6 месяцев.</p></div></div></details></div></div></div></details>
-        <details class="accordion" data-anim><summary>Ботокс для волос</summary><div class="accordion-content-wrap"><div class="accordion-content"><div class="service-item-content"><div class="service-item-top-row"><div class="service-info--masters"><span class="service-info__label">Мастера</span><div class="masters-list"><span class="master-tag">Мария Лебедева</span><span class="master-tag">Екатерина Смирнова</span></div></div><div class="service-info"><span class="service-info__label">Цена</span><span class="service-info__value service-info__value--price">4000 ₽</span></div></div><details class="accordion service-details-accordion"><summary>Подробнее</summary><div class="accordion-content-wrap"><div class="accordion-content service-details-content"><div class="service-photo-placeholder" role="button" tabindex="0" data-src="hair.botox.jpg">Фото</div><p>Интенсивное восстановление и омоложение волос изнутри. Устраняет пушистость, питает, увлажняет и придает невероятный блеск без эффекта выпрямления.</p></div></div></details></div></div></div></details>
-        <details class="accordion" data-anim><summary>Счастье для волос (Lebel)</summary><div class="accordion-content-wrap"><div class="accordion-content"><div class="service-item-content"><div class="service-item-top-row"><div class="service-info--masters"><span class="service-info__label">Мастера</span><div class="masters-list"><span class="master-tag">Екатерина Смирнова</span></div></div><div class="service-info"><span class="service-info__label">Цена</span><span class="service-info__value service-info__value--price">6500 ₽</span></div></div><details class="accordion service-details-accordion"><summary>Подробнее</summary><div class="accordion-content-wrap"><div class="accordion-content service-details-content"><div class="service-photo-placeholder" role="button" tabindex="0" data-src="lebel.happiness.jpg">Фото</div><p>Легендарная японская программа многоступенчатого ухода, которая восстанавливает волосы на молекулярном уровне. Идеально для поврежденных и ослабленных волос.</p></div></div></details></div></div></div></details>
-        <details class="accordion" data-anim><summary>Плетение кос</summary><div class="accordion-content-wrap"><div class="accordion-content"><div class="service-item-content"><div class="service-item-top-row"><div class="service-info--masters"><span class="service-info__label">Мастера</span><div class="masters-list"><span class="master-tag">Мария Лебедева</span><span class="master-tag">Екатерина Смирнова</span></div></div><div class="service-info"><span class="service-info__label">Цена</span><span class="service-info__value service-info__value--price">1500 ₽</span></div></div><details class="accordion service-details-accordion"><summary>Подробнее</summary><div class="accordion-content-wrap"><div class="accordion-content service-details-content"><div class="service-photo-placeholder" role="button" tabindex="0" data-src="braiding.jpg">Фото</div><p>Создание разнообразных причесок на основе плетения: от простых колосков до сложных ажурных кос для любого повода.</p></div></div></details></div></div></div></details>
-        <details class="accordion" data-anim><summary>Стрижка кончиков</summary><div class="accordion-content-wrap"><div class="accordion-content"><div class="service-item-content"><div class="service-item-top-row"><div class="service-info--masters"><span class="service-info__label">Мастера</span><div class="masters-list"><span class="master-tag">Александр Волков</span><span class="master-tag">Мария Лебедева</span></div></div><div class="service-info"><span class="service-info__label">Цена</span><span class="service-info__value service-info__value--price">800 ₽</span></div></div><details class="accordion service-details-accordion"><summary>Подробнее</summary><div class="accordion-content-wrap"><div class="accordion-content service-details-content"><div class="service-photo-placeholder" role="button" tabindex="0" data-src="ends.trim.jpg">Фото</div><p>Быстрая и аккуратная стрижка для поддержания здоровья волос и избавления от секущихся кончиков. Выполняется одним срезом на сухие или влажные волосы.</p></div></div></details></div></div></div></details>
-        <details class="accordion" data-anim><summary>Оформление челки</summary><div class="accordion-content-wrap"><div class="accordion-content"><div class="service-item-content"><div class="service-item-top-row"><div class="service-info--masters"><span class="service-info__label">Мастера</span><div class="masters-list"><span class="master-tag">Екатерина Смирнова</span><span class="master-tag">Мария Лебедева</span></div></div><div class="service-info"><span class="service-info__label">Цена</span><span class="service-info__value service-info__value--price">500 ₽</span></div></div><details class="accordion service-details-accordion"><summary>Подробнее</summary><div class="accordion-content-wrap"><div class="accordion-content service-details-content"><div class="service-photo-placeholder" role="button" tabindex="0" data-src="bangs.shaping.jpg">Фото</div><p>Коррекция формы челки или создание новой. Поможем подобрать идеальный вариант, который подчеркнет достоинства вашего лица.</p></div></div></details></div></div></div></details>
-        <details class="accordion" data-anim><summary>Пилинг кожи головы</summary><div class="accordion-content-wrap"><div class="accordion-content"><div class="service-item-content"><div class="service-item-top-row"><div class="service-info--masters"><span class="service-info__label">Мастера</span><div class="masters-list"><span class="master-tag">Мария Лебедева</span></div></div><div class="service-info"><span class="service-info__label">Цена</span><span class="service-info__value service-info__value--price">2200 ₽</span></div></div><details class="accordion service-details-accordion"><summary>Подробнее</summary><div class="accordion-content-wrap"><div class="accordion-content service-details-content"><div class="service-photo-placeholder" role="button" tabindex="0" data-src="scalp.peeling.jpg">Фото</div><p>Процедура глубокого очищения кожи головы. Удаляет ороговевшие клетки, излишки себума и остатки стайлинга, стимулирует рост здоровых волос.</p></div></div></details></div></div></div></details>
-        <details class="accordion" data-anim><summary>Ламинирование волос</summary><div class="accordion-content-wrap"><div class="accordion-content"><div class="service-item-content"><div class="service-item-top-row"><div class="service-info--masters"><span class="service-info__label">Мастера</span><div class="masters-list"><span class="master-tag">Екатерина Смирнова</span><span class="master-tag">Мария Лебедева</span></div></div><div class="service-info"><span class="service-info__label">Цена</span><span class="service-info__value service-info__value--price">3800 ₽</span></div></div><details class="accordion service-details-accordion"><summary>Подробнее</summary><div class="accordion-content-wrap"><div class="accordion-content service-details-content"><div class="service-photo-placeholder" role="button" tabindex="0" data-src="hair.lamination.jpg">Фото</div><p>Покрытие волос специальным составом, который создает тончайшую защитную пленку. Придает гладкость, блеск и дополнительный объем, защищает от внешних воздействий.</p></div></div></details></div></div></div></details>
-        <details class="accordion" data-anim><summary>Экранирование волос</summary><div class="accordion-content-wrap"><div class="accordion-content"><div class="service-item-content"><div class="service-item-top-row"><div class="service-info--masters"><span class="service-info__label">Мастера</span><div class="masters-list"><span class="master-tag">Александр Волков</span><span class="master-tag">Екатерина Смирнова</span></div></div><div class="service-info"><span class="service-info__label">Цена</span><span class="service-info__value service-info__value--price">2800 ₽</span></div></div><details class="accordion service-details-accordion"><summary>Подробнее</summary><div class="accordion-content-wrap"><div class="accordion-content service-details-content"><div class="service-photo-placeholder" role="button" tabindex="0" data-src="hair.shielding.jpg">Фото</div><p>Уходовая процедура для питания и увлажнения волос изнутри. Создает на поверхности волос защитный экран, придавая им плотность и сияние.</p></div></div></details></div></div></div></details>
+        <details class="accordion" data-anim><summary>Женская модельная стрижка</summary><div class="accordion-content-wrap"><div class="accordion-content"><div class="service-item-content"><div class="service-info"><span class="service-info__label">Цена</span><span class="service-info__value service-info__value--price">2500 ₽</span></div><div class="service-info--masters"><span class="service-info__label">Мастера</span><div class="masters-list"><span class="master-tag">Екатерина Смирнова</span><span class="master-tag">Мария Лебедева</span></div></div><details class="accordion service-details-accordion"><summary>Подробнее</summary><div class="accordion-content-wrap"><div class="accordion-content service-details-content"><div class="service-photo-wrapper"><div class="service-photo-placeholder"><span>female.model.cut.jpg</span></div><button class="btn btn--zoom-photo">Увеличить</button></div><div class="service-text-content"><p>Индивидуальный подбор формы стрижки с учетом особенностей вашей внешности и структуры волос. Включает мытье головы, стрижку и легкую укладку.</p></div></div></div></details></div></div></div></details>
+        <details class="accordion" data-anim><summary>Мужская модельная стрижка</summary><div class="accordion-content-wrap"><div class="accordion-content"><div class="service-item-content"><div class="service-info"><span class="service-info__label">Цена</span><span class="service-info__value service-info__value--price">1800 ₽</span></div><div class="service-info--masters"><span class="service-info__label">Мастера</span><div class="masters-list"><span class="master-tag">Александр Волков</span></div></div><details class="accordion service-details-accordion"><summary>Подробнее</summary><div class="accordion-content-wrap"><div class="accordion-content service-details-content"><div class="service-photo-wrapper"><div class="service-photo-placeholder"><span>male.model.cut.jpg</span></div><button class="btn btn--zoom-photo">Увеличить</button></div><div class="service-text-content"><p>Создание стильного мужского образа от классики до современных трендов. Включает мытье, стрижку и укладку с использованием профессиональных стайлинговых средств.</p></div></div></div></details></div></div></div></details>
+        <details class="accordion" data-anim><summary>Детская стрижка</summary><div class="accordion-content-wrap"><div class="accordion-content"><div class="service-item-content"><div class="service-info"><span class="service-info__label">Цена</span><span class="service-info__value service-info__value--price">900 ₽</span></div><div class="service-info--masters"><span class="service-info__label">Мастера</span><div class="masters-list"><span class="master-tag">Мария Лебедева</span><span class="master-tag">Александр Волков</span></div></div><details class="accordion service-details-accordion"><summary>Подробнее</summary><div class="accordion-content-wrap"><div class="accordion-content service-details-content"><div class="service-photo-wrapper"><div class="service-photo-placeholder"><span>child.cut.jpg</span></div><button class="btn btn--zoom-photo">Увеличить</button></div><div class="service-text-content"><p>Аккуратная и быстрая стрижка для самых маленьких клиентов в дружелюбной атмосфере. Мы найдем подход к любому ребенку.</p></div></div></div></details></div></div></div></details>
+        <details class="accordion" data-anim><summary>Окрашивание в один тон</summary><div class="accordion-content-wrap"><div class="accordion-content"><div class="service-item-content"><div class="service-info"><span class="service-info__label">Цена</span><span class="service-info__value service-info__value--price">4500 ₽</span></div><div class="service-info--masters"><span class="service-info__label">Мастера</span><div class="masters-list"><span class="master-tag">Екатерина Смирнова</span><span class="master-tag">Мария Лебедева</span></div></div><details class="accordion service-details-accordion"><summary>Подробнее</summary><div class="accordion-content-wrap"><div class="accordion-content service-details-content"><div class="service-photo-wrapper"><div class="service-photo-placeholder"><span>single.tone.coloring.jpg</span></div><button class="btn btn--zoom-photo">Увеличить</button></div><div class="service-text-content"><p>Классическое окрашивание для создания равномерного и насыщенного цвета по всей длине волос. Используем только щадящие красители премиум-класса.</p></div></div></div></details></div></div></div></details>
+        <details class="accordion" data-anim><summary>Сложное окрашивание</summary><div class="accordion-content-wrap"><div class="accordion-content"><div class="service-item-content"><div class="service-info"><span class="service-info__label">Цена</span><span class="service-info__value service-info__value--price">8000 ₽</span></div><div class="service-info--masters"><span class="service-info__label">Мастера</span><div class="masters-list"><span class="master-tag">Екатерина Смирнова</span></div></div><details class="accordion service-details-accordion"><summary>Подробнее</summary><div class="accordion-content-wrap"><div class="accordion-content service-details-content"><div class="service-photo-wrapper"><div class="service-photo-placeholder"><span>complex.coloring.jpg</span></div><button class="btn btn--zoom-photo">Увеличить</button></div><div class="service-text-content"><p>Техники Airtouch, балаяж, шатуш. Создание плавных переходов цвета, эффекта выгоревших волос и многогранных оттенков для визуального объема и глубины.</p></div></div></div></details></div></div></div></details>
+        <details class="accordion" data-anim><summary>Мелирование</summary><div class="accordion-content-wrap"><div class="accordion-content"><div class="service-item-content"><div class="service-info"><span class="service-info__label">Цена</span><span class="service-info__value service-info__value--price">5500 ₽</span></div><div class="service-info--masters"><span class="service-info__label">Мастера</span><div class="masters-list"><span class="master-tag">Мария Лебедева</span><span class="master-tag">Екатерина Смирнова</span></div></div><details class="accordion service-details-accordion"><summary>Подробнее</summary><div class="accordion-content-wrap"><div class="accordion-content service-details-content"><div class="service-photo-wrapper"><div class="service-photo-placeholder"><span>highlighting.jpg</span></div><button class="btn btn--zoom-photo">Увеличить</button></div><div class="service-text-content"><p>Осветление отдельных прядей для придания прическе свежести и динамики. Классическое и зональное мелирование с последующим тонированием.</p></div></div></div></details></div></div></div></details>
+        <details class="accordion" data-anim><summary>Тонирование волос</summary><div class="accordion-content-wrap"><div class="accordion-content"><div class="service-item-content"><div class="service-info"><span class="service-info__label">Цена</span><span class="service-info__value service-info__value--price">3000 ₽</span></div><div class="service-info--masters"><span class="service-info__label">Мастера</span><div class="masters-list"><span class="master-tag">Екатерина Смирнова</span><span class="master-tag">Мария Лебедева</span></div></div><details class="accordion service-details-accordion"><summary>Подробнее</summary><div class="accordion-content-wrap"><div class="accordion-content service-details-content"><div class="service-photo-wrapper"><div class="service-photo-placeholder"><span>toning.jpg</span></div><button class="btn btn--zoom-photo">Увеличить</button></div><div class="service-text-content"><p>Придание волосам желаемого оттенка с помощью безаммиачных красителей. Нейтрализует желтизну, добавляет блеск и глубину цвета.</p></div></div></div></details></div></div></div></details>
+        <details class="accordion" data-anim><summary>Вечерняя укладка</summary><div class="accordion-content-wrap"><div class="accordion-content"><div class="service-item-content"><div class="service-info"><span class="service-info__label">Цена</span><span class="service-info__value service-info__value--price">3500 ₽</span></div><div class="service-info--masters"><span class="service-info__label">Мастера</span><div class="masters-list"><span class="master-tag">Мария Лебедева</span><span class="master-tag">Екатерина Смирнова</span></div></div><details class="accordion service-details-accordion"><summary>Подробнее</summary><div class="accordion-content-wrap"><div class="accordion-content service-details-content"><div class="service-photo-wrapper"><div class="service-photo-placeholder"><span>evening.styling.jpg</span></div><button class="btn btn--zoom-photo">Увеличить</button></div><div class="service-text-content"><p>Создание элегантного образа для особого случая: локоны, волны, гладкие прически. Используем профессиональные средства для максимальной стойкости.</p></div></div></div></details></div></div></div></details>
+        <details class="accordion" data-anim><summary>Свадебная прическа</summary><div class="accordion-content-wrap"><div class="accordion-content"><div class="service-item-content"><div class="service-info"><span class="service-info__label">Цена</span><span class="service-info__value service-info__value--price">6000 ₽</span></div><div class="service-info--masters"><span class="service-info__label">Мастера</span><div class="masters-list"><span class="master-tag">Екатерина Смирнова</span><span class="master-tag">Мария Лебедева</span></div></div><details class="accordion service-details-accordion"><summary>Подробнее</summary><div class="accordion-content-wrap"><div class="accordion-content service-details-content"><div class="service-photo-wrapper"><div class="service-photo-placeholder"><span>wedding.hairstyle.jpg</span></div><button class="btn btn--zoom-photo">Увеличить</button></div><div class="service-text-content"><p>Воплощение вашей мечты об идеальной свадебной прическе. Проводим предварительную репетицию для создания безупречного и гармоничного образа невесты.</p></div></div></div></details></div></div></div></details>
+        <details class="accordion" data-anim><summary>Химическая завивка</summary><div class="accordion-content-wrap"><div class="accordion-content"><div class="service-item-content"><div class="service-info"><span class="service-info__label">Цена</span><span class="service-info__value service-info__value--price">4800 ₽</span></div><div class="service-info--masters"><span class="service-info__label">Мастера</span><div class="masters-list"><span class="master-tag">Мария Лебедева</span></div></div><details class="accordion service-details-accordion"><summary>Подробнее</summary><div class="accordion-content-wrap"><div class="accordion-content service-details-content"><div class="service-photo-wrapper"><div class="service-photo-placeholder"><span>perm.wave.jpg</span></div><button class="btn btn--zoom-photo">Увеличить</button></div><div class="service-text-content"><p>Создание упругих и стойких локонов на длительный срок. Современные составы позволяют минимизировать вред для волос, сохраняя их эластичность.</p></div></div></div></details></div></div></div></details>
+        <details class="accordion" data-anim><summary>Биозавивка</summary><div class="accordion-content-wrap"><div class="accordion-content"><div class="service-item-content"><div class="service-info"><span class="service-info__label">Цена</span><span class="service-info__value service-info__value--price">5200 ₽</span></div><div class="service-info--masters"><span class="service-info__label">Мастера</span><div class="masters-list"><span class="master-tag">Екатерина Смирнова</span><span class="master-tag">Мария Лебедева</span></div></div><details class="accordion service-details-accordion"><summary>Подробнее</summary><div class="accordion-content-wrap"><div class="accordion-content service-details-content"><div class="service-photo-wrapper"><div class="service-photo-placeholder"><span>bio.perm.jpg</span></div><button class="btn btn--zoom-photo">Увеличить</button></div><div class="service-text-content"><p>Более щадящий вариант завивки с использованием натуральных компонентов. Создает мягкие, естественные кудри и волны, не повреждая структуру волоса.</p></div></div></div></details></div></div></div></details>
+        <details class="accordion" data-anim><summary>Кератиновое выпрямление</summary><div class="accordion-content-wrap"><div class="accordion-content"><div class="service-item-content"><div class="service-info"><span class="service-info__label">Цена</span><span class="service-info__value service-info__value--price">7500 ₽</span></div><div class="service-info--masters"><span class="service-info__label">Мастера</span><div class="masters-list"><span class="master-tag">Мария Лебедева</span></div></div><details class="accordion service-details-accordion"><summary>Подробнее</summary><div class="accordion-content-wrap"><div class="accordion-content service-details-content"><div class="service-photo-wrapper"><div class="service-photo-placeholder"><span>keratin.straightening.jpg</span></div><button class="btn btn--zoom-photo">Увеличить</button></div><div class="service-text-content"><p>Процедура для выпрямления и восстановления волос. Насыщает волосы кератином, делая их гладкими, блестящими и послушными на срок до 6 месяцев.</p></div></div></div></details></div></div></div></details>
+        <details class="accordion" data-anim><summary>Ботокс для волос</summary><div class="accordion-content-wrap"><div class="accordion-content"><div class="service-item-content"><div class="service-info"><span class="service-info__label">Цена</span><span class="service-info__value service-info__value--price">4000 ₽</span></div><div class="service-info--masters"><span class="service-info__label">Мастера</span><div class="masters-list"><span class="master-tag">Мария Лебедева</span><span class="master-tag">Екатерина Смирнова</span></div></div><details class="accordion service-details-accordion"><summary>Подробнее</summary><div class="accordion-content-wrap"><div class="accordion-content service-details-content"><div class="service-photo-wrapper"><div class="service-photo-placeholder"><span>hair.botox.jpg</span></div><button class="btn btn--zoom-photo">Увеличить</button></div><div class="service-text-content"><p>Интенсивное восстановление и омоложение волос изнутри. Устраняет пушистость, питает, увлажняет и придает невероятный блеск без эффекта выпрямления.</p></div></div></div></details></div></div></div></details>
+        <details class="accordion" data-anim><summary>Счастье для волос (Lebel)</summary><div class="accordion-content-wrap"><div class="accordion-content"><div class="service-item-content"><div class="service-info"><span class="service-info__label">Цена</span><span class="service-info__value service-info__value--price">6500 ₽</span></div><div class="service-info--masters"><span class="service-info__label">Мастера</span><div class="masters-list"><span class="master-tag">Екатерина Смирнова</span></div></div><details class="accordion service-details-accordion"><summary>Подробнее</summary><div class="accordion-content-wrap"><div class="accordion-content service-details-content"><div class="service-photo-wrapper"><div class="service-photo-placeholder"><span>lebel.happiness.jpg</span></div><button class="btn btn--zoom-photo">Увеличить</button></div><div class="service-text-content"><p>Легендарная японская программа многоступенчатого ухода, которая восстанавливает волосы на молекулярном уровне. Идеально для поврежденных и ослабленных волос.</p></div></div></div></details></div></div></div></details>
+        <details class="accordion" data-anim><summary>Плетение кос</summary><div class="accordion-content-wrap"><div class="accordion-content"><div class="service-item-content"><div class="service-info"><span class="service-info__label">Цена</span><span class="service-info__value service-info__value--price">1500 ₽</span></div><div class="service-info--masters"><span class="service-info__label">Мастера</span><div class="masters-list"><span class="master-tag">Мария Лебедева</span><span class="master-tag">Екатерина Смирнова</span></div></div><details class="accordion service-details-accordion"><summary>Подробнее</summary><div class="accordion-content-wrap"><div class="accordion-content service-details-content"><div class="service-photo-wrapper"><div class="service-photo-placeholder"><span>braiding.jpg</span></div><button class="btn btn--zoom-photo">Увеличить</button></div><div class="service-text-content"><p>Создание разнообразных причесок на основе плетения: от простых колосков до сложных ажурных кос для любого повода.</p></div></div></div></details></div></div></div></details>
+        <details class="accordion" data-anim><summary>Стрижка кончиков</summary><div class="accordion-content-wrap"><div class="accordion-content"><div class="service-item-content"><div class="service-info"><span class="service-info__label">Цена</span><span class="service-info__value service-info__value--price">800 ₽</span></div><div class="service-info--masters"><span class="service-info__label">Мастера</span><div class="masters-list"><span class="master-tag">Александр Волков</span><span class="master-tag">Мария Лебедева</span></div></div><details class="accordion service-details-accordion"><summary>Подробнее</summary><div class="accordion-content-wrap"><div class="accordion-content service-details-content"><div class="service-photo-wrapper"><div class="service-photo-placeholder"><span>ends.trim.jpg</span></div><button class="btn btn--zoom-photo">Увеличить</button></div><div class="service-text-content"><p>Быстрая и аккуратная стрижка для поддержания здоровья волос и избавления от секущихся кончиков. Выполняется одним срезом на сухие или влажные волосы.</p></div></div></div></details></div></div></div></details>
+        <details class="accordion" data-anim><summary>Оформление челки</summary><div class="accordion-content-wrap"><div class="accordion-content"><div class="service-item-content"><div class="service-info"><span class="service-info__label">Цена</span><span class="service-info__value service-info__value--price">500 ₽</span></div><div class="service-info--masters"><span class="service-info__label">Мастера</span><div class="masters-list"><span class="master-tag">Екатерина Смирнова</span><span class="master-tag">Мария Лебедева</span></div></div><details class="accordion service-details-accordion"><summary>Подробнее</summary><div class="accordion-content-wrap"><div class="accordion-content service-details-content"><div class="service-photo-wrapper"><div class="service-photo-placeholder"><span>bangs.shaping.jpg</span></div><button class="btn btn--zoom-photo">Увеличить</button></div><div class="service-text-content"><p>Коррекция формы челки или создание новой. Поможем подобрать идеальный вариант, который подчеркнет достоинства вашего лица.</p></div></div></div></details></div></div></div></details>
+        <details class="accordion" data-anim><summary>Пилинг кожи головы</summary><div class="accordion-content-wrap"><div class="accordion-content"><div class="service-item-content"><div class="service-info"><span class="service-info__label">Цена</span><span class="service-info__value service-info__value--price">2200 ₽</span></div><div class="service-info--masters"><span class="service-info__label">Мастера</span><div class="masters-list"><span class="master-tag">Мария Лебедева</span></div></div><details class="accordion service-details-accordion"><summary>Подробнее</summary><div class="accordion-content-wrap"><div class="accordion-content service-details-content"><div class="service-photo-wrapper"><div class="service-photo-placeholder"><span>scalp.peeling.jpg</span></div><button class="btn btn--zoom-photo">Увеличить</button></div><div class="service-text-content"><p>Процедура глубокого очищения кожи головы. Удаляет ороговевшие клетки, излишки себума и остатки стайлинга, стимулирует рост здоровых волос.</p></div></div></div></details></div></div></div></details>
+        <details class="accordion" data-anim><summary>Ламинирование волос</summary><div class="accordion-content-wrap"><div class="accordion-content"><div class="service-item-content"><div class="service-info"><span class="service-info__label">Цена</span><span class="service-info__value service-info__value--price">3800 ₽</span></div><div class="service-info--masters"><span class="service-info__label">Мастера</span><div class="masters-list"><span class="master-tag">Екатерина Смирнова</span><span class="master-tag">Мария Лебедева</span></div></div><details class="accordion service-details-accordion"><summary>Подробнее</summary><div class="accordion-content-wrap"><div class="accordion-content service-details-content"><div class="service-photo-wrapper"><div class="service-photo-placeholder"><span>hair.lamination.jpg</span></div><button class="btn btn--zoom-photo">Увеличить</button></div><div class="service-text-content"><p>Покрытие волос специальным составом, который создает тончайшую защитную пленку. Придает гладкость, блеск и дополнительный объем, защищает от внешних воздействий.</p></div></div></div></details></div></div></div></details>
+        <details class="accordion" data-anim><summary>Экранирование волос</summary><div class="accordion-content-wrap"><div class="accordion-content"><div class="service-item-content"><div class="service-info"><span class="service-info__label">Цена</span><span class="service-info__value service-info__value--price">2800 ₽</span></div><div class="service-info--masters"><span class="service-info__label">Мастера</span><div class="masters-list"><span class="master-tag">Александр Волков</span><span class="master-tag">Екатерина Смирнова</span></div></div><details class="accordion service-details-accordion"><summary>Подробнее</summary><div class="accordion-content-wrap"><div class="accordion-content service-details-content"><div class="service-photo-wrapper"><div class="service-photo-placeholder"><span>hair.shielding.jpg</span></div><button class="btn btn--zoom-photo">Увеличить</button></div><div class="service-text-content"><p>Уходовая процедура для питания и увлажнения волос изнутри. Создает на поверхности волос защитный экран, придавая им плотность и сияние.</p></div></div></div></details></div></div></div></details>
 
       </div>
     </section>
@@ -606,14 +638,13 @@
       </div>
     </div>
   </div>
-
   
-  <div class="lightbox-overlay" id="lightboxOverlay">
-    <button class="lightbox-close" aria-label="Закрыть">&times;</button>
-    <img src="" alt="Увеличенное изображение услуги" class="lightbox-image" id="lightboxImage">
+  <div class="lightbox-overlay" id="photoLightbox">
+    <div class="lightbox-content">
+      <div class="lightbox-image-placeholder" id="lightboxImage"></div>
+      <button class="lightbox-close" aria-label="Закрыть фото">&times;</button>
+    </div>
   </div>
-
-  <script src="https://cdn.jsdelivr.net/npm/tsparticles@2.12.0/tsparticles.bundle.min.js"></script>
 
   <script>
     document.addEventListener('DOMContentLoaded', function() {
@@ -672,7 +703,7 @@
         document.addEventListener('keydown', (e) => e.key === 'Escape' && mobileNav.classList.contains('is-open') && toggleMenu(false));
       })();
 
-      // Модальное окно
+      // Модальное окно контактов
       (function(){
         const modal = document.getElementById('contactModal');
         const openTriggers = document.querySelectorAll('.modal-trigger, .nav-contact-trigger');
@@ -685,7 +716,7 @@
         document.addEventListener('keydown', (e) => e.key === 'Escape' && modal.classList.contains('is-visible') && closeModal());
       })();
       
-      // Скрипт для плавной и корректной анимации аккордеона
+      // Плавная анимация аккордеона
       (function(){
         document.querySelectorAll('details.accordion').forEach(details => {
           const summary = details.querySelector('summary');
@@ -698,18 +729,23 @@
             details.dataset.animating = 'true';
 
             if (details.open) {
+              // Логика закрытия
               contentWrap.style.maxHeight = contentWrap.scrollHeight + 'px';
               requestAnimationFrame(() => {
                 contentWrap.style.maxHeight = '0px';
               });
+
               contentWrap.addEventListener('transitionend', () => {
                 details.removeAttribute('open');
                 delete details.dataset.animating;
               }, { once: true });
+
             } else {
+              // Логика открытия
               details.setAttribute('open', '');
               const scrollHeight = contentWrap.scrollHeight;
               contentWrap.style.maxHeight = scrollHeight + 'px';
+
               contentWrap.addEventListener('transitionend', () => {
                 if (details.open) {
                   contentWrap.style.maxHeight = 'none';
@@ -721,65 +757,46 @@
         });
       })();
       
-      // --- ИЗМЕНЕНИЕ #1: Скрипт для лайтбокса (увеличение фото) ---
-      (function() {
-        const lightboxOverlay = document.getElementById('lightboxOverlay');
-        const lightboxImage = document.getElementById('lightboxImage');
-        const lightboxCloseBtn = lightboxOverlay.querySelector('.lightbox-close');
-        const photoPlaceholders = document.querySelectorAll('.service-photo-placeholder');
+      // --- ИЗМЕНЕНИЕ #3: Новый скрипт для лайтбокса (увеличения фото) ---
+      (function(){
+        const lightbox = document.getElementById('photoLightbox');
+        if (!lightbox) return;
+        
+        const imagePlaceholder = document.getElementById('lightboxImage');
+        const openTriggers = document.querySelectorAll('.btn--zoom-photo');
+        const closeBtn = lightbox.querySelector('.lightbox-close');
 
-        const openLightbox = (src) => {
-          // Предполагается, что фото лежат в папке /img/
-          // Если пути другие, нужно будет поменять здесь
-          lightboxImage.src = 'img/' + src; 
-          lightboxOverlay.classList.add('is-visible');
+        const openLightbox = (e) => {
+          e.preventDefault();
+          const trigger = e.currentTarget;
+          const photoWrapper = trigger.closest('.service-photo-wrapper');
+          const sourcePlaceholder = photoWrapper.querySelector('.service-photo-placeholder');
+          
+          if (sourcePlaceholder && imagePlaceholder) {
+            // Копируем имя файла в лайтбокс
+            imagePlaceholder.innerHTML = sourcePlaceholder.innerHTML;
+          }
+          
+          lightbox.classList.add('is-visible');
           scrollLocker.lock();
         };
 
         const closeLightbox = () => {
-          lightboxOverlay.classList.remove('is-visible');
+          lightbox.classList.remove('is-visible');
           scrollLocker.unlock();
         };
 
-        photoPlaceholders.forEach(placeholder => {
-          placeholder.addEventListener('click', () => {
-            const src = placeholder.dataset.src;
-            if (src) {
-              openLightbox(src);
-            }
-          });
-        });
-
-        lightboxCloseBtn.addEventListener('click', closeLightbox);
-        lightboxOverlay.addEventListener('click', (e) => {
-          if (e.target === lightboxOverlay) {
+        openTriggers.forEach(trigger => trigger.addEventListener('click', openLightbox));
+        closeBtn.addEventListener('click', closeLightbox);
+        lightbox.addEventListener('click', (e) => {
+          if (e.target === lightbox) {
             closeLightbox();
           }
         });
         document.addEventListener('keydown', (e) => {
-          if (e.key === 'Escape' && lightboxOverlay.classList.contains('is-visible')) {
+          if (e.key === 'Escape' && lightbox.classList.contains('is-visible')) {
             closeLightbox();
           }
-        });
-      })();
-
-      // Анимация частиц
-      (function(){
-        if (typeof tsParticles === 'undefined') { console.error('tsParticles not loaded'); return; }
-        tsParticles.load("particles-bg", {
-          fullScreen: { enable: false },
-          particles: {
-            number: { value: 50, density: { enable: true, value_area: 800 } },
-            shape: { type: "image", image: { src: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 72'%3E%3Cdefs%3E%3CradialGradient id='a' cx='50%25' cy='50%25' r='50%25'%3E%3Cstop offset='0%25' stop-color='%23c5d2ff'/%3E%3Cstop offset='100%25' stop-color='%231a3a9a'/%3E%3C/radialGradient%3E%3C/defs%3E%3Cpath d='M40 0L80 22L40 72L0 22L40 0Z' fill='url(%23a)'/%3E%3Cpath d='M40 0L0 22L40 26Z' fill='%23e8eaf6' fill-opacity='0.6'/%3E%3Cpath d='M40 0L80 22L40 26Z' fill='%237da8ff' fill-opacity='0.6'/%3E%3Cpath d='M0 22L40 72L40 26Z' fill='%230d1a4f' fill-opacity='0.7'/%3E%3Cpath d='M80 22L40 72L40 26Z' fill='%231a3a9a' fill-opacity='0.7'/%3E%3Cpath d='M40 5L20 16L40 24L60 16L40 5Z' fill='%23fff' fill-opacity='0.3'/%3E%3Cpath d='M40 26L20 16L0 22L40 26Z' fill='%23a7b0d1' fill-opacity='0.3'/%3E%3C/svg%3E" } },
-            opacity: { value: { min: 0.4, max: 0.9 }, animation: { enable: true, speed: 2.5, sync: false } },
-            size: { value: { min: 12, max: 28 } },
-            shadow: { enable: true, blur: 15, color: "#4a7dff" },
-            rotate: { value: { min: 0, max: 360 }, direction: "random", animation: { enable: true, speed: 5, sync: false } },
-            twinkle: { particles: { enable: true, frequency: 0.1, opacity: 1, color: "#fff5cc" } },
-            move: { enable: true, speed: { min: 0.8, max: 2 }, direction: "bottom", straight: true, outModes: { default: "out" } }
-          },
-          interactivity: { events: { onHover: { enable: false }, onClick: { enable: false } } },
-          detectRetina: true
         });
       })();
 
