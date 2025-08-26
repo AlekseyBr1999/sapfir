@@ -167,7 +167,6 @@
     .card-link { text-decoration: none; color: inherit; display: block; -webkit-tap-highlight-color: transparent; }
     .card {
       position: relative; border-radius: var(--radius-xl);
-      /* --- ИЗМЕНЕНО: Фон сделан непрозрачным --- */
       background: var(--sapphire-deep);
       border: 1px solid var(--glass-border-color);
       padding: 24px; overflow: hidden;
@@ -188,7 +187,7 @@
       top: 0; left: 0; right: 0; bottom: 0;
       background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), var(--accent-color, var(--sapphire-highlight)), transparent 60%);
       opacity: 0;
-      z-index: 0; /* Подняли, чтобы было видно над фоном */
+      z-index: 0;
       pointer-events: none;
       filter: blur(50px);
     }
@@ -205,7 +204,6 @@
       75% { --x: 20%; --y: 80%; }
       100% { --x: 0%; --y: 0%; }
     }
-    /* --- ИЗМЕНЕНО: Добавлен z-index, чтобы контент был над псевдо-элементом --- */
     .card > * { position: relative; z-index: 1; }
     .card .icon {
       width: 54px; height: 54px; border-radius: 14px; display: grid; place-items: center;
@@ -496,7 +494,7 @@
       }
       initMap();
 
-      // --- ИЗМЕНЕНО: Обновленная анимация частиц ---
+      // --- ИЗМЕНЕНО: Финальная версия анимации частиц ---
       (function(){
         if (typeof tsParticles === 'undefined') { console.error('tsParticles not loaded'); return; }
         
@@ -504,44 +502,54 @@
           fullScreen: { enable: false },
           particles: {
             number: {
-              value: 40,
+              value: 50,
               density: { enable: true, value_area: 800 }
             },
             shape: {
               type: "image",
               image: {
-                // Новое SVG ограненного сапфира
-                src: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3CradialGradient id='a'%3E%3Cstop offset='0%25' stop-color='%23a7b7ff'/%3E%3Cstop offset='100%25' stop-color='%231a3a9a'/%3E%3C/radialGradient%3E%3C/defs%3E%3Cpath d='M32 0L64 24L32 64L0 24L32 0Z' fill='url(%23a)'/%3E%3Cpath d='M32 0L0 24L32 28Z' fill='%23e8eaf6' fill-opacity='0.5'/%3E%3Cpath d='M32 0L64 24L32 28Z' fill='%234a7dff' fill-opacity='0.5'/%3E%3Cpath d='M0 24L32 64L32 28Z' fill='%230d1a4f' fill-opacity='0.5'/%3E%3Cpath d='M64 24L32 64L32 28Z' fill='%231a3a9a' fill-opacity='0.5'/%3E%3C/svg%3E"
+                // НОВОЕ, БОЛЕЕ СЛОЖНОЕ SVG ОГРАНЕННОГО САПФИРА
+                src: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 72'%3E%3Cdefs%3E%3CradialGradient id='a' cx='50%25' cy='50%25' r='50%25'%3E%3Cstop offset='0%25' stop-color='%23c5d2ff'/%3E%3Cstop offset='100%25' stop-color='%231a3a9a'/%3E%3C/radialGradient%3E%3C/defs%3E%3Cpath d='M40 0L80 22L40 72L0 22L40 0Z' fill='url(%23a)'/%3E%3Cpath d='M40 0L0 22L40 26Z' fill='%23e8eaf6' fill-opacity='0.6'/%3E%3Cpath d='M40 0L80 22L40 26Z' fill='%237da8ff' fill-opacity='0.6'/%3E%3Cpath d='M0 22L40 72L40 26Z' fill='%230d1a4f' fill-opacity='0.7'/%3E%3Cpath d='M80 22L40 72L40 26Z' fill='%231a3a9a' fill-opacity='0.7'/%3E%3Cpath d='M40 5L20 16L40 24L60 16L40 5Z' fill='%23fff' fill-opacity='0.3'/%3E%3Cpath d='M40 26L20 16L0 22L40 26Z' fill='%23a7b0d1' fill-opacity='0.3'/%3E%3C/svg%3E"
               }
             },
             opacity: {
-              value: { min: 0.3, max: 0.8 },
+              value: { min: 0.4, max: 0.9 },
+              animation: {
+                enable: true,
+                speed: 2.5, // Увеличена скорость пульсации
+                sync: false
+              }
             },
             size: {
-              value: { min: 10, max: 22 }
+              value: { min: 12, max: 28 } // Увеличен размер
             },
-            // Новое: вращение частиц
+            // Новое: мягкое свечение вокруг частиц для усиления эффекта
+            shadow: {
+                enable: true,
+                blur: 15,
+                color: "#4a7dff"
+            },
             rotate: {
               value: { min: 0, max: 360 },
               direction: "random",
               animation: {
                 enable: true,
-                speed: 4,
+                speed: 5,
                 sync: false
               }
             },
-            // Новое: эффект мерцания для сияния
+            // Новое: значительно усиленное мерцание
             twinkle: {
               particles: {
                 enable: true,
-                frequency: 0.02,
+                frequency: 0.1, // Частота вспышек увеличена в 5 раз
                 opacity: 1,
-                color: "#e8eaf6"
+                color: "#fff5cc" // Теплый белый для яркого блика
               }
             },
             move: {
               enable: true,
-              speed: { min: 0.5, max: 1.5 },
+              speed: { min: 0.8, max: 2 },
               direction: "bottom",
               straight: true,
               outModes: {
