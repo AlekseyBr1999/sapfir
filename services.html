@@ -45,6 +45,7 @@
       margin: 0;
       font-family: "Segoe UI", Roboto, "Helvetica Neue", Arial, system-ui, -apple-system, "Noto Sans", "Liberation Sans", sans-serif;
       line-height: 1.6;
+      /* ИЗМЕНЕНИЕ 5: Резервируем место под скроллбар, чтобы избежать "прыжка" контента */
       scrollbar-gutter: stable;
       background: linear-gradient(180deg, var(--bg-dark) 0%, var(--sapphire-deep) 70%, var(--bg-dark) 100%);
       background-size: 100% 200%;
@@ -238,7 +239,6 @@
         position: absolute;
         bottom: 0; left: 0; right: 0;
         height: 0;
-        /* ИЗМЕНЕНИЕ 2: Градиент сделан более насыщенным (0.7 вместо 0.5) */
         background: linear-gradient(to top, rgba(74, 125, 255, 0.7), transparent);
         z-index: 1;
         transition: height 0.4s ease-out;
@@ -309,7 +309,13 @@
       }
     }
     
-    /* ИЗМЕНЕНИЕ 1: Пассивные анимации для мобильных устройств */
+    /* ИЗМЕНЕНИЕ 1: Пассивные анимации и исправление "дергания" */
+    @keyframes pulse-once {
+      0% { transform: translateY(0) scale(1); box-shadow: var(--shadow-soft); }
+      50% { transform: translateY(-5px) scale(1.03); box-shadow: 0 20px 50px rgba(0,0,0,.4), 0 0 35px var(--accent-color); }
+      100% { transform: translateY(0) scale(1); box-shadow: var(--shadow-soft); }
+    }
+
     @media (hover: none) {
       .service-card-link.is-animating .service-card--sapphire {
         transform: translateY(-8px);
@@ -326,8 +332,7 @@
         opacity: 1;
       }
       .service-card-link.is-animating .service-card--emerald {
-        animation: pulse-glow 2.5s infinite ease-in-out;
-        transform: translateY(-5px);
+        animation: pulse-once 1.5s ease-in-out;
       }
       .service-card-link.is-animating .service-card--gold {
         box-shadow: 0 20px 50px rgba(0,0,0,.4), 0 0 25px var(--accent-color);
@@ -352,7 +357,6 @@
       position: fixed; inset: 0; background: rgba(5, 8, 24, 0.5); backdrop-filter: blur(10px); z-index: 1000; 
       display: flex; align-items: center; justify-content: center; padding: 14px; 
       opacity: 0; visibility: hidden; transition: opacity .3s cubic-bezier(0.4, 0, 0.2, 1), visibility .3s cubic-bezier(0.4, 0, 0.2, 1);
-      /* ИЗМЕНЕНИЕ 3: Подсказка браузеру для плавной анимации */
       will-change: opacity;
     }
     .modal-overlay.is-visible { opacity: 1; visibility: visible; }
@@ -362,7 +366,6 @@
       padding: 28px; width: 100%; max-width: 480px; text-align: center; box-shadow: 0 0 40px var(--sapphire-highlight); 
       transform: translateY(20px) scale(0.98);
       transition: transform .3s cubic-bezier(0.4, 0, 0.2, 1);
-      /* ИЗМЕНЕНИЕ 3: Подсказка браузеру для плавной анимации */
       will-change: transform, opacity;
     }
     .modal-overlay.is-visible .modal { transform: translateY(0) scale(1); }
@@ -397,9 +400,11 @@
     .mobile-nav-close:hover { opacity: 1; transform: rotate(90deg); }
     .mobile-nav a { color: var(--text-primary); text-decoration: none; font-size: 24px; font-weight: 500; padding: 12px 24px; opacity: 0; transform: translateY(15px); transition: opacity .3s ease, transform .3s ease, color .3s ease; }
     .mobile-nav.is-open a { opacity: 1; transform: translateY(0); }
-    .mobile-nav.is-open a:nth-child(2) { transition-delay: .1s; }
-    .mobile-nav.is-open a:nth-child(3) { transition-delay: .2s; }
-    .mobile-nav.is-open a:nth-child(4) { transition-delay: .3s; }
+    .mobile-nav.is-open a:nth-child(2) { transition-delay: .05s; }
+    .mobile-nav.is-open a:nth-child(3) { transition-delay: .1s; }
+    .mobile-nav.is-open a:nth-child(4) { transition-delay: .15s; }
+    .mobile-nav.is-open a:nth-child(5) { transition-delay: .2s; }
+
 
     /* Адаптивность */
     @media (max-width: 768px) {
@@ -423,6 +428,7 @@
 
   <header class="site-header">
     <div class="nav-wrap">
+      
       <a href="index.html" class="brand-link" aria-label="На главную">
         <div class="brand">
           <span class="brand-mark" aria-hidden="true"></span>
@@ -430,6 +436,8 @@
         </div>
       </a>
       <nav class="primary" id="primaryNav">
+        
+        <a href="index.html">Главная</a>
         <a href="index.html#services">Услуги</a>
         <a href="index.html#map-section">Карта</a>
         <a href="#" class="nav-contact-trigger">Контакты</a>
@@ -442,6 +450,8 @@
 
   <div class="mobile-nav" id="mobileNav" aria-hidden="true">
       <button class="mobile-nav-close" id="navClose" aria-label="Закрыть меню">&times;</button>
+      
+      <a href="index.html">Главная</a>
       <a href="index.html#services">Услуги</a>
       <a href="index.html#map-section">Карта</a>
       <a href="#" class="nav-contact-trigger">Контакты</a>
@@ -450,7 +460,8 @@
   <main>
     
     <section class="section" id="services">
-      <h1 data-anim>Все наши услуги</h1>
+      
+      <h1 data-anim>Услуги</h1>
       <div class="services-grid">
         
         
@@ -520,6 +531,10 @@
 
   <footer>
     © Сапфир, 2025.
+     
+    <div style="margin-top: 15px;">
+      <a href="index.html" class="btn secondary">На главную</a>
+    </div>
     <div class="dev-signature">Сайт разработал Алексей <span class="brand-logo-char">Э.</span> Бронников</div>
   </footer>
 
@@ -573,6 +588,32 @@
         document.querySelectorAll('[data-anim]').forEach(el => observer.observe(el));
       })();
 
+      // ИЗМЕНЕНИЕ 5: Улучшенная логика блокировки скролла
+      const scrollLocker = (function() {
+        let lockCount = 0;
+        return {
+          lock: function() {
+            if (lockCount === 0) {
+              const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+              const bodyIsScrollable = document.body.scrollHeight > window.innerHeight;
+              if (scrollbarWidth > 0 && bodyIsScrollable) {
+                document.body.style.paddingRight = `${scrollbarWidth}px`;
+              }
+              document.body.classList.add('no-scroll');
+            }
+            lockCount++;
+          },
+          unlock: function() {
+            lockCount--;
+            if (lockCount <= 0) {
+              document.body.classList.remove('no-scroll');
+              document.body.style.paddingRight = '';
+              lockCount = 0; // На случай ошибок
+            }
+          }
+        };
+      })();
+
       // Мобильное меню
       (function(){
         const navToggle = document.getElementById('navToggle');
@@ -582,7 +623,7 @@
           const isOpen = typeof force === 'boolean' ? force : !mobileNav.classList.contains('is-open');
           mobileNav.classList.toggle('is-open', isOpen);
           navToggle.classList.toggle('is-active', isOpen);
-          document.body.classList.toggle('no-scroll', isOpen);
+          isOpen ? scrollLocker.lock() : scrollLocker.unlock();
         };
         navToggle.addEventListener('click', () => toggleMenu());
         navClose.addEventListener('click', () => toggleMenu(false));
@@ -595,36 +636,25 @@
         const modal = document.getElementById('contactModal');
         const openTriggers = document.querySelectorAll('.modal-trigger, .nav-contact-trigger');
         const closeBtn = modal.querySelector('.modal-close');
-        const openModal = (e) => { e.preventDefault(); modal.classList.add('is-visible'); document.body.classList.add('no-scroll'); };
-        const closeModal = () => { modal.classList.remove('is-visible'); if(!document.getElementById('mobileNav').classList.contains('is-open')) document.body.classList.remove('no-scroll'); };
+        const openModal = (e) => { e.preventDefault(); modal.classList.add('is-visible'); scrollLocker.lock(); };
+        const closeModal = () => { modal.classList.remove('is-visible'); scrollLocker.unlock(); };
         openTriggers.forEach(trigger => trigger.addEventListener('click', openModal));
         closeBtn.addEventListener('click', closeModal);
         modal.addEventListener('click', (e) => e.target === modal && closeModal());
         document.addEventListener('keydown', (e) => e.key === 'Escape' && modal.classList.contains('is-visible') && closeModal());
       })();
       
-      // ИЗМЕНЕНИЕ 1: Пассивные анимации для мобильных
+      // Пассивные анимации для мобильных
       (function() {
-        // Проверяем, поддерживает ли устройство hover. Если да, то ничего не делаем.
-        if (window.matchMedia('(hover: hover)').matches) {
-          return;
-        }
-
+        if (window.matchMedia('(hover: hover)').matches) return;
         const cards = document.querySelectorAll('.service-card-link');
         if (cards.length === 0) return;
-
         let currentIndex = 0;
-
         setInterval(() => {
-          // Убираем класс с предыдущей карточки
           cards.forEach(card => card.classList.remove('is-animating'));
-          
-          // Добавляем класс к текущей
           cards[currentIndex].classList.add('is-animating');
-          
-          // Переключаемся на следующую
           currentIndex = (currentIndex + 1) % cards.length;
-        }, 3000); // Интервал в 3 секунды
+        }, 3000);
       })();
 
       // Анимация частиц
