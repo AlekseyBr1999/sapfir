@@ -494,7 +494,7 @@
       }
       initMap();
 
-      // --- ИЗМЕНЕНО: Финальная версия анимации частиц ---
+      // --- ИЗМЕНЕНО: Финальная версия анимации частиц с эффектом блеска ---
       (function(){
         if (typeof tsParticles === 'undefined') { console.error('tsParticles not loaded'); return; }
         
@@ -502,54 +502,34 @@
           fullScreen: { enable: false },
           particles: {
             number: {
-              value: 50,
+              value: 45,
               density: { enable: true, value_area: 800 }
             },
             shape: {
               type: "image",
               image: {
-                // НОВОЕ, БОЛЕЕ СЛОЖНОЕ SVG ОГРАНЕННОГО САПФИРА
-                src: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 72'%3E%3Cdefs%3E%3CradialGradient id='a' cx='50%25' cy='50%25' r='50%25'%3E%3Cstop offset='0%25' stop-color='%23c5d2ff'/%3E%3Cstop offset='100%25' stop-color='%231a3a9a'/%3E%3C/radialGradient%3E%3C/defs%3E%3Cpath d='M40 0L80 22L40 72L0 22L40 0Z' fill='url(%23a)'/%3E%3Cpath d='M40 0L0 22L40 26Z' fill='%23e8eaf6' fill-opacity='0.6'/%3E%3Cpath d='M40 0L80 22L40 26Z' fill='%237da8ff' fill-opacity='0.6'/%3E%3Cpath d='M0 22L40 72L40 26Z' fill='%230d1a4f' fill-opacity='0.7'/%3E%3Cpath d='M80 22L40 72L40 26Z' fill='%231a3a9a' fill-opacity='0.7'/%3E%3Cpath d='M40 5L20 16L40 24L60 16L40 5Z' fill='%23fff' fill-opacity='0.3'/%3E%3Cpath d='M40 26L20 16L0 22L40 26Z' fill='%23a7b0d1' fill-opacity='0.3'/%3E%3C/svg%3E"
+                // НОВОЕ SVG: скошенная грань + встроенный блик для блеска
+                src: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 66'%3E%3Cdefs%3E%3ClinearGradient id='a' x1='50%25' y1='0%25' x2='50%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%234a7dff'/%3E%3Cstop offset='100%25' stop-color='%230d1a4f'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpath d='M30 0L60 18L30 66L0 18L30 0Z' fill='url(%23a)'/%3E%3Cpath d='M30 0L0 18L30 21Z' fill='%23a7b7ff' fill-opacity='0.7'/%3E%3Cpath d='M30 0L60 18L30 21Z' fill='%231a3a9a' fill-opacity='0.7'/%3E%3Cpath d='M0 18L30 66L30 21Z' fill='%23050818' fill-opacity='0.5'/%3E%3Cpath d='M60 18L30 66L30 21Z' fill='%231a3a9a' fill-opacity='0.5'/%3E%3Cpath d='M30 3L49 14L30 19L11 14L30 3Z' fill='%23c5d2ff'/%3E%3Cpath d='M3 41L15 16L22 43Z' fill='white' fill-opacity='0.25'/%3E%3C/svg%3E"
               }
             },
             opacity: {
-              value: { min: 0.4, max: 0.9 },
-              animation: {
-                enable: true,
-                speed: 2.5, // Увеличена скорость пульсации
-                sync: false
-              }
+              value: { min: 0.5, max: 1.0 }, // Без анимации, просто случайная прозрачность
             },
             size: {
-              value: { min: 12, max: 28 } // Увеличен размер
-            },
-            // Новое: мягкое свечение вокруг частиц для усиления эффекта
-            shadow: {
-                enable: true,
-                blur: 15,
-                color: "#4a7dff"
+              value: { min: 14, max: 25 }
             },
             rotate: {
               value: { min: 0, max: 360 },
               direction: "random",
               animation: {
                 enable: true,
-                speed: 5,
+                speed: { min: 2, max: 6 }, // Неравномерная скорость вращения
                 sync: false
-              }
-            },
-            // Новое: значительно усиленное мерцание
-            twinkle: {
-              particles: {
-                enable: true,
-                frequency: 0.1, // Частота вспышек увеличена в 5 раз
-                opacity: 1,
-                color: "#fff5cc" // Теплый белый для яркого блика
               }
             },
             move: {
               enable: true,
-              speed: { min: 0.8, max: 2 },
+              speed: { min: 0.7, max: 1.8 },
               direction: "bottom",
               straight: true,
               outModes: {
