@@ -59,7 +59,10 @@
     }
 
     @media (prefers-reduced-motion: reduce) {
-      body, .mobile-nav, .card::after, .btn::before, #particles-bg { animation: none !important; }
+      body, .mobile-nav, .card::after, .btn::before, #particles-bg, .modal, .modal-overlay, .faq-content-wrap { 
+        animation: none !important; 
+        transition: none !important;
+      }
     }
 
     /* Стилизация скроллбара для WebKit */
@@ -236,7 +239,14 @@
     details.faq-item summary::-webkit-details-marker { display: none; }
     details.faq-item summary::after { content: ''; position: absolute; right: 18px; top: 50%; width: 8px; height: 8px; border-bottom: 2px solid var(--text-secondary); border-right: 2px solid var(--text-secondary); transform: translateY(-60%) rotate(45deg); transition: transform .3s ease; }
     details.faq-item[open] summary::after { transform: translateY(-40%) rotate(225deg); }
-    .faq-content-wrap { height: 0; overflow: hidden; transition: height .4s ease; }
+    
+    /* ИЗМЕНЕНИЕ 2: Улучшенная анимация аккордеона */
+    .faq-content-wrap { 
+      height: 0; 
+      overflow: hidden; 
+      /* Используем cubic-bezier для более плавной и профессиональной анимации */
+      transition: height 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    }
     .faq-content { padding: 0 18px 16px; color: var(--text-secondary); }
 
     /* Футер */
@@ -253,57 +263,78 @@
     .dev-signature { margin-top: 10px; }
     .brand-logo-char { font-family: "JetBrains Mono", monospace; font-weight: 700; color: var(--ink-brand); font-size: 22px; line-height: 1; display: inline-block; vertical-align: middle; }
 
-    /* Анимации появления */
-    [data-anim] { opacity: 0; transform: translateY(20px); transition: opacity .6s ease-out, transform .6s ease-out; }
-    [data-anim].is-visible { opacity: 1; transform: translateY(0); }
-    .hero [data-anim]:nth-child(2) { transition-delay: .1s; }
-    .services a:nth-child(1) { transition-delay: .1s; }
-    .services a:nth-child(2) { transition-delay: .2s; }
-    .services a:nth-child(3) { transition-delay: .3s; }
-    .services a:nth-child(4) { transition-delay: .4s; }
-
-    /* Модальное окно */
-    .modal-overlay { position: fixed; inset: 0; background: rgba(5, 8, 24, 0.5); backdrop-filter: blur(10px); z-index: 1000; display: flex; align-items: center; justify-content: center; padding: 14px; opacity: 0; visibility: hidden; transition: opacity .3s ease, visibility .3s ease; }
-    .modal-overlay.is-visible { opacity: 1; visibility: visible; }
-    .modal { position: relative; background: linear-gradient(180deg, rgba(13, 26, 79, 0.8), rgba(5, 8, 24, 0.8)); border: 1px solid var(--glass-border-color); border-radius: var(--radius-xl); padding: 28px; width: 100%; max-width: 480px; text-align: center; box-shadow: 0 0 40px var(--sapphire-highlight); transform: scale(0.97); transition: transform .3s cubic-bezier(.2,.7,.2,1); }
-    .modal-overlay.is-visible .modal { transform: scale(1); }
+    /* ИЗМЕНЕНИЕ 2: Улучшенная анимация модального окна */
+    .modal-overlay { 
+      position: fixed; inset: 0; background: rgba(5, 8, 24, 0.5); 
+      backdrop-filter: blur(10px); z-index: 1000; 
+      display: flex; align-items: center; justify-content: center; 
+      padding: 14px; 
+      opacity: 0; 
+      visibility: hidden; 
+      transition: opacity .3s cubic-bezier(0.4, 0, 0.2, 1), visibility .3s cubic-bezier(0.4, 0, 0.2, 1); 
+    }
+    .modal-overlay.is-visible { 
+      opacity: 1; 
+      visibility: visible; 
+    }
+    .modal { 
+      position: relative; 
+      background: linear-gradient(180deg, rgba(13, 26, 79, 0.8), rgba(5, 8, 24, 0.8)); 
+      border: 1px solid var(--glass-border-color); 
+      border-radius: var(--radius-xl); 
+      padding: 28px; width: 100%; max-width: 480px; 
+      text-align: center; box-shadow: 0 0 40px var(--sapphire-highlight); 
+      /* Начальное состояние для анимации появления */
+      transform: translateY(20px) scale(0.98);
+      transition: transform .3s cubic-bezier(0.4, 0, 0.2, 1); 
+    }
+    .modal-overlay.is-visible .modal { 
+      /* Конечное состояние */
+      transform: translateY(0) scale(1); 
+    }
     .modal h3 { margin: 0 0 20px; font-weight: 600; font-size: 20px; color: var(--text-primary); }
     .modal-close { position: absolute; top: 10px; right: 10px; background: none; border: none; color: var(--text-secondary); font-size: 24px; line-height: 1; cursor: pointer; padding: 4px; opacity: .8; transition: opacity .2s ease, transform .2s ease; }
     .modal-close:hover { opacity: 1; transform: scale(1.1) rotate(90deg); }
 
-    /* ИЗМЕНЕНИЕ 1: Обновленные стили для списка контактов */
-    .contact-list { display: flex; flex-direction: column; gap: 14px; text-align: left; }
-    .contact-item { 
-      display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; 
-      gap: 10px; padding: 12px 16px; border-radius: 10px; 
-      background: rgba(0,0,0,0.25);
-      border: 1px solid var(--glass-border-color);
-      transition: box-shadow .3s ease, border-color .3s ease;
+    /* ИЗМЕНЕНИЕ 1 & 3: Новый дизайн списка контактов в стиле "Quiet Luxury" */
+    .contact-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px; /* Уменьшили гэп для более плотного вида */
+      text-align: left;
     }
-    .contact-item__title { color: var(--text-secondary); font-size: 15px; }
-    .contact-item__phone { 
-      font-weight: 600; font-size: 17px; letter-spacing: 0.03em; text-decoration: none;
-      color: var(--gold-accent); /* Единый цвет для номера */
-      transition: opacity .2s;
+    .contact-item {
+      padding: 16px;
+      border-radius: 12px;
+      background-color: rgba(0,0,0,0.15);
+      border: 1px solid transparent; /* Прозрачная рамка для плавного перехода */
+      transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
     }
-    .contact-item__phone:hover { opacity: 0.8; }
-    
-    /* Подсветка для каждого типа услуг */
-    .contact-item--hair {
-      border-color: rgba(74, 125, 255, 0.5);
-      box-shadow: 0 0 12px -2px var(--accent-hair);
+    .contact-item:hover {
+      background-color: rgba(0,0,0,0.3);
+      border-color: var(--glass-border-color);
+      box-shadow: 0 0 15px -5px var(--sapphire-highlight);
     }
-    .contact-item--nails {
-      border-color: rgba(211, 30, 106, 0.5);
-      box-shadow: 0 0 12px -2px var(--accent-nails);
+    .contact-item__title {
+      display: block;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      margin-bottom: 4px;
     }
-    .contact-item--cosmo {
-      border-color: rgba(16, 185, 129, 0.5);
-      box-shadow: 0 0 12px -2px var(--accent-cosmo);
+    .contact-item__phone {
+      display: block;
+      font-size: 18px;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      text-decoration: none;
+      color: var(--text-primary); /* Основной цвет текста для солидности */
+      transition: color 0.3s ease;
     }
-    .contact-item--brows {
-      border-color: rgba(218, 183, 133, 0.5);
-      box-shadow: 0 0 12px -2px var(--accent-brows);
+    .contact-item:hover .contact-item__phone {
+      color: var(--gold-accent); /* Золотой акцент появляется при наведении */
     }
     
     /* Мобильная навигация */
@@ -313,13 +344,11 @@
     .nav-toggle.is-active span:nth-child(2) { opacity: 0; }
     .nav-toggle.is-active span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
 
-    /* ИЗМЕНЕНИЕ 2: Исправленная анимация мобильного меню */
     .mobile-nav { 
       position: fixed; inset: 0; z-index: 1001; 
-      display: flex; /* Убираем display: none для работы анимации */
+      display: flex;
       flex-direction: column; align-items: center; justify-content: center; gap: 20px; 
       background: rgba(5, 8, 24, 0.8); backdrop-filter: blur(16px); 
-      /* Начальное состояние для анимации */
       opacity: 0; 
       visibility: hidden;
       pointer-events: none;
@@ -327,7 +356,6 @@
       transition: opacity .3s ease-in-out, visibility .3s ease-in-out, transform .3s ease-in-out;
     }
     .mobile-nav.is-open { 
-      /* Конечное состояние для анимации */
       opacity: 1; 
       visibility: visible; 
       pointer-events: auto;
@@ -337,7 +365,7 @@
     .mobile-nav-close:hover { opacity: 1; transform: rotate(90deg); }
     .mobile-nav a { color: var(--text-primary); text-decoration: none; font-size: 24px; font-weight: 500; padding: 12px 24px; opacity: 0; transform: translateY(15px); transition: opacity .3s ease, transform .3s ease, color .3s ease; }
     .mobile-nav.is-open a { opacity: 1; transform: translateY(0); }
-    .mobile-nav.is-open a:nth-child(2) { transition-delay: .1s; } /* Индексы изменились, т.к. кнопка закрытия первая */
+    .mobile-nav.is-open a:nth-child(2) { transition-delay: .1s; }
     .mobile-nav.is-open a:nth-child(3) { transition-delay: .2s; }
     .mobile-nav.is-open a:nth-child(4) { transition-delay: .3s; }
 
@@ -347,9 +375,16 @@
       .nav-toggle { display: block; }
       .cta-row { flex-direction: column; align-items: stretch; }
     }
-    @media (max-width: 400px) {
-      .contact-item { flex-direction: column; align-items: flex-start; }
-    }
+    
+    /* Анимации появления */
+    [data-anim] { opacity: 0; transform: translateY(20px); transition: opacity .6s ease-out, transform .6s ease-out; }
+    [data-anim].is-visible { opacity: 1; transform: translateY(0); }
+    .hero [data-anim]:nth-child(2) { transition-delay: .1s; }
+    .services a:nth-child(1) { transition-delay: .1s; }
+    .services a:nth-child(2) { transition-delay: .2s; }
+    .services a:nth-child(3) { transition-delay: .3s; }
+    .services a:nth-child(4) { transition-delay: .4s; }
+
   </style>
 </head>
 <body>
@@ -445,20 +480,21 @@
         <summary>Свяжитесь с нами</summary>
         <div class="faq-content-wrap">
           <div class="faq-content">
+            
             <div class="contact-list">
-              <div class="contact-item contact-item--hair">
+              <div class="contact-item">
                 <span class="contact-item__title">Парикмахерские услуги</span>
                 <a href="tel:+79171234567" class="contact-item__phone">+7 (917) 123-45-67</a>
               </div>
-              <div class="contact-item contact-item--nails">
+              <div class="contact-item">
                 <span class="contact-item__title">Ногтевой сервис</span>
                 <a href="tel:+79272345678" class="contact-item__phone">+7 (927) 234-56-78</a>
               </div>
-              <div class="contact-item contact-item--cosmo">
+              <div class="contact-item">
                 <span class="contact-item__title">Косметология</span>
                 <a href="tel:+79373456789" class="contact-item__phone">+7 (937) 345-67-89</a>
               </div>
-              <div class="contact-item contact-item--brows">
+              <div class="contact-item">
                 <span class="contact-item__title">Коррекция бровей</span>
                 <a href="tel:+79874567890" class="contact-item__phone">+7 (987) 456-78-90</a>
               </div>
@@ -479,20 +515,21 @@
     <div class="modal" role="dialog" aria-labelledby="modalTitle">
       <button class="modal-close" aria-label="Закрыть окно">&times;</button>
       <h3 id="modalTitle">Запись по телефону</h3>
+      
       <div class="contact-list">
-        <div class="contact-item contact-item--hair">
+        <div class="contact-item">
           <span class="contact-item__title">Парикмахерские услуги</span>
           <a href="tel:+79171234567" class="contact-item__phone">+7 (917) 123-45-67</a>
         </div>
-        <div class="contact-item contact-item--nails">
+        <div class="contact-item">
           <span class="contact-item__title">Ногтевой сервис</span>
           <a href="tel:+79272345678" class="contact-item__phone">+7 (927) 234-56-78</a>
         </div>
-        <div class="contact-item contact-item--cosmo">
+        <div class="contact-item">
           <span class="contact-item__title">Косметология</span>
           <a href="tel:+79373456789" class="contact-item__phone">+7 (937) 345-67-89</a>
         </div>
-        <div class="contact-item contact-item--brows">
+        <div class="contact-item">
           <span class="contact-item__title">Коррекция бровей</span>
           <a href="tel:+79874567890" class="contact-item__phone">+7 (987) 456-78-90</a>
         </div>
@@ -547,7 +584,7 @@
         document.addEventListener('keydown', (e) => e.key === 'Escape' && modal.classList.contains('is-visible') && closeModal());
       })();
       
-      // Аккордеон
+      // Аккордеон (логика анимации, работает на всех устройствах)
       (function(){
         document.querySelectorAll('details.faq-item').forEach(details => {
           const wrap = details.querySelector('.faq-content-wrap');
