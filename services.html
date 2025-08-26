@@ -76,7 +76,9 @@
     
     #particles-bg {
       position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; 
-      will-change: transform; /* ИСПРАВЛЕНИЕ: Оптимизация для скролла */
+      /* ИСПРАВЛЕНИЕ 2: Принудительное аппаратное ускорение для плавности скролла */
+      transform: translateZ(0);
+      will-change: transform;
     }
 
     /* Шапка сайта */
@@ -229,7 +231,7 @@
     /* Цветовые схемы для карточек */
     .service-card--sapphire { --accent-color: var(--accent-hair); }
     .service-card--garnet { --accent-color: var(--accent-nails); }
-    .service-card--emerald { --accent-color: var(--accent-cosmo); }
+    /* .service-card--emerald класс больше не используется */
     .service-card--gold { --accent-color: var(--accent-brows); }
     
     /* --- АНИМАЦИИ --- */
@@ -277,20 +279,7 @@
       }
     }
 
-    /* 3. Изумрудное сияние */
-    @keyframes pulse-glow {
-      0% { box-shadow: 0 20px 50px rgba(0,0,0,.4), 0 0 15px rgba(16, 185, 129, 0.4); }
-      50% { box-shadow: 0 20px 50px rgba(0,0,0,.4), 0 0 35px rgba(16, 185, 129, 0.8); }
-      100% { box-shadow: 0 20px 50px rgba(0,0,0,.4), 0 0 15px rgba(16, 185, 129, 0.4); }
-    }
-    @media (hover: hover) {
-      .service-card-link:hover .service-card--emerald {
-          transform: translateY(-5px);
-          /* ИСПРАВЛЕНИЕ: Добавляем box-shadow напрямую, чтобы избежать конфликта с transition и запустить анимацию */
-          box-shadow: 0 20px 50px rgba(0,0,0,.4), 0 0 15px rgba(16, 185, 129, 0.4);
-          animation: pulse-glow 2.5s infinite ease-in-out;
-      }
-    }
+    /* 3. Изумрудное сияние - УДАЛЕНО */
 
     /* 4. Золотой блеск */
     .service-card--gold::before {
@@ -462,7 +451,8 @@
 
         
         <a href="cosmetic.html" class="service-card-link" data-anim>
-          <article class="service-card service-card--emerald">
+          
+          <article class="service-card service-card--sapphire">
             <div class="service-card__icon-wrap">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 21a9 9 0 0 1-9-9c0-4.2 2.8-7.9 6.7-8.8C10.6 2 11.3 2.5 11.3 3.3v.2c0 .6-.4 1.1-1 1.2-2.4.5-4.3 2.7-4.3 5.3 0 3 2.4 5.4 5.4 5.4s5.4-2.4 5.4-5.4c0-2.6-1.8-4.8-4.3-5.3-.6-.1-1-.6-1-1.2v-.2c0-.7.6-1.3 1.5-1.2C18.2 3.1 21 6.8 21 11a9 9 0 0 1-9 10z"/></svg>
             </div>
