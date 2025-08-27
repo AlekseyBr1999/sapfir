@@ -2,7 +2,7 @@
 
 <html lang="ru">
 <head>
-  <meta charset="utf-t" />
+  <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Сапфир — салон красоты в Тольятти</title>
   <meta name="description" content="Салон красоты Сапфир в Тольятти — парикмахерские услуги, ногтевой сервис, косметология и коррекция бровей." />
@@ -205,6 +205,18 @@
     #map-container { border-radius: var(--radius-xl); overflow: hidden; border: 1px solid var(--glass-border-color); box-shadow: var(--shadow-soft); height: 420px; background-color: var(--bg-dark); }
     #map { width: 100%; height: 100%; }
     
+    /* --- НАЧАЛО ИЗМЕНЕНИЙ ДЛЯ ТЕМНОЙ КАРТЫ --- */
+    #map {
+      /* Применяем фильтр для создания эффекта "ночной" карты */
+      filter: invert(100%) hue-rotate(180deg) brightness(90%) contrast(110%);
+    }
+    #map > [class*="ymaps-2-1-"] {
+      /* Возвращаем оригинальные цвета для элементов управления и метки,
+         применяя обратный фильтр. Это гарантирует, что они не будут инвертированы. */
+      filter: invert(100%) hue-rotate(180deg);
+    }
+    /* --- КОНЕЦ ИЗМЕНЕНИЙ ДЛЯ ТЕМНОЙ КАРТЫ --- */
+    
     details.faq-item { margin-top: 18px; border-radius: var(--radius-xl); background: var(--glass-bg); border: 1px solid var(--glass-border-color); transition: border-color .3s ease; overflow: clip; }
     details.faq-item[open] { border-color: var(--sapphire-highlight); }
     details.faq-item summary { position: relative; padding: 16px 46px 16px 18px; font-size: 16px; font-weight: 600; color: var(--text-primary); cursor: pointer; list-style: none; user-select: none; }
@@ -212,7 +224,6 @@
     details.faq-item summary::after { content: ''; position: absolute; right: 18px; top: 50%; width: 8px; height: 8px; border-bottom: 2px solid var(--text-secondary); border-right: 2px solid var(--text-secondary); transform: translateY(-60%) rotate(45deg); transition: transform .3s ease; }
     details.faq-item[open] summary::after { transform: translateY(-40%) rotate(225deg); }
     
-    /* ИЗМЕНЕНИЕ 3: Надежная анимация аккордеона через max-height */
     .faq-content-wrap { 
       max-height: 0;
       overflow: hidden; 
@@ -247,7 +258,6 @@
     .modal-close { position: absolute; top: 10px; right: 10px; background: none; border: none; color: var(--text-secondary); font-size: 24px; line-height: 1; cursor: pointer; padding: 4px; opacity: .8; transition: opacity .2s ease, transform .2s ease; }
     .modal-close:hover { opacity: 1; transform: scale(1.1) rotate(90deg); }
 
-    /* ИЗМЕНЕНИЕ 1: Новый дизайн кнопок-контактов для мобильных */
     .contact-list {
       display: flex;
       flex-direction: column;
@@ -325,11 +335,7 @@
       nav.primary { display: none; }
       .nav-toggle { display: block; }
       .cta-row { flex-direction: column; align-items: stretch; }
-      
-      /* ИЗМЕНЕНИЕ 2: Увеличиваем отступ для подзаголовка на мобильных */
-      .headline-sub {
-        margin-top: 8px;
-      }
+      .headline-sub { margin-top: 8px; }
     }
     
     /* Анимации появления */
@@ -426,12 +432,12 @@
     </section>
 
     <section class="section map-section" id="map-section">
-      <h2 data-anim>Карта</h2>
+      <h2 data-anim>Как нас найти</h2>
       <div id="map-container" data-anim><div id="map"></div></div>
       <details class="faq-item" data-anim>
-        <summary>Как нас найти</summary>
+        <summary>Адрес и ориентиры</summary>
         <div class="faq-content-wrap">
-          <div class="faq-content"><p>Выйдите на ближайшей остановке, двигайтесь вдоль ул. 70 лет Октября к дому №35. Вход в салон под сапфировой вывеской «Сапфир».</p></div>
+          <div class="faq-content"><p>Мы находимся по адресу: г. Тольятти, ул. 70 лет Октября, д. 35. Выйдите на ближайшей остановке, двигайтесь вдоль улицы к дому №35. Вход в салон под сапфировой вывеской «Сапфир».</p></div>
         </div>
       </details>
       <details class="faq-item" data-anim>
@@ -472,7 +478,7 @@
   </main>
 
   <footer>
-    © Сапфир, 2025.
+    © Сапфир, 2025. v 1.0
     <div class="dev-signature">Сайт разработал Алексей <span class="brand-logo-char">Э.</span> Бронников</div>
   </footer>
 
@@ -540,7 +546,6 @@
         navToggle.addEventListener('click', () => toggleMenu());
         navClose.addEventListener('click', () => toggleMenu(false));
         mobileNav.querySelectorAll('a').forEach(link => {
-            // Закрываем меню при клике, только если это не ссылка на другую страницу
             if (link.getAttribute('href').startsWith('#')) {
                 link.addEventListener('click', () => toggleMenu(false));
             }
@@ -561,27 +566,20 @@
         document.addEventListener('keydown', (e) => e.key === 'Escape' && modal.classList.contains('is-visible') && closeModal());
       })();
       
-      // ИЗМЕНЕНИЕ 3: Надежная анимация аккордеона для всех устройств
+      // Анимация аккордеона
       (function(){
         document.querySelectorAll('details.faq-item').forEach(details => {
           const summary = details.querySelector('summary');
           const contentWrap = details.querySelector('.faq-content-wrap');
-
           summary.addEventListener('click', (event) => {
-            // Предотвращаем стандартное поведение, чтобы управлять анимацией
             event.preventDefault();
-
             if (details.open) {
-              // Закрываем аккордеон
               contentWrap.style.maxHeight = '0px';
-              // Ждем окончания анимации, чтобы скрыть элемент
               contentWrap.addEventListener('transitionend', () => {
                 details.removeAttribute('open');
               }, { once: true });
             } else {
-              // Открываем аккордеон
               details.setAttribute('open', '');
-              // Устанавливаем max-height равным реальной высоте контента
               contentWrap.style.maxHeight = contentWrap.scrollHeight + 'px';
             }
           });
@@ -598,17 +596,17 @@
             const myMap = new ymaps.Map('map', { 
               center: coords, 
               zoom: 17, 
-              controls: ['zoomControl'],
-              // ПРАВИЛЬНЫЙ СПОСОБ: Используем готовый темный слой от Яндекса
-              type: 'yandex#dark' 
+              controls: ['zoomControl']
+              // ИСПРАВЛЕНО: Удален неработающий параметр 'type: "yandex#dark"'.
+              // Карта будет работать. Темная тема реализована через CSS-фильтры.
             });
             
             myMap.geoObjects.add(new ymaps.Placemark(coords, { 
-              balloonContentHeader: 'Салон «Сапфир»' 
+              balloonContentHeader: 'Салон «Сапфир»',
+              balloonContentBody: 'ул. 70 лет Октября, 35'
             }, { 
               preset: 'islands#dotIcon', 
-              // Возвращаем сапфировый цвет метки
-              iconColor: '#4a7dff' 
+              iconColor: '#4a7dff' // Сапфировый цвет метки
             }));
             
             myMap.behaviors.disable('scrollZoom');
@@ -618,9 +616,10 @@
           }
         });
       }
+      // Инициализируем карту, как только DOM будет готов
       initMap();
 
-      // --- Финальная версия анимации частиц ---
+      // Анимация частиц
       (function(){
         if (typeof tsParticles === 'undefined') { console.error('tsParticles not loaded'); return; }
         
