@@ -591,11 +591,56 @@
       // Яндекс.Карта
       function initMap() {
         if (typeof ymaps === 'undefined') { console.error('Yandex Maps script is not loaded.'); return; }
+        
+        // JSON-стиль для темной карты в цветах сайта
+        const mapStyle = [
+          {
+            "elements": "geometry",
+            "stylers": [{ "color": "#0d1a4f" }] // --sapphire-deep
+          },
+          {
+            "elements": "labels.text.fill",
+            "stylers": [{ "color": "#a7b0d1" }] // --text-secondary
+          },
+          {
+            "elements": "labels.text.stroke",
+            "stylers": [{ "color": "#050818" }] // --bg-dark
+          },
+          {
+            "tags": { "all": ["water"] },
+            "elements": "geometry",
+            "stylers": [{ "color": "#1a3a9a" }] // --sapphire-mid
+          },
+          {
+            "tags": { "all": ["road"] },
+            "elements": "geometry",
+            "stylers": [{ "color": "#1a3a9a" }] // --sapphire-mid
+          },
+           {
+            "tags": { "all": ["transit"] },
+            "elements": "labels",
+            "stylers": [{ "visibility": "off" }]
+          }
+        ];
+
         ymaps.ready(() => {
           try {
             const coords = [53.54112164561584, 49.337911170825244];
-            const myMap = new ymaps.Map('map', { center: coords, zoom: 17, controls: ['zoomControl'] });
-            myMap.geoObjects.add(new ymaps.Placemark(coords, { balloonContentHeader: 'Салон «Сапфир»' }, { preset: 'islands#dotIcon', iconColor: '#4a7dff' }));
+            const myMap = new ymaps.Map('map', { 
+              center: coords, 
+              zoom: 17, 
+              controls: ['zoomControl'],
+              // Применяем наш стиль
+              customization: mapStyle 
+            });
+            
+            myMap.geoObjects.add(new ymaps.Placemark(coords, { 
+              balloonContentHeader: 'Салон «Сапфир»' 
+            }, { 
+              preset: 'islands#dotIcon', 
+              iconColor: '#e8c981' // Изменил цвет метки на золотой для контраста
+            }));
+            
             myMap.behaviors.disable('scrollZoom');
           } catch(err) {
             console.error('Yandex Map initialization failed:', err);
