@@ -1,0 +1,501 @@
+<!doctype html>
+
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Блог — Салон красоты «Сапфир»</title>
+  <meta name="description" content="Советы по уходу, обзоры новинок и тренды из мира красоты в блоге салона Сапфир. Узнайте больше о наших услугах и секретах мастеров." />
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      /* Глубокая сапфировая палитра */
+      --bg-dark: #050818;
+      --sapphire-deep: #0d1a4f;
+      --sapphire-mid: #1a3a9a;
+      --sapphire-highlight: #4a7dff;
+      --gold-accent: #e8c981;
+      --text-primary: #e8eaf6;
+      --text-secondary: #a7b0d1;
+      --glass-bg: rgba(13, 26, 79, 0.45);
+      --glass-border-color: rgba(74, 125, 255, 0.25);
+      --ink-brand: #c5d2ff;
+
+      /* Акценты для карточек */
+      --accent-hair: #4a7dff; /* Сапфировый */
+      --accent-nails: #d31e6a; /* Гранатовый */
+      --accent-cosmo: #10b981; /* Изумрудный */
+      --accent-brows: #dab785; /* Золотой */
+
+      --radius-xl: 18px;
+      --shadow-soft: 0 16px 40px rgba(0,0,0,.3);
+    }
+
+    html {
+      scroll-behavior: smooth;
+      scrollbar-width: thin;
+      scrollbar-color: var(--sapphire-mid) transparent;
+    }
+    html, body { height: 100%; color: var(--text-primary); -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Roboto, "Helvetica Neue", Arial, system-ui, -apple-system, "Noto Sans", "Liberation Sans", sans-serif;
+      line-height: 1.6;
+      scrollbar-gutter: stable;
+      background: linear-gradient(180deg, var(--bg-dark) 0%, var(--sapphire-deep) 70%, var(--bg-dark) 100%);
+      background-size: 100% 200%;
+      animation: gradient-pan 12s ease-in-out infinite alternate;
+      overflow-x: hidden;
+      overscroll-behavior-y: contain;
+    }
+
+    @keyframes gradient-pan {
+      from { background-position: 0% 0%; }
+      to { background-position: 0% 100%; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      body, .mobile-nav, .btn::before, #particles-bg, .modal, .modal-overlay { 
+        animation: none !important; 
+        transition: none !important;
+      }
+    }
+
+    /* Стилизация скроллбара для WebKit */
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb {
+      border-radius: 10px;
+      background: linear-gradient(180deg, var(--sapphire-highlight), var(--sapphire-mid));
+    }
+    body.no-scroll { overflow: hidden; }
+    
+    #particles-bg {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; 
+      will-change: transform;
+    }
+
+    /* Шапка сайта */
+    header.site-header {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(5, 8, 24, 0.6);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--glass-border-color);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+    }
+    .nav-wrap { max-width: 1200px; margin: 0 auto; padding: 14px 18px; display: flex; align-items: center; justify-content: space-between; }
+    .brand-link { text-decoration: none; }
+    .brand { display: flex; align-items: center; gap: 10px; letter-spacing: .16em; text-transform: uppercase; font-weight: 500; font-size: 14px; color: var(--ink-brand); }
+    .brand-mark { width: 24px; height: 24px; background: conic-gradient(from 0deg, #7da8ff, #d1d9e6, #3a5aff, #7da8ff); border-radius: 6px; transform: rotate(45deg); box-shadow: 0 0 16px rgba(74, 85, 255, 0.4), inset 0 0 10px rgba(255,255,255,.2); transition: transform .5s ease; }
+    .brand-link:hover .brand-mark { transform: rotate(45deg) scale(1.08) rotate(10deg); }
+    nav.primary { display: flex; gap: 18px; }
+    nav.primary a { position: relative; display: inline-block; padding: 8px 6px; color: var(--text-primary); text-decoration: none; font-weight: 400; letter-spacing: .03em; transition: color .3s ease; }
+    nav.primary a:hover { color: var(--gold-accent); }
+    nav.primary a::after {
+        content: ''; position: absolute; left: 50%; bottom: -2px; width: 0; height: 2px;
+        background: var(--sapphire-highlight);
+        border-radius: 2px; box-shadow: 0 0 8px var(--sapphire-highlight);
+        transform: translateX(-50%); transition: width .3s ease;
+    }
+    nav.primary a:hover::after { width: 100%; }
+
+    /* Кнопки */
+    .btn {
+      position: relative; display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+      padding: 14px 24px; border-radius: 999px;
+      border: 1px solid var(--glass-border-color);
+      background-color: var(--glass-bg);
+      color: var(--text-primary); text-decoration: none; letter-spacing: .04em; font-weight: 600;
+      box-shadow: 0 8px 24px rgba(0,0,0,.3);
+      transition: transform .25s ease, box-shadow .25s ease, background-color .25s ease;
+      -webkit-tap-highlight-color: transparent;
+    }
+    @media (hover: hover) {
+      .btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 12px 32px rgba(0,0,0,.4);
+        background-color: var(--sapphire-deep);
+      }
+    }
+    .btn:active { transform: translateY(0) scale(0.98); }
+    .btn.secondary { background: transparent; }
+    .btn.secondary:hover { background: var(--glass-bg); }
+    .btn svg { width: 18px; height: 18px; }
+
+    /* Секции */
+    .section { max-width: 1200px; margin: 30px auto; padding: 20px 18px; }
+    .section h1 {
+      font-family: Georgia, "Times New Roman", serif; font-weight: 400; letter-spacing: .14em; text-transform: uppercase;
+      font-size: clamp(24px, 5vw, 32px); color: var(--text-primary); margin: 30px 0 20px; text-align: center;
+      text-shadow: 0 0 15px rgba(125, 168, 255, .3);
+    }
+    
+    /* --- СТИЛИ ДЛЯ СТРАНИЦЫ БЛОГА --- */
+    .page-intro {
+      text-align: center;
+      max-width: 65ch;
+      margin: 0 auto 40px;
+      font-size: 18px;
+      color: var(--text-secondary);
+    }
+    .blog-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px;
+    }
+    .article-card-link {
+      text-decoration: none;
+      color: inherit;
+      display: block;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .article-card {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      border-radius: var(--radius-xl);
+      background: var(--sapphire-deep);
+      border: 1px solid var(--glass-border-color);
+      overflow: hidden;
+      box-shadow: var(--shadow-soft);
+      transition: transform .3s ease, box-shadow .3s ease;
+    }
+    @media (hover: hover) {
+      .article-card-link:hover .article-card {
+        transform: translateY(-8px);
+        box-shadow: 0 20px 50px rgba(0,0,0,.4),
+                    0 0 20px var(--gold-accent);
+      }
+    }
+    .article-card__image-placeholder {
+      aspect-ratio: 16 / 9;
+      background-color: var(--bg-dark);
+      border-bottom: 1px solid var(--glass-border-color);
+      display: grid;
+      place-items: center;
+      color: var(--text-secondary);
+      font-size: 14px;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+    }
+    .article-card__content {
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+    }
+    .article-card__date {
+      font-size: 13px;
+      color: var(--text-secondary);
+      margin-bottom: 8px;
+    }
+    .article-card h3 {
+      margin: 0 0 12px;
+      font-size: 20px;
+      font-weight: 600;
+      letter-spacing: .02em;
+      color: var(--text-primary);
+    }
+    .article-card p {
+      margin: 0 0 24px;
+      color: var(--text-secondary);
+      flex-grow: 1;
+    }
+    .article-card__read-more {
+      color: var(--gold-accent);
+      text-decoration: none;
+      font-weight: 600;
+      letter-spacing: .05em;
+      align-self: flex-start;
+      transition: color .3s ease;
+    }
+    .article-card-link:hover .article-card__read-more {
+      color: var(--text-primary);
+      text-decoration: underline;
+    }
+    /* --- КОНЕЦ СТИЛЕЙ БЛОГА --- */
+
+    /* Футер */
+    footer { 
+      margin-top: 34px; border-top: 1px solid var(--glass-border-color); color: var(--text-secondary); 
+      font-size: 13px; padding: 24px 18px; text-align: center; background: rgba(5, 8, 24, 0.6); backdrop-filter: blur(12px);
+    }
+    .dev-signature { margin-top: 10px; }
+    .brand-logo-char { font-family: "JetBrains Mono", monospace; font-weight: 700; color: var(--ink-brand); font-size: 22px; line-height: 1; display: inline-block; vertical-align: middle; }
+
+    /* Анимация модального окна */
+    .modal-overlay { 
+      position: fixed; inset: 0; background: rgba(5, 8, 24, 0.5); backdrop-filter: blur(10px); z-index: 1000; 
+      display: flex; align-items: center; justify-content: center; padding: 14px; 
+      opacity: 0; visibility: hidden; transition: opacity .3s cubic-bezier(0.4, 0, 0.2, 1), visibility .3s cubic-bezier(0.4, 0, 0.2, 1);
+      will-change: opacity;
+    }
+    .modal-overlay.is-visible { opacity: 1; visibility: visible; }
+    .modal { 
+      position: relative; background: linear-gradient(180deg, rgba(13, 26, 79, 0.8), rgba(5, 8, 24, 0.8)); 
+      border: 1px solid var(--glass-border-color); border-radius: var(--radius-xl); 
+      padding: 28px; width: 100%; max-width: 480px; text-align: center; box-shadow: 0 0 40px var(--sapphire-highlight); 
+      transform: translateY(20px) scale(0.98);
+      transition: transform .3s cubic-bezier(0.4, 0, 0.2, 1);
+      will-change: transform, opacity;
+    }
+    .modal-overlay.is-visible .modal { transform: translateY(0) scale(1); }
+    .modal h3 { margin: 0 0 20px; font-weight: 600; font-size: 20px; color: var(--text-primary); }
+    .modal-close { position: absolute; top: 10px; right: 10px; background: none; border: none; color: var(--text-secondary); font-size: 24px; line-height: 1; cursor: pointer; padding: 4px; opacity: .8; transition: opacity .2s ease, transform .2s ease; }
+    .modal-close:hover { opacity: 1; transform: scale(1.1) rotate(90deg); }
+
+    .contact-list { display: flex; flex-direction: column; gap: 10px; text-align: left; }
+    .contact-item__phone { display: block; padding: 14px 16px; border-radius: 12px; background-color: rgba(0,0,0,0.2); border: 1px solid var(--glass-border-color); text-decoration: none; transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease; -webkit-tap-highlight-color: transparent; }
+    .contact-item__phone:hover { background-color: rgba(0,0,0,0.4); box-shadow: 0 0 15px -5px var(--sapphire-highlight); }
+    .contact-item__phone:active { transform: scale(0.98); background-color: rgba(0,0,0,0.5); }
+    .contact-item__title { display: block; font-size: 13px; font-weight: 500; letter-spacing: 0.05em; text-transform: uppercase; color: var(--text-secondary); margin-bottom: 4px; }
+    .contact-item__number { display: block; font-size: 18px; font-weight: 600; letter-spacing: 0.02em; color: var(--text-primary); transition: color 0.3s ease; }
+    .contact-item__phone:hover .contact-item__number { color: var(--gold-accent); }
+    
+    /* Мобильная навигация */
+    .nav-toggle { display: none; z-index: 1002; position: relative; width: 34px; height: 34px; background: transparent; border: none; cursor: pointer; padding: 0; -webkit-tap-highlight-color: transparent; }
+    .nav-toggle span { display: block; width: 24px; height: 2px; background: var(--text-primary); border-radius: 2px; margin: 6px auto; transition: transform 0.3s ease, opacity 0.3s ease; }
+    .nav-toggle.is-active span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+    .nav-toggle.is-active span:nth-child(2) { opacity: 0; }
+    .nav-toggle.is-active span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+
+    .mobile-nav { 
+      position: fixed; inset: 0; z-index: 1001; display: flex;
+      flex-direction: column; align-items: center; justify-content: center; gap: 20px; 
+      background: rgba(5, 8, 24, 0.8); backdrop-filter: blur(16px); 
+      opacity: 0; visibility: hidden; pointer-events: none; transform: translateY(-20px);
+      transition: opacity .3s ease-in-out, visibility .3s ease-in-out, transform .3s ease-in-out;
+    }
+    .mobile-nav.is-open { opacity: 1; visibility: visible; pointer-events: auto; transform: translateY(0); }
+    .mobile-nav-close { position: absolute; top: 14px; right: 16px; width: 44px; height: 44px; background: none; border: none; color: var(--text-primary); font-size: 36px; line-height: 1; cursor: pointer; opacity: 0.9; transition: opacity .3s, transform .3s; }
+    .mobile-nav-close:hover { opacity: 1; transform: rotate(90deg); }
+    .mobile-nav a { color: var(--text-primary); text-decoration: none; font-size: 24px; font-weight: 500; padding: 12px 24px; opacity: 0; transform: translateY(15px); transition: opacity .3s ease, transform .3s ease, color .3s ease; }
+    .mobile-nav.is-open a { opacity: 1; transform: translateY(0); }
+    .mobile-nav.is-open a:nth-child(2) { transition-delay: .05s; }
+    .mobile-nav.is-open a:nth-child(3) { transition-delay: .1s; }
+    .mobile-nav.is-open a:nth-child(4) { transition-delay: .15s; }
+    .mobile-nav.is-open a:nth-child(5) { transition-delay: .2s; }
+
+    /* Адаптивность */
+    @media (max-width: 768px) {
+      nav.primary { display: none; }
+      .nav-toggle { display: block; }
+    }
+    
+    /* Анимации появления */
+    [data-anim] { opacity: 0; transform: translateY(20px); transition: opacity .6s ease-out, transform .6s ease-out; }
+    [data-anim].is-visible { opacity: 1; transform: translateY(0); }
+    .blog-grid > a:nth-child(1) { transition-delay: .1s; }
+    .blog-grid > a:nth-child(2) { transition-delay: .2s; }
+    .blog-grid > a:nth-child(3) { transition-delay: .3s; }
+
+  </style>
+</head>
+<body>
+
+  <div id="particles-bg"></div>
+
+  <header class="site-header">
+    <div class="nav-wrap">
+      <a href="index.html" class="brand-link" aria-label="На главную">
+        <div class="brand">
+          <span class="brand-mark" aria-hidden="true"></span>
+          Сапфир
+        </div>
+      </a>
+      <nav class="primary" id="primaryNav">
+        <a href="index.html">Главная</a>
+        <a href="services.html">Услуги</a>
+        <a href="blog.html">Блог</a>
+        <a href="index.html#map-section">Как нас найти</a>
+        <a href="#" class="nav-contact-trigger">Контакты</a>
+      </nav>
+      <button class="nav-toggle" id="navToggle" aria-label="Открыть меню" aria-expanded="false" aria-controls="mobileNav">
+        <span aria-hidden="true"></span><span aria-hidden="true"></span><span aria-hidden="true"></span>
+      </button>
+    </div>
+  </header>
+
+  <div class="mobile-nav" id="mobileNav" aria-hidden="true">
+      <button class="mobile-nav-close" id="navClose" aria-label="Закрыть меню">&times;</button>
+      <a href="index.html">Главная</a>
+      <a href="services.html">Услуги</a>
+      <a href="blog.html">Блог</a>
+      <a href="index.html#map-section">Как нас найти</a>
+      <a href="#" class="nav-contact-trigger">Контакты</a>
+  </div>
+
+  <main>
+    
+    <section class="section" id="blog">
+      <h1 data-anim>Наш Блог</h1>
+      <p class="page-intro" data-anim>
+        Блог находится в разработке. Скоро здесь появятся полезные статьи о красоте и уходе. Следите за обновлениями!
+      </p>
+
+      <div class="blog-grid">
+        <a href="#" class="article-card-link" data-anim>
+          <article class="article-card">
+            <div class="article-card__image-placeholder">
+              <span>Изображение статьи</span>
+            </div>
+            <div class="article-card__content">
+              <span class="article-card__date">27 августа 2025</span>
+              <h3>5 секретов идеального блонда: как сохранить цвет и здоровье волос</h3>
+              <p>Узнайте, как правильно ухаживать за осветленными волосами, какие средства использовать для нейтрализации желтизны и как продлить яркость вашего оттенка...</p>
+              <span class="article-card__read-more">Читать далее →</span>
+            </div>
+          </article>
+        </a>
+        
+        
+
+      </div>
+    </section>
+
+  </main>
+  
+  <footer>
+    © Сапфир, 2025. v 1.0
+    <div class="dev-signature">Сайт разработал Алексей <span class="brand-logo-char">Э.</span> Бронников</div>
+  </footer>
+
+  <div class="modal-overlay" id="contactModal" aria-hidden="true">
+    <div class="modal" role="dialog" aria-labelledby="modalTitle">
+      <button class="modal-close" aria-label="Закрыть окно">&times;</button>
+      <h3 id="modalTitle">Запись по телефону</h3>
+      <div class="contact-list">
+        <div class="contact-item">
+          <a href="tel:+79171234567" class="contact-item__phone">
+            <span class="contact-item__title">Парикмахерские услуги</span>
+            <span class="contact-item__number">+7 (917) 123-45-67</span>
+          </a>
+        </div>
+        <div class="contact-item">
+          <a href="tel:+79272345678" class="contact-item__phone">
+            <span class="contact-item__title">Ногтевой сервис</span>
+            <span class="contact-item__number">+7 (927) 234-56-78</span>
+          </a>
+        </div>
+        <div class="contact-item">
+          <a href="tel:+79373456789" class="contact-item__phone">
+            <span class="contact-item__title">Косметология</span>
+            <span class="contact-item__number">+7 (937) 345-67-89</span>
+          </a>
+        </div>
+        <div class="contact-item">
+          <a href="tel:+79874567890" class="contact-item__phone">
+            <span class="contact-item__title">Коррекция бровей</span>
+            <span class="contact-item__number">+7 (987) 456-78-90</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/tsparticles@2.12.0/tsparticles.bundle.min.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Анимации появления
+      (function(){
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('is-visible');
+              observer.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.2 });
+        document.querySelectorAll('[data-anim]').forEach(el => observer.observe(el));
+      })();
+
+      // Улучшенная логика блокировки скролла
+      const scrollLocker = (function() {
+        let lockCount = 0;
+        return {
+          lock: function() {
+            if (lockCount === 0) {
+              const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+              const bodyIsScrollable = document.body.scrollHeight > window.innerHeight;
+              if (scrollbarWidth > 0 && bodyIsScrollable) {
+                document.body.style.paddingRight = `${scrollbarWidth}px`;
+              }
+              document.body.classList.add('no-scroll');
+            }
+            lockCount++;
+          },
+          unlock: function() {
+            lockCount--;
+            if (lockCount <= 0) {
+              document.body.classList.remove('no-scroll');
+              document.body.style.paddingRight = '';
+              lockCount = 0;
+            }
+          }
+        };
+      })();
+
+      // Мобильное меню
+      (function(){
+        const navToggle = document.getElementById('navToggle');
+        const mobileNav = document.getElementById('mobileNav');
+        const navClose = document.getElementById('navClose');
+        const toggleMenu = (force) => {
+          const isOpen = typeof force === 'boolean' ? force : !mobileNav.classList.contains('is-open');
+          mobileNav.classList.toggle('is-open', isOpen);
+          navToggle.classList.toggle('is-active', isOpen);
+          isOpen ? scrollLocker.lock() : scrollLocker.unlock();
+        };
+        navToggle.addEventListener('click', () => toggleMenu());
+        navClose.addEventListener('click', () => toggleMenu(false));
+        // Не закрываем меню при клике на якорные ссылки на ДРУГУЮ страницу
+        mobileNav.querySelectorAll('a').forEach(link => {
+          if (!link.getAttribute('href').includes('#')) {
+            link.addEventListener('click', () => toggleMenu(false));
+          }
+        });
+        document.addEventListener('keydown', (e) => e.key === 'Escape' && mobileNav.classList.contains('is-open') && toggleMenu(false));
+      })();
+
+      // Модальное окно
+      (function(){
+        const modal = document.getElementById('contactModal');
+        const openTriggers = document.querySelectorAll('.modal-trigger, .nav-contact-trigger');
+        const closeBtn = modal.querySelector('.modal-close');
+        const openModal = (e) => { e.preventDefault(); modal.classList.add('is-visible'); scrollLocker.lock(); };
+        const closeModal = () => { modal.classList.remove('is-visible'); scrollLocker.unlock(); };
+        openTriggers.forEach(trigger => trigger.addEventListener('click', openModal));
+        closeBtn.addEventListener('click', closeModal);
+        modal.addEventListener('click', (e) => e.target === modal && closeModal());
+        document.addEventListener('keydown', (e) => e.key === 'Escape' && modal.classList.contains('is-visible') && closeModal());
+      })();
+      
+      // Анимация частиц
+      (function(){
+        if (typeof tsParticles === 'undefined') { console.error('tsParticles not loaded'); return; }
+        tsParticles.load("particles-bg", {
+          fullScreen: { enable: false },
+          particles: {
+            number: { value: 50, density: { enable: true, value_area: 800 } },
+            shape: { type: "image", image: { src: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 72'%3E%3Cdefs%3E%3CradialGradient id='a' cx='50%25' cy='50%25' r='50%25'%3E%3Cstop offset='0%25' stop-color='%23c5d2ff'/%3E%3Cstop offset='100%25' stop-color='%231a3a9a'/%3E%3C/radialGradient%3E%3C/defs%3E%3Cpath d='M40 0L80 22L40 72L0 22L40 0Z' fill='url(%23a)'/%3E%3Cpath d='M40 0L0 22L40 26Z' fill='%23e8eaf6' fill-opacity='0.6'/%3E%3Cpath d='M40 0L80 22L40 26Z' fill='%237da8ff' fill-opacity='0.6'/%3E%3Cpath d='M0 22L40 72L40 26Z' fill='%230d1a4f' fill-opacity='0.7'/%3E%3Cpath d='M80 22L40 72L40 26Z' fill='%231a3a9a' fill-opacity='0.7'/%3E%3Cpath d='M40 5L20 16L40 24L60 16L40 5Z' fill='%23fff' fill-opacity='0.3'/%3E%3Cpath d='M40 26L20 16L0 22L40 26Z' fill='%23a7b0d1' fill-opacity='0.3'/%3E%3C/svg%3E" } },
+            opacity: { value: { min: 0.4, max: 0.9 }, animation: { enable: true, speed: 2.5, sync: false } },
+            size: { value: { min: 12, max: 28 } },
+            shadow: { enable: true, blur: 15, color: "#4a7dff" },
+            rotate: { value: { min: 0, max: 360 }, direction: "random", animation: { enable: true, speed: 5, sync: false } },
+            twinkle: { particles: { enable: true, frequency: 0.1, opacity: 1, color: "#fff5cc" } },
+            move: { enable: true, speed: { min: 0.8, max: 2 }, direction: "bottom", straight: true, outModes: { default: "out" } }
+          },
+          interactivity: { events: { onHover: { enable: false }, onClick: { enable: false } } },
+          detectRetina: true
+        });
+      })();
+
+    });
+  </script>
+</body>
+</html>
