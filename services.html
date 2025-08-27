@@ -76,7 +76,6 @@
     
     #particles-bg {
       position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; 
-      /* ИСПРАВЛЕНИЕ 2: Удален transform: translateZ(0) для исправления дерганий на мобильных */
       will-change: transform;
     }
 
@@ -230,12 +229,10 @@
     /* Цветовые схемы для карточек */
     .service-card--sapphire { --accent-color: var(--accent-hair); }
     .service-card--garnet { --accent-color: var(--accent-nails); }
-    .service-card--emerald { --accent-color: var(--accent-cosmo); } /* ИСПРАВЛЕНИЕ 1: Вернули цвет */
+    .service-card--emerald { --accent-color: var(--accent-cosmo); }
     .service-card--gold { --accent-color: var(--accent-brows); }
     
     /* --- АНИМАЦИИ --- */
-
-    /* 1. Сапфировая волна (теперь и для изумрудной карточки) */
     .service-card--sapphire::before,
     .service-card--emerald::before {
         content: '';
@@ -243,7 +240,7 @@
         bottom: 0; left: 0; right: 0;
         height: 0;
         background: linear-gradient(to top, var(--accent-color), transparent);
-        opacity: 0.7; /* Сделал универсальной */
+        opacity: 0.7;
         z-index: 1;
         transition: height 0.4s ease-out;
     }
@@ -260,7 +257,6 @@
       }
     }
 
-    /* 2. Гранатовая вспышка */
     .service-card--garnet::before {
       content: '';
       position: absolute;
@@ -282,7 +278,6 @@
       }
     }
 
-    /* 3. Золотой блеск */
     .service-card--gold::before {
       content: '';
       position: absolute;
@@ -365,7 +360,6 @@
     .mobile-nav.is-open a:nth-child(4) { transition-delay: .15s; }
     .mobile-nav.is-open a:nth-child(5) { transition-delay: .2s; }
 
-
     /* Адаптивность */
     @media (max-width: 768px) {
       nav.primary { display: none; }
@@ -398,7 +392,7 @@
         <a href="index.html">Главная</a>
         <a href="services.html">Услуги</a>
         <a href="blog.html">Блог</a>
-        <a href="#map-section">Как нас найти</a>
+        <a href="index.html#map-section">Как нас найти</a>
         <a href="#" class="nav-contact-trigger">Контакты</a>
       </nav>
       <button class="nav-toggle" id="navToggle" aria-label="Открыть меню" aria-expanded="false" aria-controls="mobileNav">
@@ -412,7 +406,7 @@
       <a href="index.html">Главная</a>
       <a href="services.html">Услуги</a>
       <a href="blog.html">Блог</a>
-      <a href="#map-section">Как нас найти</a>
+      <a href="index.html#map-section">Как нас найти</a>
       <a href="#" class="nav-contact-trigger">Контакты</a>
   </div>
 
@@ -582,7 +576,12 @@
         };
         navToggle.addEventListener('click', () => toggleMenu());
         navClose.addEventListener('click', () => toggleMenu(false));
-        mobileNav.querySelectorAll('a').forEach(link => link.addEventListener('click', () => toggleMenu(false)));
+        // Не закрываем меню при клике на якорные ссылки на ДРУГУЮ страницу
+        mobileNav.querySelectorAll('a').forEach(link => {
+          if (!link.getAttribute('href').includes('#')) {
+            link.addEventListener('click', () => toggleMenu(false));
+          }
+        });
         document.addEventListener('keydown', (e) => e.key === 'Escape' && mobileNav.classList.contains('is-open') && toggleMenu(false));
       })();
 
