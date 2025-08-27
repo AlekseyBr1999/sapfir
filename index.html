@@ -318,6 +318,7 @@
     .mobile-nav.is-open a:nth-child(2) { transition-delay: .1s; }
     .mobile-nav.is-open a:nth-child(3) { transition-delay: .2s; }
     .mobile-nav.is-open a:nth-child(4) { transition-delay: .3s; }
+    .mobile-nav.is-open a:nth-child(5) { transition-delay: .4s; }
 
     /* Адаптивность */
     @media (max-width: 768px) {
@@ -356,6 +357,7 @@
       </a>
       <nav class="primary" id="primaryNav">
         <a href="services.html">Услуги</a>
+        <a href="blog.html">Блог</a>
         <a href="#map-section">Как нас найти</a>
         <a href="#" class="nav-contact-trigger">Контакты</a>
       </nav>
@@ -368,6 +370,7 @@
   <div class="mobile-nav" id="mobileNav" aria-hidden="true">
       <button class="mobile-nav-close" id="navClose" aria-label="Закрыть меню">&times;</button>
       <a href="services.html">Услуги</a>
+      <a href="blog.html">Блог</a>
       <a href="#map-section">Как нас найти</a>
       <a href="#" class="nav-contact-trigger">Контакты</a>
   </div>
@@ -589,12 +592,15 @@
       function initMap() {
         if (typeof ymaps === 'undefined') { console.error('Yandex Maps script is not loaded.'); return; }
         ymaps.ready(() => {
-          ymaps.geocode('Тольятти, ул. 70 лет Октября, 35').then(res => {
-            const coords = res.geoObjects.get(0).geometry.getCoordinates();
+          try {
+            const coords = [53.54112164561584, 49.337911170825244];
             const myMap = new ymaps.Map('map', { center: coords, zoom: 17, controls: ['zoomControl'] });
             myMap.geoObjects.add(new ymaps.Placemark(coords, { balloonContentHeader: 'Салон «Сапфир»' }, { preset: 'islands#dotIcon', iconColor: '#4a7dff' }));
             myMap.behaviors.disable('scrollZoom');
-          }).catch(err => console.error('Geocoding failed:', err));
+          } catch(err) {
+            console.error('Yandex Map initialization failed:', err);
+            document.getElementById('map').innerHTML = 'Не удалось загрузить карту.';
+          }
         });
       }
       initMap();
