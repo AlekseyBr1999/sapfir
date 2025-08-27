@@ -582,36 +582,27 @@
         }
 
         ymaps.ready(() => {
-          const coords = [53.54112164561584, 49.337911170825244];
-          const placemark = new ymaps.Placemark(coords, {
-            balloonContentHeader: 'Салон «Сапфир»',
-            balloonContentBody: 'ул. 70 лет Октября, 35'
-          }, {
-            preset: 'islands#dotIcon',
-            iconColor: '#4a7dff'
-          });
-
-          // Функция для создания карты с заданным типом
-          const createMap = (mapType) => {
-            const map = new ymaps.Map('map', {
+          try {
+            const coords = [53.54112164561584, 49.337911170825244];
+            const myMap = new ymaps.Map('map', {
               center: coords,
               zoom: 17,
-              controls: ['zoomControl'],
-              type: mapType
+              controls: ['zoomControl']
+              // Тип карты не указываем, будет использован стандартный (светлый)
             });
-            map.geoObjects.add(placemark);
-            map.behaviors.disable('scrollZoom');
-          };
 
-          // Пытаемся создать темную карту
-          try {
-            createMap('yandex#dark');
+            myMap.geoObjects.add(new ymaps.Placemark(coords, {
+              balloonContentHeader: 'Салон «Сапфир»',
+              balloonContentBody: 'ул. 70 лет Октября, 35'
+            }, {
+              preset: 'islands#dotIcon',
+              iconColor: '#4a7dff'
+            }));
+
+            myMap.behaviors.disable('scrollZoom');
           } catch (err) {
-            // Если не получилось (например, слой недоступен), создаем обычную карту
-            console.warn('Dark map layer is unavailable. Falling back to standard map. Error:', err);
-            // Очищаем контейнер от остатков неудачной инициализации
-            document.getElementById('map').innerHTML = '';
-            createMap('yandex#map');
+            console.error('Yandex Map initialization failed:', err);
+            document.getElementById('map').innerHTML = 'Не удалось загрузить карту.';
           }
         });
       }
