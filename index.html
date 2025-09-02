@@ -4,22 +4,22 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Парикмахерские услуги — Салон красоты «Сапфир»</title>
+  <title>Сапфир — салон красоты в Тольятти</title>
 
   <link rel="icon" href="/icons/favicon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
   <link rel="manifest" href="/icons/manifest.json">
   <meta name="theme-color" content="#0d1a4f">
   
-  <meta name="description" content="Парикмахерские услуги в салоне красоты Сапфир: стрижки, окрашивания, укладки и уходовые процедуры от лучших мастеров." />
+  <meta name="description" content="Салон красоты Сапфир в Тольятти — парикмахерские услуги, ногтевой сервис, косметология и коррекция бровей." />
   
+  <script src="https://api-maps.yandex.ru/2.1/?apikey=a93f5820-da04-4b9d-b3a3-0eb3c4e72a4d&lang=ru_RU" type="text/javascript"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@700&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,700&display=swap" rel="stylesheet">
   <style>
     :root {
-      /* Глубокая сапфировая палитра */
+      /* Новая глубокая сапфировая палитра */
       --bg-dark: #050818;
       --sapphire-deep: #0d1a4f;
       --sapphire-mid: #1a3a9a;
@@ -53,40 +53,25 @@
       font-family: "Segoe UI", Roboto, "Helvetica Neue", Arial, system-ui, -apple-system, "Noto Sans", "Liberation Sans", sans-serif;
       line-height: 1.6;
       scrollbar-gutter: stable;
-      background-color: var(--bg-dark);
-      position: relative;
+      background: linear-gradient(180deg, var(--bg-dark) 0%, var(--sapphire-deep) 70%, var(--bg-dark) 100%);
+      background-size: 100% 200%;
+      animation: gradient-pan 12s ease-in-out infinite alternate;
       overflow-x: hidden;
-      overscroll-behavior-y: contain;
-    }
-    
-    /* --- ИЗМЕНЕНИЕ #1: Исправленная и рабочая анимация фона --- */
-    body::before {
-      content: '';
-      position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      z-index: -1;
-      background: 
-        radial-gradient(ellipse 50% 40% at 20% 25%, var(--sapphire-highlight), transparent),
-        radial-gradient(ellipse 60% 50% at 80% 15%, var(--sapphire-deep), transparent),
-        radial-gradient(ellipse 40% 50% at 55% 80%, var(--sapphire-mid), transparent),
-        radial-gradient(ellipse 70% 50% at -10% 100%, var(--sapphire-deep), transparent);
-      background-color: var(--bg-dark);
-      opacity: 0.5;
-      animation: aurora-flow 25s ease-in-out infinite alternate;
     }
 
-    @keyframes aurora-flow {
-      from { transform: rotate(0deg) scale(1.5); }
-      to { transform: rotate(45deg) scale(1.5); }
+    @keyframes gradient-pan {
+      from { background-position: 0% 0%; }
+      to { background-position: 0% 100%; }
     }
 
     @media (prefers-reduced-motion: reduce) {
-      body, body::before, .mobile-nav, .btn::before, .modal, .modal-overlay, .accordion-content-wrap, .lightbox-overlay { 
+      body, .mobile-nav, .card::after, .btn::before, #particles-bg, .modal, .modal-overlay, .faq-content-wrap { 
         animation: none !important; 
         transition: none !important;
       }
     }
 
+    /* Стилизация скроллбара для WebKit */
     ::-webkit-scrollbar { width: 8px; }
     ::-webkit-scrollbar-track { background: transparent; }
     ::-webkit-scrollbar-thumb {
@@ -94,6 +79,10 @@
       background: linear-gradient(180deg, var(--sapphire-highlight), var(--sapphire-mid));
     }
     body.no-scroll { overflow: hidden; }
+    
+    #particles-bg {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; 
+    }
 
     /* Шапка сайта */
     header.site-header {
@@ -118,227 +107,206 @@
         transform: translateX(-50%); transition: width .3s ease;
     }
     nav.primary a:hover::after { width: 100%; }
-    
-    /* Секции */
-    .section { max-width: 1200px; margin: 30px auto; padding: 20px 18px; }
-    .section h1 {
-      font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 600; letter-spacing: .05em; text-transform: uppercase;
-      font-size: clamp(32px, 6vw, 48px); color: var(--text-primary); margin: 30px 0 40px; text-align: center;
-      text-shadow: 0 0 20px var(--accent-hair);
+
+    /* Герой-блок */
+    .hero { position: relative; overflow: hidden; padding: clamp(40px, 12vh, 100px) 18px clamp(80px, 14vh, 140px); text-align: center; }
+    .hero-inner { max-width: 1200px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; }
+    .headline { position: relative; margin: 0; line-height: 1; letter-spacing: .05em; text-transform: uppercase; display: inline-block; }
+    .headline-main {
+      display: block; font-family: Georgia, "Times New Roman", serif; font-weight: 300; font-size: clamp(64px, 20vw, 240px);
+      background: linear-gradient(90deg, #cfd9ff 0%, #a7b7ff 28%, #e8eaff 60%, #a3baff 100%);
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+      text-shadow: 0 0 40px rgba(125, 168, 255, .45);
     }
-    
-    .accordion-group {
-        display: flex;
-        flex-direction: column;
-        gap: 16px;
-    }
-    
-    .masters-section {
-        padding: 24px;
-        border-radius: var(--radius-xl);
-        background: rgba(5, 8, 24, 0.6);
-        backdrop-filter: blur(12px);
-        border: 1px solid var(--glass-border-color);
-        margin-bottom: 24px;
-    }
-    .masters-section h2 {
-        font-family: 'Cormorant Garamond', Georgia, serif;
-        font-weight: 600;
-        letter-spacing: .05em;
-        text-transform: uppercase;
-        font-size: 24px;
-        color: var(--text-primary);
-        margin: 0 0 24px;
-        text-align: center;
-        text-shadow: 0 0 15px var(--accent-hair);
-    }
-    .masters-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-        gap: 24px;
-    }
-    .master-card {
-        display: flex;
-        flex-direction: column;
-        gap: 16px;
-        align-items: center;
-        text-align: center;
-    }
-    
-    /* --- ИЗМЕНЕНИЕ #4: Стили для фото мастеров --- */
-    .master-photo {
-        width: 150px;
-        height: 150px;
-        border-radius: 50%;
-        object-fit: cover;
-        border: 2px solid var(--accent-hair);
-        box-shadow: 0 0 15px var(--accent-hair);
+    .headline-sub {
+      display: block;
+      font-family: "Segoe UI", sans-serif;
+      font-weight: 400;
+      font-size: clamp(14px, 4vw, 22px);
+      letter-spacing: .3em;
+      color: var(--text-secondary);
+      margin-top: -10px;
+      text-transform: uppercase;
+      text-shadow: 0 0 10px rgba(125, 168, 255, .2);
+      transition: margin-top 0.3s ease; /* Добавим плавность для адаптивности */
     }
 
-    .master-name {
-        font-family: 'Cormorant Garamond', serif;
-        font-style: italic;
-        font-weight: 700;
-        font-size: 26px;
-        color: var(--text-primary);
-        margin: 0;
-    }
-    .master-desc {
-        padding: 12px;
-        border: 1px solid var(--glass-border-color);
-        border-radius: 12px;
-        background: rgba(5, 8, 24, 0.5);
-        font-size: 15px;
-    }
-    
-    details.accordion {
-        border-radius: var(--radius-xl);
-        background: var(--glass-bg);
-        border: 1px solid var(--glass-border-color);
-        transition: border-color .3s ease, box-shadow .3s ease;
-        overflow: hidden;
-    }
-    details.accordion[open] {
-        border-color: var(--accent-hair);
-        box-shadow: 0 0 25px rgba(74, 125, 255, 0.3);
-    }
-    
-    details.accordion summary {
-        position: relative;
-        padding: 18px 50px 18px 20px;
-        font-size: 18px;
-        font-weight: 600;
-        color: var(--text-primary);
-        cursor: pointer;
-        list-style: none;
-        user-select: none;
-        transition: background-color 0.3s ease;
-    }
-    details.accordion summary:hover {
-        background-color: rgba(74, 125, 255, 0.1);
-    }
-    details.accordion summary::-webkit-details-marker { display: none; }
-    
-    details.accordion summary::after {
-        content: '';
-        position: absolute;
-        right: 20px;
-        top: 50%;
-        width: 10px;
-        height: 10px;
-        border-bottom: 2px solid var(--text-secondary);
-        border-right: 2px solid var(--text-secondary);
-        transform: translateY(-60%) rotate(45deg);
-        transition: transform .3s cubic-bezier(0.25, 1, 0.5, 1);
-    }
-    details.accordion[open] > summary::after {
-        transform: translateY(-40%) rotate(225deg);
-    }
-    
-    .accordion-content-wrap {
-        max-height: 0;
-        overflow: hidden;
-        transition: max-height 0.5s ease-in-out;
-    }
-    .accordion-content {
-        padding: 0 20px 20px;
-        color: var(--text-secondary);
-        border-top: 1px solid var(--glass-border-color);
-    }
-    details.accordion[open] > summary + .accordion-content-wrap {
-        padding-bottom: 20px;
-    }
-    
-    .service-item-content {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 16px;
-        align-items: center;
-        justify-content: space-between;
-        padding-top: 20px;
-    }
-    .service-info { display: flex; flex-direction: column; gap: 4px; }
-    .service-info__label { font-size: 13px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-secondary); }
-    .service-info__value { font-size: 18px; font-weight: 600; color: var(--text-primary); }
-    .service-info__value--price { color: var(--gold-accent); }
-    .service-info--masters { display: flex; flex-direction: column; gap: 8px; flex-grow: 1; }
-    .masters-list { display: flex; flex-wrap: wrap; gap: 8px; }
-    .master-tag { font-size: 14px; font-weight: 500; padding: 4px 10px; border-radius: 6px; background-color: rgba(5, 8, 24, 0.5); border: 1px solid var(--glass-border-color); color: var(--text-secondary); }
-    
-    .service-details-accordion { margin-top: 10px; border-color: rgba(74, 125, 255, 0.5); background: rgba(5, 8, 24, 0.7); }
-    @media (max-width: 500px) { .service-details-accordion { flex-basis: 100%; } }
-    .service-details-accordion summary { font-size: 16px; font-weight: 400; padding: 12px 50px 12px 20px; background-color: var(--sapphire-deep); border-radius: 12px; }
-    
-    .service-details-content { display: flex; flex-direction: column; gap: 16px; padding-top: 20px; }
-    .service-photo-wrapper { display: flex; flex-direction: column; gap: 12px; align-items: center; }
-    
-    img.service-photo {
-      display: block; width: 100%; max-width: 250px; aspect-ratio: 1 / 1;
-      object-fit: cover; border-radius: 12px; border: 1px solid var(--glass-border-color);
-    }
-    
-    .btn--zoom-photo { padding: 8px 16px; font-size: 14px; width: auto; }
-    .service-text-content p { margin: 0; font-size: 16px; line-height: 1.7; color: var(--text-secondary); }
-
-    @media (min-width: 640px) {
-        .service-details-content { display: grid; grid-template-columns: 250px 1fr; align-items: start; gap: 32px; }
-        .service-photo-wrapper { align-items: stretch; }
-        img.service-photo { max-width: none; }
-        .service-text-content { max-width: 65ch; }
-        .service-text-content p { font-size: 18px; }
-    }
-    
+    /* Кнопки */
+    .cta-row { display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; margin-top: clamp(30px, 8vh, 80px); }
     .btn {
       position: relative; display: inline-flex; align-items: center; justify-content: center; gap: 10px;
-      padding: 12px 20px; border-radius: 999px; border: 1px solid var(--glass-border-color);
-      background-color: var(--glass-bg); color: var(--text-primary); text-decoration: none;
-      letter-spacing: .04em; font-weight: 600; box-shadow: 0 4px 12px rgba(0,0,0,.3);
-      transition: transform .25s ease, box-shadow .25s ease, background-color .25s ease;
-      -webkit-tap-highlight-color: transparent; cursor: pointer;
+      padding: 16px 28px; border-radius: 999px;
+      border: 1px solid var(--glass-border-color);
+      background-color: var(--glass-bg);
+      color: var(--text-primary); text-decoration: none; letter-spacing: .04em; font-weight: 600;
+      box-shadow: 0 8px 24px rgba(0,0,0,.3);
+      transition: transform .25s ease, box-shadow .25s ease;
+      -webkit-tap-highlight-color: transparent;
     }
     @media (hover: hover) {
       .btn:hover {
-        transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,0,0,.4); background-color: var(--sapphire-deep);
+        transform: translateY(-3px);
+        box-shadow: 0 12px 32px rgba(0,0,0,.4),
+                    0 0 15px var(--sapphire-highlight),
+                    0 0 25px var(--sapphire-highlight);
       }
     }
     .btn:active { transform: translateY(0) scale(0.98); }
+    .btn.secondary { background: transparent; }
+    .btn.secondary:hover { background: var(--glass-bg); }
+    .btn svg { width: 18px; height: 18px; }
 
+    /* Секции */
+    .section { max-width: 1200px; margin: 30px auto; padding: 0 18px; }
+    .section h2 {
+      font-family: Georgia, "Times New Roman", serif; font-weight: 400; letter-spacing: .14em; text-transform: uppercase;
+      font-size: 24px; color: var(--text-primary); margin: 30px 0 20px; text-align: center;
+      text-shadow: 0 0 15px rgba(125, 168, 255, .3);
+    }
+
+    /* Карточки услуг */
+    .services { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px; }
+    .card-link { text-decoration: none; color: inherit; display: block; -webkit-tap-highlight-color: transparent; }
+    .card {
+      position: relative; border-radius: var(--radius-xl);
+      background: var(--sapphire-deep);
+      border: 1px solid var(--glass-border-color);
+      padding: 24px; overflow: hidden;
+      box-shadow: var(--shadow-soft);
+      transition: transform .3s ease, box-shadow .3s ease;
+    }
+    @media (hover: hover) {
+      .card-link:hover .card {
+        transform: translateY(-8px);
+        box-shadow: 0 20px 50px rgba(0,0,0,.4),
+                    0 0 20px var(--accent-color, var(--sapphire-highlight)),
+                    inset 0 0 15px rgba(255,255,255,0.05);
+      }
+    }
+    .card::after {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+      background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), var(--accent-color, var(--sapphire-highlight)), transparent 60%);
+      opacity: 0; z-index: 0; pointer-events: none; filter: blur(50px);
+    }
+    @media (hover: none) { .card::after { opacity: 0.6; animation: mobile-glow 8s infinite ease-in-out alternate; } }
+    @keyframes mobile-glow {
+      0% { --x: 0%; --y: 0%; } 25% { --x: 100%; --y: 20%; } 50% { --x: 80%; --y: 100%; } 75% { --x: 20%; --y: 80%; } 100% { --x: 0%; --y: 0%; }
+    }
+    .card > * { position: relative; z-index: 1; }
+    .card .icon {
+      width: 54px; height: 54px; border-radius: 14px; display: grid; place-items: center;
+      background: rgba(5, 8, 24, 0.7); border: 1px solid var(--glass-border-color); box-shadow: inset 0 0 12px rgba(0,0,0,.3); transition: transform .4s ease;
+    }
+    .card-link:hover .icon { transform: scale(1.1); }
+    .card .icon svg { width: 28px; height: 28px; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+    .card h3 { margin: 16px 0 8px; font-weight: 600; letter-spacing: .02em; color: var(--text-primary); }
+    .card p { margin: 0; color: var(--text-secondary); }
+    .card--hair { --accent-color: var(--accent-hair); } .card--hair .icon svg { stroke: var(--accent-hair); stroke-width: 1.5; }
+    .card--nails { --accent-color: var(--accent-nails); } .card--nails .icon svg { stroke: var(--accent-nails); stroke-width: 1.5; }
+    .card--cosmo { --accent-color: var(--accent-cosmo); } .card--cosmo .icon svg { stroke: var(--accent-cosmo); stroke-width: 1.5; }
+    .card--brows { --accent-color: var(--accent-brows); } .card--brows .icon svg { stroke: var(--accent-brows); stroke-width: 1.8; }
+
+    /* Карта и контакты */
+    .map-section { margin-top: 40px; }
+    #map-container { border-radius: var(--radius-xl); overflow: hidden; border: 1px solid var(--glass-border-color); box-shadow: var(--shadow-soft); height: 420px; background-color: var(--bg-dark); }
+    #map { width: 100%; height: 100%; }
+    
+    details.faq-item { margin-top: 18px; border-radius: var(--radius-xl); background: var(--glass-bg); border: 1px solid var(--glass-border-color); transition: border-color .3s ease; overflow: clip; }
+    details.faq-item[open] { border-color: var(--sapphire-highlight); }
+    details.faq-item summary { position: relative; padding: 16px 46px 16px 18px; font-size: 16px; font-weight: 600; color: var(--text-primary); cursor: pointer; list-style: none; user-select: none; }
+    details.faq-item summary::-webkit-details-marker { display: none; }
+    details.faq-item summary::after { content: ''; position: absolute; right: 18px; top: 50%; width: 8px; height: 8px; border-bottom: 2px solid var(--text-secondary); border-right: 2px solid var(--text-secondary); transform: translateY(-60%) rotate(45deg); transition: transform .3s ease; }
+    details.faq-item[open] summary::after { transform: translateY(-40%) rotate(225deg); }
+    
+    .faq-content-wrap { 
+      max-height: 0;
+      overflow: hidden; 
+      transition: max-height 0.4s ease-in-out;
+    }
+    .faq-content { padding: 0 18px 16px; color: var(--text-secondary); }
+
+    /* Футер */
     footer { 
       margin-top: 34px; border-top: 1px solid var(--glass-border-color); color: var(--text-secondary); 
       font-size: 13px; padding: 24px 18px; text-align: center; background: rgba(5, 8, 24, 0.6); backdrop-filter: blur(12px);
     }
     .dev-signature { margin-top: 10px; }
     .brand-logo-char { font-family: "JetBrains Mono", monospace; font-weight: 700; color: var(--ink-brand); font-size: 22px; line-height: 1; display: inline-block; vertical-align: middle; }
-    
+
+    /* Анимация модального окна */
     .modal-overlay { 
       position: fixed; inset: 0; background: rgba(5, 8, 24, 0.5); backdrop-filter: blur(10px); z-index: 1000; 
       display: flex; align-items: center; justify-content: center; padding: 14px; 
-      opacity: 0; visibility: hidden; transition: opacity .3s ease, visibility .3s ease;
+      opacity: 0; visibility: hidden; transition: opacity .3s cubic-bezier(0.4, 0, 0.2, 1), visibility .3s cubic-bezier(0.4, 0, 0.2, 1); 
     }
     .modal-overlay.is-visible { opacity: 1; visibility: visible; }
     .modal { 
       position: relative; background: linear-gradient(180deg, rgba(13, 26, 79, 0.8), rgba(5, 8, 24, 0.8)); 
       border: 1px solid var(--glass-border-color); border-radius: var(--radius-xl); 
       padding: 28px; width: 100%; max-width: 480px; text-align: center; box-shadow: 0 0 40px var(--sapphire-highlight); 
-      transform: translateY(20px) scale(0.98); transition: transform .3s ease;
+      transform: translateY(20px) scale(0.98);
+      transition: transform .3s cubic-bezier(0.4, 0, 0.2, 1); 
     }
     .modal-overlay.is-visible .modal { transform: translateY(0) scale(1); }
     .modal h3 { margin: 0 0 20px; font-weight: 600; font-size: 20px; color: var(--text-primary); }
     .modal-close { position: absolute; top: 10px; right: 10px; background: none; border: none; color: var(--text-secondary); font-size: 24px; line-height: 1; cursor: pointer; padding: 4px; opacity: .8; transition: opacity .2s ease, transform .2s ease; }
     .modal-close:hover { opacity: 1; transform: scale(1.1) rotate(90deg); }
-    .contact-list { display: flex; flex-direction: column; gap: 10px; text-align: left; }
-    .contact-item__phone { display: block; padding: 14px 16px; border-radius: 12px; background-color: rgba(0,0,0,0.2); border: 1px solid var(--glass-border-color); text-decoration: none; transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease; -webkit-tap-highlight-color: transparent; }
-    .contact-item__phone:hover { background-color: rgba(0,0,0,0.4); box-shadow: 0 0 15px -5px var(--sapphire-highlight); }
-    .contact-item__phone:active { transform: scale(0.98); background-color: rgba(0,0,0,0.5); }
-    .contact-item__title { display: block; font-size: 13px; font-weight: 500; letter-spacing: 0.05em; text-transform: uppercase; color: var(--text-secondary); margin-bottom: 4px; }
-    .contact-item__number { display: block; font-size: 18px; font-weight: 600; letter-spacing: 0.02em; color: var(--text-primary); transition: color 0.3s ease; }
-    .contact-item__phone:hover .contact-item__number { color: var(--gold-accent); }
+
+    .contact-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      text-align: left;
+    }
+    .contact-item {
+        /* Этот элемент теперь просто контейнер, вся стилизация на ссылке */
+    }
+    .contact-item__phone {
+      display: block;
+      padding: 14px 16px;
+      border-radius: 12px;
+      background-color: rgba(0,0,0,0.2);
+      border: 1px solid var(--glass-border-color);
+      text-decoration: none;
+      transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
+      -webkit-tap-highlight-color: transparent; /* Убираем синюю вспышку при тапе на iOS */
+    }
+    .contact-item__phone:hover {
+      background-color: rgba(0,0,0,0.4);
+      box-shadow: 0 0 15px -5px var(--sapphire-highlight);
+    }
+    .contact-item__phone:active {
+      transform: scale(0.98);
+      background-color: rgba(0,0,0,0.5);
+    }
+    .contact-item__title {
+      display: block;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--text-secondary);
+      margin-bottom: 4px;
+    }
+    .contact-item__number {
+      display: block;
+      font-size: 18px;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      color: var(--text-primary);
+      transition: color 0.3s ease;
+    }
+    .contact-item__phone:hover .contact-item__number {
+      color: var(--gold-accent);
+    }
     
+    /* Мобильная навигация */
     .nav-toggle { display: none; z-index: 1002; position: relative; width: 34px; height: 34px; background: transparent; border: none; cursor: pointer; padding: 0; -webkit-tap-highlight-color: transparent; }
     .nav-toggle span { display: block; width: 24px; height: 2px; background: var(--text-primary); border-radius: 2px; margin: 6px auto; transition: transform 0.3s ease, opacity 0.3s ease; }
     .nav-toggle.is-active span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
     .nav-toggle.is-active span:nth-child(2) { opacity: 0; }
     .nav-toggle.is-active span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+
     .mobile-nav { 
       position: fixed; inset: 0; z-index: 1001; display: flex;
       flex-direction: column; align-items: center; justify-content: center; gap: 20px; 
@@ -351,70 +319,47 @@
     .mobile-nav-close:hover { opacity: 1; transform: rotate(90deg); }
     .mobile-nav a { color: var(--text-primary); text-decoration: none; font-size: 24px; font-weight: 500; padding: 12px 24px; opacity: 0; transform: translateY(15px); transition: opacity .3s ease, transform .3s ease, color .3s ease; }
     .mobile-nav.is-open a { opacity: 1; transform: translateY(0); }
-    .mobile-nav.is-open a:nth-child(2) { transition-delay: .05s; }
-    .mobile-nav.is-open a:nth-child(3) { transition-delay: .1s; }
-    .mobile-nav.is-open a:nth-child(4) { transition-delay: .15s; }
-    .mobile-nav.is-open a:nth-child(5) { transition-delay: .2s; }
+    .mobile-nav.is-open a:nth-child(2) { transition-delay: .1s; }
+    .mobile-nav.is-open a:nth-child(3) { transition-delay: .2s; }
+    .mobile-nav.is-open a:nth-child(4) { transition-delay: .3s; }
+    .mobile-nav.is-open a:nth-child(5) { transition-delay: .4s; }
 
-    @media (max-width: 768px) { nav.primary { display: none; } .nav-toggle { display: block; } }
+    /* Адаптивность */
+    @media (max-width: 768px) {
+      nav.primary { display: none; }
+      .nav-toggle { display: block; }
+      .cta-row { flex-direction: column; align-items: stretch; }
+      .headline-sub { margin-top: 8px; }
+    }
     
+    /* Анимации появления */
     [data-anim] { opacity: 0; transform: translateY(20px); transition: opacity .6s ease-out, transform .6s ease-out; }
     [data-anim].is-visible { opacity: 1; transform: translateY(0); }
-    
-    /* --- ИЗМЕНЕНИЕ #2: Лайтбокс с возможностью скролла --- */
-    .lightbox-overlay {
-      position: fixed; inset: 0; background: rgba(5, 8, 24, 0.7);
-      backdrop-filter: blur(10px); z-index: 2000;
-      display: flex; align-items: center; justify-content: center;
-      padding: 16px; opacity: 0; visibility: hidden;
-      transition: opacity .3s ease, visibility .3s ease;
-      overflow-y: auto; /* Добавляем скролл, если контент не помещается */
-    }
-    .lightbox-overlay.is-visible { opacity: 1; visibility: visible; }
-    .lightbox-content {
-      position: relative; width: 100%; max-width: 90vw;
-      transform: scale(0.95); transition: transform .3s ease;
-      margin: auto; /* Центрируем по вертикали и горизонтали */
-    }
-    .lightbox-overlay.is-visible .lightbox-content { transform: scale(1); }
-    .lightbox-image-container { display: flex; align-items: center; justify-content: center; }
-    .lightbox-image-container img {
-      display: block; max-width: 100%; height: auto;
-      border-radius: var(--radius-xl); border: 2px solid var(--accent-hair);
-      box-shadow: 0 0 40px var(--accent-hair);
-    }
-    .lightbox-close {
-      position: absolute; top: 0; right: 0;
-      transform: translate(40%, -40%);
-      width: 36px; height: 36px; border-radius: 50%;
-      background: var(--bg-dark); border: 1px solid var(--glass-border-color);
-      color: var(--text-primary); font-size: 28px; line-height: 1;
-      cursor: pointer; display: grid; place-items: center;
-      transition: transform .2s ease, background-color .2s ease;
-    }
-    .lightbox-close:hover {
-      transform: translate(40%, -40%) scale(1.1) rotate(90deg);
-      background-color: var(--sapphire-deep);
-    }
+    .hero [data-anim]:nth-child(2) { transition-delay: .1s; }
+    .services a:nth-child(1) { transition-delay: .1s; }
+    .services a:nth-child(2) { transition-delay: .2s; }
+    .services a:nth-child(3) { transition-delay: .3s; }
+    .services a:nth-child(4) { transition-delay: .4s; }
 
   </style>
 </head>
 <body>
 
+  <div id="particles-bg"></div>
+
   <header class="site-header">
     <div class="nav-wrap">
-      <a href="../index.html" class="brand-link" aria-label="На главную">
+      <a href="#" class="brand-link" aria-label="На главную">
         <div class="brand">
           <span class="brand-mark" aria-hidden="true"></span>
           Сапфир
         </div>
       </a>
       <nav class="primary" id="primaryNav">
-        <a href="../index.html">Главная</a>
-        <a href="../services.html">Услуги</a>
-        <a href="../blog.html">Блог</a>
-        <a href="../index.html#map-section">Как нас найти</a>
-        <a href="../employment.html">Трудоустройство</a>
+        <a href="services.html">Услуги</a>
+        <a href="blog.html">Блог</a>
+        <a href="#map-section">Как нас найти</a>
+        <a href="employment.html">Трудоустройство</a>
         <a href="#" class="nav-contact-trigger">Контакты</a>
       </nav>
       <button class="nav-toggle" id="navToggle" aria-label="Открыть меню" aria-expanded="false" aria-controls="mobileNav">
@@ -425,68 +370,108 @@
 
   <div class="mobile-nav" id="mobileNav" aria-hidden="true">
       <button class="mobile-nav-close" id="navClose" aria-label="Закрыть меню">&times;</button>
-      <a href="../index.html">Главная</a>
-      <a href="../services.html">Услуги</a>
-      <a href="../blog.html">Блог</a>
-      <a href="../index.html#map-section">Как нас найти</a>
-      <a href="../employment.html">Трудоустройство</a>
+      <a href="services.html">Услуги</a>
+      <a href="blog.html">Блог</a>
+      <a href="#map-section">Как нас найти</a>
+      <a href="employment.html">Трудоустройство</a>
       <a href="#" class="nav-contact-trigger">Контакты</a>
   </div>
 
   <main>
-    <section class="section">
-      <h1 data-anim>Парикмахерские услуги</h1>
-
-      <section class="masters-section" data-anim>
-          <div class="masters-grid">
-              <article class="master-card">
-                  <img src="masters-cut-img/master1.jpg" alt="Фото мастера Елены Бронниковой" class="master-photo">
-                  <h3 class="master-name">Елена Бронникова</h3>
-                  <p class="master-desc">Стилист-колорист, парикмахер-универсал. Более 25 лет опыта работы, умение идеально подобрать стрижку под форму лица и головы.</p>
-              </article>
-          </div>
-      </section>
-      
-      <section class="masters-section" data-anim>
-          <div class="masters-grid">
-              <article class="master-card">
-                  <img src="masters-cut-img/master2.jpg" alt="Фото мастера Алёна Фамилия" class="master-photo">
-                  <h3 class="master-name">Алёна Фамилия</h3>
-                  <p class="master-desc">Мастер стрижек и оформления бороды. Владеет техниками классических и креативных стрижек, создавая стильные и аккуратные образы.</p>
-              </article>
-          </div>
-      </section>
-      
-      <div class="accordion-group">
-        
-        <details class="accordion" data-anim><summary>Женская модельная стрижка</summary><div class="accordion-content-wrap"><div class="accordion-content"><div class="service-item-content"><div class="service-info"><span class="service-info__label">Цена</span><span class="service-info__value service-info__value--price">2500 ₽</span></div><div class="service-info--masters"><span class="service-info__label">Мастера</span><div class="masters-list"><span class="master-tag">Екатерина Смирнова</span><span class="master-tag">Мария Лебедева</span></div></div><details class="accordion service-details-accordion"><summary>Подробнее</summary><div class="accordion-content-wrap"><div class="accordion-content service-details-content"><div class="service-photo-wrapper"><img class="service-photo" src="cut-img/female-model-cut.jpg" alt="Женская модельная стрижка"><button class="btn btn--zoom-photo">Увеличить</button></div><div class="service-text-content"><p>Индивидуальный подбор формы стрижки с учетом особенностей вашей внешности и структуры волос. Включает мытье головы, стрижку и легкую укладку.</p></div></div></div></details></div></div></div></details>
-        <details class="accordion" data-anim><summary>Мужская модельная стрижка</summary><div class="accordion-content-wrap"><div class="accordion-content"><div class="service-item-content"><div class="service-info"><span class="service-info__label">Цена</span><span class="service-info__value service-info__value--price">1800 ₽</span></div><div class="service-info--masters"><span class="service-info__label">Мастера</span><div class="masters-list"><span class="master-tag">Александр Волков</span></div></div><details class="accordion service-details-accordion"><summary>Подробнее</summary><div class="accordion-content-wrap"><div class="accordion-content service-details-content"><div class="service-photo-wrapper"><img class="service-photo" src="cut-img/male-model-cut.jpg" alt="Мужская модельная стрижка"><button class="btn btn--zoom-photo">Увеличить</button></div><div class="service-text-content"><p>Создание стильного мужского образа от классики до современных трендов. Включает мытье, стрижку и укладку с использованием профессиональных стайлинговых средств.</p></div></div></div></details></div></div></div></details>
-        <details class="accordion" data-anim><summary>Детская стрижка</summary><div class="accordion-content-wrap"><div class="accordion-content"><div class="service-item-content"><div class="service-info"><span class="service-info__label">Цена</span><span class="service-info__value service-info__value--price">900 ₽</span></div><div class="service-info--masters"><span class="service-info__label">Мастера</span><div class="masters-list"><span class="master-tag">Мария Лебедева</span><span class="master-tag">Александр Волков</span></div></div><details class="accordion service-details-accordion"><summary>Подробнее</summary><div class="accordion-content-wrap"><div class="accordion-content service-details-content"><div class="service-photo-wrapper"><img class="service-photo" src="cut-img/child-cut.jpg" alt="Детская стрижка"><button class="btn btn--zoom-photo">Увеличить</button></div><div class="service-text-content"><p>Аккуратная и быстрая стрижка для самых маленьких клиентов в дружелюбной атмосфере. Мы найдем подход к любому ребенку.</p></div></div></div></details></div></div></div></details>
-        <details class="accordion" data-anim><summary>Окрашивание в один тон</summary><div class="accordion-content-wrap"><div class="accordion-content"><div class="service-item-content"><div class="service-info"><span class="service-info__label">Цена</span><span class="service-info__value service-info__value--price">4500 ₽</span></div><div class="service-info--masters"><span class="service-info__label">Мастера</span><div class="masters-list"><span class="master-tag">Екатерина Смирнова</span><span class="master-tag">Мария Лебедева</span></div></div><details class="accordion service-details-accordion"><summary>Подробнее</summary><div class="accordion-content-wrap"><div class="accordion-content service-details-content"><div class="service-photo-wrapper"><img class="service-photo" src="cut-img/single-tone-coloring.jpg" alt="Окрашивание в один тон"><button class="btn btn--zoom-photo">Увеличить</button></div><div class="service-text-content"><p>Классическое окрашивание для создания равномерного и насыщенного цвета по всей длине волос. Используем только щадящие красители премиум-класса.</p></div></div></div></details></div></div></div></details>
-        <details class="accordion" data-anim><summary>Сложное окрашивание</summary><div class="accordion-content-wrap"><div class="accordion-content"><div class="service-item-content"><div class="service-info"><span class="service-info__label">Цена</span><span class="service-info__value service-info__value--price">8000 ₽</span></div><div class="service-info--masters"><span class="service-info__label">Мастера</span><div class="masters-list"><span class="master-tag">Екатерина Смирнова</span></div></div><details class="accordion service-details-accordion"><summary>Подробнее</summary><div class="accordion-content-wrap"><div class="accordion-content service-details-content"><div class="service-photo-wrapper"><img class="service-photo" src="cut-img/complex-coloring.jpg" alt="Сложное окрашивание"><button class="btn btn--zoom-photo">Увеличить</button></div><div class="service-text-content"><p>Техники Airtouch, балаяж, шатуш. Создание плавных переходов цвета, эффекта выгоревших волос и многогранных оттенков для визуального объема и глубины.</p></div></div></div></details></div></div></div></details>
-        <details class="accordion" data-anim><summary>Мелирование</summary><div class="accordion-content-wrap"><div class="accordion-content"><div class="service-item-content"><div class="service-info"><span class="service-info__label">Цена</span><span class="service-info__value service-info__value--price">5500 ₽</span></div><div class="service-info--masters"><span class="service-info__label">Мастера</span><div class="masters-list"><span class="master-tag">Мария Лебедева</span><span class="master-tag">Екатерина Смирнова</span></div></div><details class="accordion service-details-accordion"><summary>Подробнее</summary><div class="accordion-content-wrap"><div class="accordion-content service-details-content"><div class="service-photo-wrapper"><img class="service-photo" src="cut-img/highlighting.jpg" alt="Мелирование"><button class="btn btn--zoom-photo">Увеличить</button></div><div class="service-text-content"><p>Осветление отдельных прядей для придания прическе свежести и динамики. Классическое и зональное мелирование с последующим тонированием.</p></div></div></div></details></div></div></div></details>
-        <details class="accordion" data-anim><summary>Тонирование волос</summary><div class="accordion-content-wrap"><div class="accordion-content"><div class="service-item-content"><div class="service-info"><span class="service-info__label">Цена</span><span class="service-info__value service-info__value--price">3000 ₽</span></div><div class="service-info--masters"><span class="service-info__label">Мастера</span><div class="masters-list"><span class="master-tag">Екатерина Смирнова</span><span class="master-tag">Мария Лебедева</span></div></div><details class="accordion service-details-accordion"><summary>Подробнее</summary><div class="accordion-content-wrap"><div class="accordion-content service-details-content"><div class="service-photo-wrapper"><img class="service-photo" src="cut-img/toning.jpg" alt="Тонирование волос"><button class="btn btn--zoom-photo">Увеличить</button></div><div class="service-text-content"><p>Придание волосам желаемого оттенка с помощью безаммиачных красителей. Нейтрализует желтизну, добавляет блеск и глубину цвета.</p></div></div></div></details></div></div></div></details>
-        <details class="accordion" data-anim><summary>Вечерняя укладка</summary><div class="accordion-content-wrap"><div class="accordion-content"><div class="service-item-content"><div class="service-info"><span class="service-info__label">Цена</span><span class="service-info__value service-info__value--price">3500 ₽</span></div><div class="service-info--masters"><span class="service-info__label">Мастера</span><div class="masters-list"><span class="master-tag">Мария Лебедева</span><span class="master-tag">Екатерина Смирнова</span></div></div><details class="accordion service-details-accordion"><summary>Подробнее</summary><div class="accordion-content-wrap"><div class="accordion-content service-details-content"><div class="service-photo-wrapper"><img class="service-photo" src="cut-img/evening-styling.jpg" alt="Вечерняя укладка"><button class="btn btn--zoom-photo">Увеличить</button></div><div class="service-text-content"><p>Создание элегантного образа для особого случая: локоны, волны, гладкие прически. Используем профессиональные средства для максимальной стойкости.</p></div></div></div></details></div></div></div></details>
-        <details class="accordion" data-anim><summary>Свадебная прическа</summary><div class="accordion-content-wrap"><div class="accordion-content"><div class="service-item-content"><div class="service-info"><span class="service-info__label">Цена</span><span class="service-info__value service-info__value--price">6000 ₽</span></div><div class="service-info--masters"><span class="service-info__label">Мастера</span><div class="masters-list"><span class="master-tag">Екатерина Смирнова</span><span class="master-tag">Мария Лебедева</span></div></div><details class="accordion service-details-accordion"><summary>Подробнее</summary><div class="accordion-content-wrap"><div class="accordion-content service-details-content"><div class="service-photo-wrapper"><img class="service-photo" src="cut-img/wedding-hairstyle.jpg" alt="Свадебная прическа"><button class="btn btn--zoom-photo">Увеличить</button></div><div class="service-text-content"><p>Воплощение вашей мечты об идеальной свадебной прическе. Проводим предварительную репетицию для создания безупречного и гармоничного образа невесты.</p></div></div></div></details></div></div></div></details>
-        <details class="accordion" data-anim><summary>Химическая завивка</summary><div class="accordion-content-wrap"><div class="accordion-content"><div class="service-item-content"><div class="service-info"><span class="service-info__label">Цена</span><span class="service-info__value service-info__value--price">4800 ₽</span></div><div class="service-info--masters"><span class="service-info__label">Мастера</span><div class="masters-list"><span class="master-tag">Мария Лебедева</span></div></div><details class="accordion service-details-accordion"><summary>Подробнее</summary><div class="accordion-content-wrap"><div class="accordion-content service-details-content"><div class="service-photo-wrapper"><img class="service-photo" src="cut-img/perm-wave.jpg" alt="Химическая завивка"><button class="btn btn--zoom-photo">Увеличить</button></div><div class="service-text-content"><p>Создание упругих и стойких локонов на длительный срок. Современные составы позволяют минимизировать вред для волос, сохраняя их эластичность.</p></div></div></div></details></div></div></div></details>
-        <details class="accordion" data-anim><summary>Биозавивка</summary><div class="accordion-content-wrap"><div class="accordion-content"><div class="service-item-content"><div class="service-info"><span class="service-info__label">Цена</span><span class="service-info__value service-info__value--price">5200 ₽</span></div><div class="service-info--masters"><span class="service-info__label">Мастера</span><div class="masters-list"><span class="master-tag">Екатерина Смирнова</span><span class="master-tag">Мария Лебедева</span></div></div><details class="accordion service-details-accordion"><summary>Подробнее</summary><div class="accordion-content-wrap"><div class="accordion-content service-details-content"><div class="service-photo-wrapper"><img class="service-photo" src="cut-img/bio-perm.jpg" alt="Биозавивка"><button class="btn btn--zoom-photo">Увеличить</button></div><div class="service-text-content"><p>Более щадящий вариант завивки с использованием натуральных компонентов. Создает мягкие, естественные кудри и волны, не повреждая структуру волоса.</p></div></div></div></details></div></div></div></details>
-        <details class="accordion" data-anim><summary>Кератиновое выпрямление</summary><div class="accordion-content-wrap"><div class="accordion-content"><div class="service-item-content"><div class="service-info"><span class="service-info__label">Цена</span><span class="service-info__value service-info__value--price">7500 ₽</span></div><div class="service-info--masters"><span class="service-info__label">Мастера</span><div class="masters-list"><span class="master-tag">Мария Лебедева</span></div></div><details class="accordion service-details-accordion"><summary>Подробнее</summary><div class="accordion-content-wrap"><div class="accordion-content service-details-content"><div class="service-photo-wrapper"><img class="service-photo" src="cut-img/keratin-straightening.jpg" alt="Кератиновое выпрямление"><button class="btn btn--zoom-photo">Увеличить</button></div><div class="service-text-content"><p>Процедура для выпрямления и восстановления волос. Насыщает волосы кератином, делая их гладкими, блестящими и послушными на срок до 6 месяцев.</p></div></div></div></details></div></div></div></details>
-        <details class="accordion" data-anim><summary>Ботокс для волос</summary><div class="accordion-content-wrap"><div class="accordion-content"><div class="service-item-content"><div class="service-info"><span class="service-info__label">Цена</span><span class="service-info__value service-info__value--price">4000 ₽</span></div><div class="service-info--masters"><span class="service-info__label">Мастера</span><div class="masters-list"><span class="master-tag">Мария Лебедева</span><span class="master-tag">Екатерина Смирнова</span></div></div><details class="accordion service-details-accordion"><summary>Подробнее</summary><div class="accordion-content-wrap"><div class="accordion-content service-details-content"><div class="service-photo-wrapper"><img class="service-photo" src="cut-img/hair-botox.jpg" alt="Ботокс для волос"><button class="btn btn--zoom-photo">Увеличить</button></div><div class="service-text-content"><p>Интенсивное восстановление и омоложение волос изнутри. Устраняет пушистость, питает, увлажняет и придает невероятный блеск без эффекта выпрямления.</p></div></div></div></details></div></div></div></details>
-        <details class="accordion" data-anim><summary>Счастье для волос (Lebel)</summary><div class="accordion-content-wrap"><div class="accordion-content"><div class="service-item-content"><div class="service-info"><span class="service-info__label">Цена</span><span class="service-info__value service-info__value--price">6500 ₽</span></div><div class="service-info--masters"><span class="service-info__label">Мастера</span><div class="masters-list"><span class="master-tag">Екатерина Смирнова</span></div></div><details class="accordion service-details-accordion"><summary>Подробнее</summary><div class="accordion-content-wrap"><div class="accordion-content service-details-content"><div class="service-photo-wrapper"><img class="service-photo" src="cut-img/lebel-happiness.jpg" alt="Счастье для волос (Lebel)"><button class="btn btn--zoom-photo">Увеличить</button></div><div class="service-text-content"><p>Легендарная японская программа многоступенчатого ухода, которая восстанавливает волосы на молекулярном уровне. Идеально для поврежденных и ослабленных волос.</p></div></div></div></details></div></div></div></details>
-        <details class="accordion" data-anim><summary>Плетение кос</summary><div class="accordion-content-wrap"><div class="accordion-content"><div class="service-item-content"><div class="service-info"><span class="service-info__label">Цена</span><span class="service-info__value service-info__value--price">1500 ₽</span></div><div class="service-info--masters"><span class="service-info__label">Мастера</span><div class="masters-list"><span class="master-tag">Мария Лебедева</span><span class="master-tag">Екатерина Смирнова</span></div></div><details class="accordion service-details-accordion"><summary>Подробнее</summary><div class="accordion-content-wrap"><div class="accordion-content service-details-content"><div class="service-photo-wrapper"><img class="service-photo" src="cut-img/braiding.jpg" alt="Плетение кос"><button class="btn btn--zoom-photo">Увеличить</button></div><div class="service-text-content"><p>Создание разнообразных причесок на основе плетения: от простых колосков до сложных ажурных кос для любого повода.</p></div></div></div></details></div></div></div></details>
-        <details class="accordion" data-anim><summary>Стрижка кончиков</summary><div class="accordion-content-wrap"><div class="accordion-content"><div class="service-item-content"><div class="service-info"><span class="service-info__label">Цена</span><span class="service-info__value service-info__value--price">800 ₽</span></div><div class="service-info--masters"><span class="service-info__label">Мастера</span><div class="masters-list"><span class="master-tag">Александр Волков</span><span class="master-tag">Мария Лебедева</span></div></div><details class="accordion service-details-accordion"><summary>Подробнее</summary><div class="accordion-content-wrap"><div class="accordion-content service-details-content"><div class="service-photo-wrapper"><img class="service-photo" src="cut-img/ends-trim.jpg" alt="Стрижка кончиков"><button class="btn btn--zoom-photo">Увеличить</button></div><div class="service-text-content"><p>Быстрая и аккуратная стрижка для поддержания здоровья волос и избавления от секущихся кончиков. Выполняется одним срезом на сухие или влажные волосы.</p></div></div></div></details></div></div></div></details>
-        <details class="accordion" data-anim><summary>Оформление челки</summary><div class="accordion-content-wrap"><div class="accordion-content"><div class="service-item-content"><div class="service-info"><span class="service-info__label">Цена</span><span class="service-info__value service-info__value--price">500 ₽</span></div><div class="service-info--masters"><span class="service-info__label">Мастера</span><div class="masters-list"><span class="master-tag">Екатерина Смирнова</span><span class="master-tag">Мария Лебедева</span></div></div><details class="accordion service-details-accordion"><summary>Подробнее</summary><div class="accordion-content-wrap"><div class="accordion-content service-details-content"><div class="service-photo-wrapper"><img class="service-photo" src="cut-img/bangs-shaping.jpg" alt="Оформление челки"><button class="btn btn--zoom-photo">Увеличить</button></div><div class="service-text-content"><p>Коррекция формы челки или создание новой. Поможем подобрать идеальный вариант, который подчеркнет достоинства вашего лица.</p></div></div></div></details></div></div></div></details>
-        <details class="accordion" data-anim><summary>Пилинг кожи головы</summary><div class="accordion-content-wrap"><div class="accordion-content"><div class="service-item-content"><div class="service-info"><span class="service-info__label">Цена</span><span class="service-info__value service-info__value--price">2200 ₽</span></div><div class="service-info--masters"><span class="service-info__label">Мастера</span><div class="masters-list"><span class="master-tag">Мария Лебедева</span></div></div><details class="accordion service-details-accordion"><summary>Подробнее</summary><div class="accordion-content-wrap"><div class="accordion-content service-details-content"><div class="service-photo-wrapper"><img class="service-photo" src="cut-img/scalp-peeling.jpg" alt="Пилинг кожи головы"><button class="btn btn--zoom-photo">Увеличить</button></div><div class="service-text-content"><p>Процедура глубокого очищения кожи головы. Удаляет ороговевшие клетки, излишки себума и остатки стайлинга, стимулирует рост здоровых волос.</p></div></div></div></details></div></div></div></details>
-        <details class="accordion" data-anim><summary>Ламинирование волос</summary><div class="accordion-content-wrap"><div class="accordion-content"><div class="service-item-content"><div class="service-info"><span class="service-info__label">Цена</span><span class="service-info__value service-info__value--price">3800 ₽</span></div><div class="service-info--masters"><span class="service-info__label">Мастера</span><div class="masters-list"><span class="master-tag">Екатерина Смирнова</span><span class="master-tag">Мария Лебедева</span></div></div><details class="accordion service-details-accordion"><summary>Подробнее</summary><div class="accordion-content-wrap"><div class="accordion-content service-details-content"><div class="service-photo-wrapper"><img class="service-photo" src="cut-img/hair-lamination.jpg" alt="Ламинирование волос"><button class="btn btn--zoom-photo">Увеличить</button></div><div class="service-text-content"><p>Покрытие волос специальным составом, который создает тончайшую защитную пленку. Придает гладкость, блеск и дополнительный объем, защищает от внешних воздействий.</p></div></div></div></details></div></div></div></details>
-        <details class="accordion" data-anim><summary>Экранирование волос</summary><div class="accordion-content-wrap"><div class="accordion-content"><div class="service-item-content"><div class="service-info"><span class="service-info__label">Цена</span><span class="service-info__value service-info__value--price">2800 ₽</span></div><div class="service-info--masters"><span class="service-info__label">Мастера</span><div class="masters-list"><span class="master-tag">Александр Волков</span><span class="master-tag">Екатерина Смирнова</span></div></div><details class="accordion service-details-accordion"><summary>Подробнее</summary><div class="accordion-content-wrap"><div class="accordion-content service-details-content"><div class="service-photo-wrapper"><img class="service-photo" src="cut-img/hair-shielding.jpg" alt="Экранирование волос"><button class="btn btn--zoom-photo">Увеличить</button></div><div class="service-text-content"><p>Уходовая процедура для питания и увлажнения волос изнутри. Создает на поверхности волос защитный экран, придавая им плотность и сияние.</p></div></div></div></details></div></div></div></details>
-
+    <section class="hero">
+      <div class="hero-inner">
+        <h1 class="headline" data-anim>
+          <span class="headline-main">Сапфир</span>
+          <span class="headline-sub">студия красоты</span>
+        </h1>
+        <div class="cta-row" data-anim>
+          <button class="btn modal-trigger">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.08 4.18 2 2 0 0 1 4.06 2h3a2 2 0 0 1 2 1.72c.12.9.33 1.78.62 2.63a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.45-1.14a2 2 0 0 1 2.11-.45c.85.29 1.73.5 2.63.62A2 2 0 0 1 22 16.92Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Записаться
+          </button>
+          <a href="#services" class="btn secondary">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Смотреть услуги
+          </a>
+        </div>
       </div>
     </section>
+
+    <section class="section" id="services">
+      <h2 data-anim>Услуги</h2>
+      <div class="services">
+        <a href="services/cut.html" class="card-link" data-anim>
+          <article class="card card--hair">
+            <div class="icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 10.2c0 2.3-1.9 4.2-4.2 4.2H8.2C5.9 14.4 4 12.5 4 10.2S5.9 6 8.2 6h7.6c2.3 0 4.2 1.9 4.2 4.2zM7 18v-2.4M17 18v-2.4M12 18v-3.6M9.5 6V4.2C9.5 3 10.6 2 12 2s2.5 1 2.5 2.2V6"/></svg></div>
+            <h3>Парикмахерские</h3><p>Стрижки, окрашивание и уходовые процедуры для здоровья ваших волос.</p>
+          </article>
+        </a>
+        <a href="nails.html" class="card-link" data-anim>
+          <article class="card card--nails">
+            <div class="icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12.2 4.6a2.2 2.2 0 0 1 3.1 3.1L5.8 17.2c-.4.4-.9.6-1.4.6H3v-1.4c0-.5.2-1 .6-1.4l9.6-9.5zM12.2 4.6l5.2 5.2c.8.8.8 2 0 2.8l-2.8 2.8c-.8.8-2 .8-2.8 0L6.6 9.8"/></svg></div>
+            <h3>Ногтевой сервис</h3><p>Маникюр и педикюр, стойкое покрытие и оригинальный дизайн.</p>
+          </article>
+        </a>
+        <a href="services/cosmetic.html" class="card-link" data-anim>
+          <article class="card card--cosmo">
+            <div class="icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 21a9 9 0 0 1-9-9c0-4.2 2.8-7.9 6.7-8.8C10.6 2 11.3 2.5 11.3 3.3v.2c0 .6-.4 1.1-1 1.2-2.4.5-4.3 2.7-4.3 5.3 0 3 2.4 5.4 5.4 5.4s5.4-2.4 5.4-5.4c0-2.6-1.8-4.8-4.3-5.3-.6-.1-1-.6-1-1.2v-.2c0-.7.6-1.3 1.5-1.2C18.2 3.1 21 6.8 21 11a9 9 0 0 1-9 10z"/></svg></div>
+            <h3>Косметология</h3><p>Чистки, пилинги, омолаживающие программы и уход за кожей.</p>
+          </article>
+        </a>
+        <a href="services/brows.html" class="card-link" data-anim>
+          <article class="card card--brows">
+            <div class="icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21.5 9.8c-1-.2-2.1.3-2.6 1.3-.5 1-.2 2.1.8 2.6 1 .5 2.1-.3 2.6-1.3.5-1 .2-2.1-.8-2.6zM2.5 9.8c1-.2 2.1.3 2.6 1.3.5 1 .2 2.1-.8 2.6-1 .5-2.1-.3-2.6-1.3-.5-1-.2-2.1.8-2.6zM22 6c-2.5 0-4.5 2-4.5 4.5 0 1.2.5 2.3 1.2 3.2-1.2.8-2.6 1.3-4.2 1.3s-3.1-.5-4.2-1.3c.8-.9 1.2-2 1.2-3.2C11.5 8 9.5 6 7 6s-4.5 2-4.5 4.5c0 1.2.5 2.3 1.2 3.2C2.6 14.5 1 15 0 15"/></svg></div>
+            <h3>Коррекция бровей</h3><p>Профессиональное оформление, окрашивание и ламинирование бровей.</p>
+          </article>
+        </a>
+      </div>
+    </section>
+
+    <section class="section map-section" id="map-section">
+      <h2 data-anim>Как нас найти</h2>
+      <div id="map-container" data-anim><div id="map"></div></div>
+      <details class="faq-item" data-anim>
+        <summary>Адрес и ориентиры</summary>
+        <div class="faq-content-wrap">
+          <div class="faq-content"><p>Мы находимся по адресу: г. Тольятти, ул. 70 лет Октября, д. 35. Выйдите на ближайшей остановке, двигайтесь вдоль улицы к дому №35. Вход в салон под сапфировой вывеской «Сапфир».</p></div>
+        </div>
+      </details>
+      <details class="faq-item" data-anim>
+        <summary>Свяжитесь с нами</summary>
+        <div class="faq-content-wrap">
+          <div class="faq-content">
+            <div class="contact-list">
+              <div class="contact-item">
+                <a href="tel:+79171234567" class="contact-item__phone">
+                  <span class="contact-item__title">Парикмахерские услуги</span>
+                  <span class="contact-item__number">+7 (917) 123-45-67</span>
+                </a>
+              </div>
+              <div class="contact-item">
+                <a href="tel:+79272345678" class="contact-item__phone">
+                  <span class="contact-item__title">Ногтевой сервис</span>
+                  <span class="contact-item__number">+7 (927) 234-56-78</span>
+                </a>
+              </div>
+              <div class="contact-item">
+                <a href="tel:+79373456789" class="contact-item__phone">
+                  <span class="contact-item__title">Косметология</span>
+                  <span class="contact-item__number">+7 (937) 345-67-89</span>
+                </a>
+              </div>
+              <div class="contact-item">
+                <a href="tel:+79874567890" class="contact-item__phone">
+                  <span class="contact-item__title">Коррекция бровей</span>
+                  <span class="contact-item__number">+7 (987) 456-78-90</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </details>
+    </section>
+
   </main>
-  
-  <div style="text-align: center; padding: 20px 18px 0;">
-    <a href="../services.html" class="btn">Все услуги</a>
-  </div>
 
   <footer>
     © Сапфир, 2025. v 1.0
@@ -504,20 +489,33 @@
             <span class="contact-item__number">+7 (917) 123-45-67</span>
           </a>
         </div>
+        <div class="contact-item">
+          <a href="tel:+79272345678" class="contact-item__phone">
+            <span class="contact-item__title">Ногтевой сервис</span>
+            <span class="contact-item__number">+7 (927) 234-56-78</span>
+          </a>
+        </div>
+        <div class="contact-item">
+          <a href="tel:+79373456789" class="contact-item__phone">
+            <span class="contact-item__title">Косметология</span>
+            <span class="contact-item__number">+7 (937) 345-67-89</span>
+          </a>
+        </div>
+        <div class="contact-item">
+          <a href="tel:+79874567890" class="contact-item__phone">
+            <span class="contact-item__title">Коррекция бровей</span>
+            <span class="contact-item__number">+7 (987) 456-78-90</span>
+          </a>
+        </div>
       </div>
     </div>
   </div>
-  
-  <div class="lightbox-overlay" id="photoLightbox">
-    <div class="lightbox-content">
-      <div class="lightbox-image-container" id="lightboxImageContainer"></div>
-      <button class="lightbox-close" aria-label="Закрыть фото">&times;</button>
-    </div>
-  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/tsparticles@2.12.0/tsparticles.bundle.min.js"></script>
 
   <script>
     document.addEventListener('DOMContentLoaded', function() {
-      // Анимации появления
+      // Анимации появления при скролле
       (function(){
         const observer = new IntersectionObserver((entries) => {
           entries.forEach(entry => {
@@ -530,31 +528,6 @@
         document.querySelectorAll('[data-anim]').forEach(el => observer.observe(el));
       })();
 
-      // Улучшенная логика блокировки скролла
-      const scrollLocker = (function() {
-        let lockCount = 0;
-        return {
-          lock: function() {
-            if (lockCount === 0) {
-              const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
-              if (scrollbarWidth > 0 && document.body.scrollHeight > window.innerHeight) {
-                document.body.style.paddingRight = `${scrollbarWidth}px`;
-              }
-              document.body.classList.add('no-scroll');
-            }
-            lockCount++;
-          },
-          unlock: function() {
-            lockCount--;
-            if (lockCount <= 0) {
-              document.body.classList.remove('no-scroll');
-              document.body.style.paddingRight = '';
-              lockCount = 0;
-            }
-          }
-        };
-      })();
-
       // Мобильное меню
       (function(){
         const navToggle = document.getElementById('navToggle');
@@ -564,98 +537,103 @@
           const isOpen = typeof force === 'boolean' ? force : !mobileNav.classList.contains('is-open');
           mobileNav.classList.toggle('is-open', isOpen);
           navToggle.classList.toggle('is-active', isOpen);
-          isOpen ? scrollLocker.lock() : scrollLocker.unlock();
+          document.body.classList.toggle('no-scroll', isOpen);
         };
         navToggle.addEventListener('click', () => toggleMenu());
         navClose.addEventListener('click', () => toggleMenu(false));
-        mobileNav.querySelectorAll('a').forEach(link => link.addEventListener('click', () => toggleMenu(false)));
+        mobileNav.querySelectorAll('a').forEach(link => {
+            if (link.getAttribute('href').startsWith('#')) {
+                link.addEventListener('click', () => toggleMenu(false));
+            }
+        });
         document.addEventListener('keydown', (e) => e.key === 'Escape' && mobileNav.classList.contains('is-open') && toggleMenu(false));
       })();
 
-      // Модальное окно контактов
+      // Модальное окно
       (function(){
         const modal = document.getElementById('contactModal');
         const openTriggers = document.querySelectorAll('.modal-trigger, .nav-contact-trigger');
         const closeBtn = modal.querySelector('.modal-close');
-        const openModal = (e) => { e.preventDefault(); modal.classList.add('is-visible'); scrollLocker.lock(); };
-        const closeModal = () => { modal.classList.remove('is-visible'); scrollLocker.unlock(); };
+        const openModal = (e) => { e.preventDefault(); modal.classList.add('is-visible'); document.body.classList.add('no-scroll'); };
+        const closeModal = () => { modal.classList.remove('is-visible'); if(!document.getElementById('mobileNav').classList.contains('is-open')) document.body.classList.remove('no-scroll'); };
         openTriggers.forEach(trigger => trigger.addEventListener('click', openModal));
         closeBtn.addEventListener('click', closeModal);
         modal.addEventListener('click', (e) => e.target === modal && closeModal());
         document.addEventListener('keydown', (e) => e.key === 'Escape' && modal.classList.contains('is-visible') && closeModal());
       })();
       
-      // Плавная анимация аккордеона
+      // Анимация аккордеона
       (function(){
-        document.querySelectorAll('details.accordion').forEach(details => {
+        document.querySelectorAll('details.faq-item').forEach(details => {
           const summary = details.querySelector('summary');
-          const contentWrap = details.querySelector('.accordion-content-wrap');
-
+          const contentWrap = details.querySelector('.faq-content-wrap');
           summary.addEventListener('click', (event) => {
             event.preventDefault();
-            if (details.dataset.animating) return;
-            details.dataset.animating = 'true';
             if (details.open) {
-              contentWrap.style.maxHeight = contentWrap.scrollHeight + 'px';
-              requestAnimationFrame(() => { contentWrap.style.maxHeight = '0px'; });
+              contentWrap.style.maxHeight = '0px';
               contentWrap.addEventListener('transitionend', () => {
                 details.removeAttribute('open');
-                delete details.dataset.animating;
               }, { once: true });
             } else {
               details.setAttribute('open', '');
-              const scrollHeight = contentWrap.scrollHeight;
-              contentWrap.style.maxHeight = scrollHeight + 'px';
-              contentWrap.addEventListener('transitionend', () => {
-                if (details.open) { contentWrap.style.maxHeight = 'none'; }
-                delete details.dataset.animating;
-              }, { once: true });
+              contentWrap.style.maxHeight = contentWrap.scrollHeight + 'px';
             }
           });
         });
       })();
-      
-      // Скрипт для лайтбокса
-      (function(){
-        const lightbox = document.getElementById('photoLightbox');
-        if (!lightbox) return;
-        
-        const imageContainer = document.getElementById('lightboxImageContainer');
-        const openTriggers = document.querySelectorAll('.btn--zoom-photo');
-        const closeBtn = lightbox.querySelector('.lightbox-close');
 
-        const openLightbox = (e) => {
-          e.preventDefault();
-          const trigger = e.currentTarget;
-          const photoWrapper = trigger.closest('.service-photo-wrapper');
-          const sourceImage = photoWrapper.querySelector('img.service-photo');
-          
-          if (sourceImage && imageContainer) {
-            imageContainer.innerHTML = ''; // Очищаем контейнер
-            const newImage = new Image();
-            newImage.src = sourceImage.src;
-            newImage.alt = sourceImage.alt;
-            imageContainer.appendChild(newImage);
+      // Яндекс.Карта
+      function initMap() {
+        if (typeof ymaps === 'undefined') {
+          console.error('Yandex Maps script is not loaded.');
+          return;
+        }
+
+        ymaps.ready(() => {
+          try {
+            const coords = [53.54112164561584, 49.337911170825244];
+            const myMap = new ymaps.Map('map', {
+              center: coords,
+              zoom: 17,
+              controls: ['zoomControl']
+              // Тип карты не указываем, будет использован стандартный (светлый)
+            });
+
+            myMap.geoObjects.add(new ymaps.Placemark(coords, {
+              balloonContentHeader: 'Салон «Сапфир»',
+              balloonContentBody: 'ул. 70 лет Октября, 35'
+            }, {
+              preset: 'islands#dotIcon',
+              iconColor: '#4a7dff'
+            }));
+
+            myMap.behaviors.disable('scrollZoom');
+          } catch (err) {
+            console.error('Yandex Map initialization failed:', err);
+            document.getElementById('map').innerHTML = 'Не удалось загрузить карту.';
           }
-          
-          lightbox.classList.add('is-visible');
-          scrollLocker.lock();
-        };
-
-        const closeLightbox = () => {
-          lightbox.classList.remove('is-visible');
-          scrollLocker.unlock();
-        };
-
-        openTriggers.forEach(trigger => trigger.addEventListener('click', openLightbox));
-        closeBtn.addEventListener('click', closeLightbox);
-        lightbox.addEventListener('click', (e) => {
-          if (e.target === lightbox) { closeLightbox(); }
         });
-        document.addEventListener('keydown', (e) => {
-          if (e.key === 'Escape' && lightbox.classList.contains('is-visible')) {
-            closeLightbox();
-          }
+      }
+      initMap();
+
+      // Анимация частиц
+      (function(){
+        if (typeof tsParticles === 'undefined') { console.error('tsParticles not loaded'); return; }
+        
+        tsParticles.load("particles-bg", {
+          fullScreen: { enable: false },
+          particles: {
+            number: { value: 50, density: { enable: true, value_area: 800 } },
+            shape: { type: "image", image: { src: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 72'%3E%3Cdefs%3E%3CradialGradient id='a' cx='50%25' cy='50%25' r='50%25'%3E%3Cstop offset='0%25' stop-color='%23c5d2ff'/%3E%3Cstop offset='100%25' stop-color='%231a3a9a'/%3E%3C/radialGradient%3E%3C/defs%3E%3Cpath d='M40 0L80 22L40 72L0 22L40 0Z' fill='url(%23a)'/%3E%3Cpath d='M40 0L0 22L40 26Z' fill='%23e8eaf6' fill-opacity='0.6'/%3E%3Cpath d='M40 0L80 22L40 26Z' fill='%237da8ff' fill-opacity='0.6'/%3E%3Cpath d='M0 22L40 72L40 26Z' fill='%230d1a4f' fill-opacity='0.7'/%3E%3Cpath d='M80 22L40 72L40 26Z' fill='%231a3a9a' fill-opacity='0.7'/%3E%3Cpath d='M40 5L20 16L40 24L60 16L40 5Z' fill='%23fff' fill-opacity='0.3'/%3E%3Cpath d='M40 26L20 16L0 22L40 26Z' fill='%23a7b0d1' fill-opacity='0.3'/%3E%3C/svg%3E" } },
+            opacity: { value: { min: 0.4, max: 0.9 }, animation: { enable: true, speed: 2.5, sync: false } },
+            size: { value: { min: 12, max: 28 } },
+            shadow: { enable: true, blur: 15, color: "#4a7dff" },
+            rotate: { value: { min: 0, max: 360 }, direction: "random", animation: { enable: true, speed: 5, sync: false } },
+            twinkle: { particles: { enable: true, frequency: 0.1, opacity: 1, color: "#fff5cc" } },
+            move: { enable: true, speed: { min: 0.8, max: 2 }, direction: "bottom", straight: true, outModes: { default: "out" } }
+          },
+          interactivity: { events: { onHover: { enable: false }, onClick: { enable: false } } },
+          detectRetina: true
         });
       })();
 
