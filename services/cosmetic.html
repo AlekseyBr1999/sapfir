@@ -271,6 +271,20 @@
     .masters-list { display: flex; flex-wrap: wrap; gap: 8px; }
     .master-tag { font-size: 14px; font-weight: 500; padding: 4px 10px; border-radius: 6px; background-color: rgba(5, 8, 24, 0.5); border: 1px solid var(--glass-border-color); color: var(--text-secondary); }
     
+    .price-note {
+        margin: 32px auto 0;
+        padding: 18px 24px;
+        max-width: 650px;
+        border-radius: var(--radius-xl);
+        background: rgba(5, 8, 24, 0.6);
+        border: 1px solid var(--glass-border-color);
+        border-left: 4px solid var(--accent-cosmo);
+        text-align: center;
+        font-size: 16px;
+        color: var(--text-secondary);
+        line-height: 1.7;
+    }
+
     .btn {
       position: relative; display: inline-flex; align-items: center; justify-content: center; gap: 10px;
       padding: 12px 20px; border-radius: 999px; border: 1px solid var(--glass-border-color);
@@ -386,7 +400,7 @@
           <h2>Специалист</h2>
           <div class="masters-grid">
               <article class="master-card">
-                  <img src="../cosmetic-img/oksana.jpg" alt="Фото мастера Оксаны" class="master-photo">
+                  <img src="cosmetic-img/oksana.png" alt="Фото мастера Оксаны" class="master-photo">
                   <h3 class="master-name">Оксана</h3>
                   <p class="master-desc">Косметолог-эстетист. Подбирает индивидуальные программы ухода, владеет современными методиками и помогает достичь здоровой и сияющей кожи.</p>
               </article>
@@ -487,9 +501,9 @@
 
       </div>
       
-      <p style="text-align: center; color: var(--text-secondary); margin-top: 24px; padding: 0 18px;">
+      <div class="price-note" data-anim>
         Прайс на прочие косметологические услуги можно узнать по запросу у мастера.
-      </p>
+      </div>
 
     </section>
   </main>
@@ -515,13 +529,6 @@
           </a>
         </div>
       </div>
-    </div>
-  </div>
-  
-  <div class="lightbox-overlay" id="photoLightbox">
-    <div class="lightbox-content">
-      <div class="lightbox-image-container" id="lightboxImageContainer"></div>
-      <button class="lightbox-close" aria-label="Закрыть фото">&times;</button>
     </div>
   </div>
 
@@ -624,53 +631,6 @@
           });
         });
       })();
-      
-      // Поскольку фото из прайса убраны, лайтбокс для них больше не нужен.
-      // Можно удалить или закомментировать этот скрипт, если он не используется в других местах.
-      /*
-      (function(){
-        const lightbox = document.getElementById('photoLightbox');
-        if (!lightbox) return;
-        
-        const imageContainer = document.getElementById('lightboxImageContainer');
-        const openTriggers = document.querySelectorAll('.btn--zoom-photo');
-        const closeBtn = lightbox.querySelector('.lightbox-close');
-
-        const openLightbox = (e) => {
-          e.preventDefault();
-          const trigger = e.currentTarget;
-          const photoWrapper = trigger.closest('.service-photo-wrapper');
-          const sourceImage = photoWrapper.querySelector('img.service-photo');
-          
-          if (sourceImage && imageContainer) {
-            imageContainer.innerHTML = ''; // Очищаем контейнер
-            const newImage = new Image();
-            newImage.src = sourceImage.src;
-            newImage.alt = sourceImage.alt;
-            imageContainer.appendChild(newImage);
-          }
-          
-          lightbox.classList.add('is-visible');
-          scrollLocker.lock();
-        };
-
-        const closeLightbox = () => {
-          lightbox.classList.remove('is-visible');
-          scrollLocker.unlock();
-        };
-
-        openTriggers.forEach(trigger => trigger.addEventListener('click', openLightbox));
-        closeBtn.addEventListener('click', closeLightbox);
-        lightbox.addEventListener('click', (e) => {
-          if (e.target === lightbox) { closeLightbox(); }
-        });
-        document.addEventListener('keydown', (e) => {
-          if (e.key === 'Escape' && lightbox.classList.contains('is-visible')) {
-            closeLightbox();
-          }
-        });
-      })();
-      */
 
     });
   </script>
