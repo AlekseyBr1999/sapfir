@@ -271,30 +271,6 @@
     .masters-list { display: flex; flex-wrap: wrap; gap: 8px; }
     .master-tag { font-size: 14px; font-weight: 500; padding: 4px 10px; border-radius: 6px; background-color: rgba(5, 8, 24, 0.5); border: 1px solid var(--glass-border-color); color: var(--text-secondary); }
     
-    /* --- ИЗМЕНЕНИЕ: Изумрудный акцент --- */
-    .service-details-accordion { margin-top: 10px; border-color: rgba(16, 185, 129, 0.5); background: rgba(5, 8, 24, 0.7); }
-    @media (max-width: 500px) { .service-details-accordion { flex-basis: 100%; } }
-    .service-details-accordion summary { font-size: 16px; font-weight: 400; padding: 12px 50px 12px 20px; background-color: var(--sapphire-deep); border-radius: 12px; }
-    
-    .service-details-content { display: flex; flex-direction: column; gap: 16px; padding-top: 20px; }
-    .service-photo-wrapper { display: flex; flex-direction: column; gap: 12px; align-items: center; }
-    
-    img.service-photo {
-      display: block; width: 100%; max-width: 250px; aspect-ratio: 1 / 1;
-      object-fit: cover; border-radius: 12px; border: 1px solid var(--glass-border-color);
-    }
-    
-    .btn--zoom-photo { padding: 8px 16px; font-size: 14px; width: auto; }
-    .service-text-content p { margin: 0; font-size: 16px; line-height: 1.7; color: var(--text-secondary); }
-
-    @media (min-width: 640px) {
-        .service-details-content { display: grid; grid-template-columns: 250px 1fr; align-items: start; gap: 32px; }
-        .service-photo-wrapper { align-items: stretch; }
-        img.service-photo { max-width: none; }
-        .service-text-content { max-width: 65ch; }
-        .service-text-content p { font-size: 18px; }
-    }
-    
     .btn {
       position: relative; display: inline-flex; align-items: center; justify-content: center; gap: 10px;
       padding: 12px 20px; border-radius: 999px; border: 1px solid var(--glass-border-color);
@@ -368,43 +344,6 @@
     [data-anim] { opacity: 0; transform: translateY(20px); transition: opacity .6s ease-out, transform .6s ease-out; }
     [data-anim].is-visible { opacity: 1; transform: translateY(0); }
     
-    .lightbox-overlay {
-      position: fixed; inset: 0; background: rgba(5, 8, 24, 0.7);
-      backdrop-filter: blur(10px); z-index: 2000;
-      display: flex; align-items: center; justify-content: center;
-      padding: 16px; opacity: 0; visibility: hidden;
-      transition: opacity .3s ease, visibility .3s ease;
-      overflow-y: auto;
-    }
-    .lightbox-overlay.is-visible { opacity: 1; visibility: visible; }
-    .lightbox-content {
-      position: relative; width: 100%; max-width: 90vw;
-      transform: scale(0.95); transition: transform .3s ease;
-      margin: auto;
-    }
-    .lightbox-overlay.is-visible .lightbox-content { transform: scale(1); }
-    .lightbox-image-container { display: flex; align-items: center; justify-content: center; }
-    .lightbox-image-container img {
-      display: block; max-width: 100%; height: auto;
-      border-radius: var(--radius-xl);
-      /* --- ИЗМЕНЕНИЕ: Изумрудный акцент --- */
-      border: 2px solid var(--accent-cosmo);
-      box-shadow: 0 0 40px var(--accent-cosmo);
-    }
-    .lightbox-close {
-      position: absolute; top: 0; right: 0;
-      transform: translate(40%, -40%);
-      width: 36px; height: 36px; border-radius: 50%;
-      background: var(--bg-dark); border: 1px solid var(--glass-border-color);
-      color: var(--text-primary); font-size: 28px; line-height: 1;
-      cursor: pointer; display: grid; place-items: center;
-      transition: transform .2s ease, background-color .2s ease;
-    }
-    .lightbox-close:hover {
-      transform: translate(40%, -40%) scale(1.1) rotate(90deg);
-      background-color: var(--sapphire-deep);
-    }
-
   </style>
 </head>
 <body>
@@ -447,7 +386,7 @@
           <h2>Специалист</h2>
           <div class="masters-grid">
               <article class="master-card">
-                  <img src="cosmetic-img/oksana.png" alt="Фото мастера Оксаны" class="master-photo">
+                  <img src="../cosmetic-img/oksana.jpg" alt="Фото мастера Оксаны" class="master-photo">
                   <h3 class="master-name">Оксана</h3>
                   <p class="master-desc">Косметолог-эстетист. Подбирает индивидуальные программы ухода, владеет современными методиками и помогает достичь здоровой и сияющей кожи.</p>
               </article>
@@ -456,18 +395,102 @@
       
       <div class="accordion-group">
         
-        <details class="accordion" data-anim><summary>Атравматичная чистка лица</summary><div class="accordion-content-wrap"><div class="accordion-content"><div class="service-item-content"><div class="service-info"><span class="service-info__label">Цена</span><span class="service-info__value service-info__value--price">3500 ₽</span></div><div class="service-info--masters"><span class="service-info__label">Мастер</span><div class="masters-list"><span class="master-tag">Елена Морозова</span></div></div><details class="accordion service-details-accordion"><summary>Подробнее</summary><div class="accordion-content-wrap"><div class="accordion-content service-details-content"><div class="service-photo-wrapper"><img class="service-photo" src="../cosmo-img/atraumatic-cleansing.jpg" alt="Атравматичная чистка лица"><button class="btn btn--zoom-photo">Увеличить</button></div><div class="service-text-content"><p>Деликатное, но глубокое очищение кожи без механического воздействия. Процедура растворяет комедоны, сужает поры и выравнивает тон лица, не оставляя покраснений.</p></div></div></div></details></div></div></div></details>
-        <details class="accordion" data-anim><summary>Ультразвуковая чистка</summary><div class="accordion-content-wrap"><div class="accordion-content"><div class="service-item-content"><div class="service-info"><span class="service-info__label">Цена</span><span class="service-info__value service-info__value--price">2800 ₽</span></div><div class="service-info--masters"><span class="service-info__label">Мастер</span><div class="masters-list"><span class="master-tag">Елена Морозова</span></div></div><details class="accordion service-details-accordion"><summary>Подробнее</summary><div class="accordion-content-wrap"><div class="accordion-content service-details-content"><div class="service-photo-wrapper"><img class="service-photo" src="../cosmo-img/ultrasonic-cleansing.jpg" alt="Ультразвуковая чистка"><button class="btn btn--zoom-photo">Увеличить</button></div><div class="service-text-content"><p>Аппаратная методика очищения кожи с помощью ультразвуковых волн. Эффективно удаляет ороговевшие клетки, поверхностные загрязнения и излишки себума.</p></div></div></div></details></div></div></div></details>
-        <details class="accordion" data-anim><summary>Химический пилинг</summary><div class="accordion-content-wrap"><div class="accordion-content"><div class="service-item-content"><div class="service-info"><span class="service-info__label">Цена</span><span class="service-info__value service-info__value--price">4000 ₽</span></div><div class="service-info--masters"><span class="service-info__label">Мастер</span><div class="masters-list"><span class="master-tag">Елена Морозова</span></div></div><details class="accordion service-details-accordion"><summary>Подробнее</summary><div class="accordion-content-wrap"><div class="accordion-content service-details-content"><div class="service-photo-wrapper"><img class="service-photo" src="../cosmo-img/chemical-peel.jpg" alt="Химический пилинг"><button class="btn btn--zoom-photo">Увеличить</button></div><div class="service-text-content"><p>Процедура обновления кожи с помощью кислот. Помогает бороться с пигментацией, постакне, мелкими морщинами и улучшает общую текстуру кожи.</p></div></div></div></details></div></div></div></details>
-        <details class="accordion" data-anim><summary>Карбоновый пилинг</summary><div class="accordion-content-wrap"><div class="accordion-content"><div class="service-item-content"><div class="service-info"><span class="service-info__label">Цена</span><span class="service-info__value service-info__value--price">4500 ₽</span></div><div class="service-info--masters"><span class="service-info__label">Мастер</span><div class="masters-list"><span class="master-tag">Елена Морозова</span></div></div><details class="accordion service-details-accordion"><summary>Подробнее</summary><div class="accordion-content-wrap"><div class="accordion-content service-details-content"><div class="service-photo-wrapper"><img class="service-photo" src="../cosmo-img/carbon-peel.jpg" alt="Карбоновый пилинг"><button class="btn btn--zoom-photo">Увеличить</button></div><div class="service-text-content"><p>Лазерная процедура с использованием карбонового наногеля. Обеспечивает глубокое очищение пор, оказывает бактерицидное действие и стимулирует выработку коллагена.</p></div></div></div></details></div></div></div></details>
-        <details class="accordion" data-anim><summary>Альгинатная маска</summary><div class="accordion-content-wrap"><div class="accordion-content"><div class="service-item-content"><div class="service-info"><span class="service-info__label">Цена</span><span class="service-info__value service-info__value--price">1500 ₽</span></div><div class="service-info--masters"><span class="service-info__label">Мастер</span><div class="masters-list"><span class="master-tag">Елена Морозова</span></div></div><details class="accordion service-details-accordion"><summary>Подробнее</summary><div class="accordion-content-wrap"><div class="accordion-content service-details-content"><div class="service-photo-wrapper"><img class="service-photo" src="../cosmo-img/alginate-mask.jpg" alt="Альгинатная маска"><button class="btn btn--zoom-photo">Увеличить</button></div><div class="service-text-content"><p>Пластифицирующая маска на основе водорослей. Оказывает мощный лифтинг-эффект, увлажняет, снимает отечность и улучшает цвет лица. Наносится поверх сыворотки.</p></div></div></div></details></div></div></div></details>
-        <details class="accordion" data-anim><summary>Классический массаж лица</summary><div class="accordion-content-wrap"><div class="accordion-content"><div class="service-item-content"><div class="service-info"><span class="service-info__label">Цена</span><span class="service-info__value service-info__value--price">2500 ₽</span></div><div class="service-info--masters"><span class="service-info__label">Мастер</span><div class="masters-list"><span class="master-tag">Елена Морозова</span></div></div><details class="accordion service-details-accordion"><summary>Подробнее</summary><div class="accordion-content-wrap"><div class="accordion-content service-details-content"><div class="service-photo-wrapper"><img class="service-photo" src="../cosmo-img/facial-massage.jpg" alt="Классический массаж лица"><button class="btn btn--zoom-photo">Увеличить</button></div><div class="service-text-content"><p>Ручная техника массажа, направленная на улучшение кровообращения, повышение тонуса мышц и кожи. Предотвращает появление морщин и дарит глубокое расслабление.</p></div></div></div></details></div></div></div></details>
-        <details class="accordion" data-anim><summary>Микротоковая терапия</summary><div class="accordion-content-wrap"><div class="accordion-content"><div class="service-item-content"><div class="service-info"><span class="service-info__label">Цена</span><span class="service-info__value service-info__value--price">3000 ₽</span></div><div class="service-info--masters"><span class="service-info__label">Мастер</span><div class="masters-list"><span class="master-tag">Елена Морозова</span></div></div><details class="accordion service-details-accordion"><summary>Подробнее</summary><div class="accordion-content-wrap"><div class="accordion-content service-details-content"><div class="service-photo-wrapper"><img class="service-photo" src="../cosmo-img/microcurrent-therapy.jpg" alt="Микротоковая терапия"><button class="btn btn--zoom-photo">Увеличить</button></div><div class="service-text-content"><p>Воздействие на кожу слабыми импульсами электрического тока. Процедура стимулирует клеточный метаболизм, обеспечивает лимфодренаж и оказывает выраженный лифтинг-эффект.</p></div></div></div></details></div></div></div></details>
-        <details class="accordion" data-anim><summary>RF-лифтинг лица</summary><div class="accordion-content-wrap"><div class="accordion-content"><div class="service-item-content"><div class="service-info"><span class="service-info__label">Цена</span><span class="service-info__value service-info__value--price">3800 ₽</span></div><div class="service-info--masters"><span class="service-info__label">Мастер</span><div class="masters-list"><span class="master-tag">Елена Морозова</span></div></div><details class="accordion service-details-accordion"><summary>Подробнее</summary><div class="accordion-content-wrap"><div class="accordion-content service-details-content"><div class="service-photo-wrapper"><img class="service-photo" src="../cosmo-img/rf-lifting.jpg" alt="RF-лифтинг лица"><button class="btn btn--zoom-photo">Увеличить</button></div><div class="service-text-content"><p>Радиочастотное омоложение кожи. Прогрев глубоких слоев дермы стимулирует активную выработку нового коллагена, что приводит к подтяжке кожи и уменьшению морщин.</p></div></div></div></details></div></div></div></details>
-        <details class="accordion" data-anim><summary>Уход по типу кожи</summary><div class="accordion-content-wrap"><div class="accordion-content"><div class="service-item-content"><div class="service-info"><span class="service-info__label">Цена</span><span class="service-info__value service-info__value--price">3200 ₽</span></div><div class="service-info--masters"><span class="service-info__label">Мастер</span><div class="masters-list"><span class="master-tag">Елена Морозова</span></div></div><details class="accordion service-details-accordion"><summary>Подробнее</summary><div class="accordion-content-wrap"><div class="accordion-content service-details-content"><div class="service-photo-wrapper"><img class="service-photo" src="../cosmo-img/skin-care-program.jpg" alt="Уход по типу кожи"><button class="btn btn--zoom-photo">Увеличить</button></div><div class="service-text-content"><p>Комплексная программа, подобранная индивидуально под потребности вашей кожи (увлажнение, питание, анти-акне, антивозрастной уход). Включает очищение, сыворотку и маску.</p></div></div></div></details></div></div></div></details>
-        <details class="accordion" data-anim><summary>Безинъекционная мезотерапия</summary><div class="accordion-content-wrap"><div class="accordion-content"><div class="service-item-content"><div class="service-info"><span class="service-info__label">Цена</span><span class="service-info__value service-info__value--price">4200 ₽</span></div><div class="service-info--masters"><span class="service-info__label">Мастер</span><div class="masters-list"><span class="master-tag">Елена Морозова</span></div></div><details class="accordion service-details-accordion"><summary>Подробнее</summary><div class="accordion-content-wrap"><div class="accordion-content service-details-content"><div class="service-photo-wrapper"><img class="service-photo" src="../cosmo-img/non-injection-mesotherapy.jpg" alt="Безинъекционная мезотерапия"><button class="btn btn--zoom-photo">Увеличить</button></div><div class="service-text-content"><p>Введение активных сывороток и витаминных коктейлей в глубокие слои кожи с помощью аппарата (электропорация). Без боли и уколов достигается эффект увлажнения и омоложения.</p></div></div></div></details></div></div></div></details>
+        <details class="accordion" data-anim>
+          <summary>Аппаратный вибрационный массаж (30 минут)</summary>
+          <div class="accordion-content-wrap">
+            <div class="accordion-content">
+              <div class="service-item-content">
+                <div class="service-info">
+                  <span class="service-info__label">Цена</span>
+                  <span class="service-info__value service-info__value--price">700 ₽</span>
+                </div>
+                <div class="service-info--masters">
+                  <span class="service-info__label">Мастер</span>
+                  <div class="masters-list"><span class="master-tag">Оксана</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </details>
+        
+        <details class="accordion" data-anim>
+          <summary>Аппаратная чистка лица</summary>
+          <div class="accordion-content-wrap">
+            <div class="accordion-content">
+              <div class="service-item-content">
+                <div class="service-info">
+                  <span class="service-info__label">Цена</span>
+                  <span class="service-info__value service-info__value--price">2000 ₽</span>
+                </div>
+                <div class="service-info--masters">
+                  <span class="service-info__label">Мастер</span>
+                  <div class="masters-list"><span class="master-tag">Оксана</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </details>
+
+        <details class="accordion" data-anim>
+          <summary>Мануальная чистка лица</summary>
+          <div class="accordion-content-wrap">
+            <div class="accordion-content">
+              <div class="service-item-content">
+                <div class="service-info">
+                  <span class="service-info__label">Цена</span>
+                  <span class="service-info__value service-info__value--price">от 2000 ₽</span>
+                </div>
+                <div class="service-info--masters">
+                  <span class="service-info__label">Мастер</span>
+                  <div class="masters-list"><span class="master-tag">Оксана</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </details>
+
+        <details class="accordion" data-anim>
+          <summary>Пилинг с гиалуроновой кислотой</summary>
+          <div class="accordion-content-wrap">
+            <div class="accordion-content">
+              <div class="service-item-content">
+                <div class="service-info">
+                  <span class="service-info__label">Цена</span>
+                  <span class="service-info__value service-info__value--price">2000 ₽</span>
+                </div>
+                <div class="service-info--masters">
+                  <span class="service-info__label">Мастер</span>
+                  <div class="masters-list"><span class="master-tag">Оксана</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </details>
+
+        <details class="accordion" data-anim>
+          <summary>Желтый пилинг</summary>
+          <div class="accordion-content-wrap">
+            <div class="accordion-content">
+              <div class="service-item-content">
+                <div class="service-info">
+                  <span class="service-info__label">Цена</span>
+                  <span class="service-info__value service-info__value--price">3000 ₽</span>
+                </div>
+                <div class="service-info--masters">
+                  <span class="service-info__label">Мастер</span>
+                  <div class="masters-list"><span class="master-tag">Оксана</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </details>
 
       </div>
+      
+      <p style="text-align: center; color: var(--text-secondary); margin-top: 24px; padding: 0 18px;">
+        Прайс на прочие косметологические услуги можно узнать по запросу у мастера.
+      </p>
+
     </section>
   </main>
   
@@ -602,7 +625,9 @@
         });
       })();
       
-      // Скрипт для лайтбокса
+      // Поскольку фото из прайса убраны, лайтбокс для них больше не нужен.
+      // Можно удалить или закомментировать этот скрипт, если он не используется в других местах.
+      /*
       (function(){
         const lightbox = document.getElementById('photoLightbox');
         if (!lightbox) return;
@@ -645,6 +670,7 @@
           }
         });
       })();
+      */
 
     });
   </script>
