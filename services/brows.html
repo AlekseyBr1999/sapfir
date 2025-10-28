@@ -363,7 +363,51 @@
     .mobile-nav.is-open a:nth-child(4) { transition-delay: .15s; }
     .mobile-nav.is-open a:nth-child(5) { transition-delay: .2s; }
 
-    @media (max-width: 768px) { nav.primary { display: none; } .nav-toggle { display: block; } }
+    /* Cookie Consent Banner */
+    .cookie-consent {
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      z-index: 1100;
+      padding: 16px 24px;
+      background: var(--glass-bg);
+      backdrop-filter: blur(12px);
+      border-top: 1px solid var(--glass-border-color);
+      box-shadow: 0 -8px 24px rgba(0,0,0,.3);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      transform: translateY(100%);
+      transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .cookie-consent.is-visible {
+      transform: translateY(0);
+    }
+    .cookie-consent__text {
+      font-size: 14px;
+      color: var(--text-secondary);
+      flex-grow: 1;
+    }
+    .btn.btn-cookie {
+      padding: 8px 20px;
+      font-weight: 500;
+      flex-shrink: 0;
+    }
+    
+    @media (max-width: 768px) { 
+      nav.primary { display: none; } 
+      .nav-toggle { display: block; } 
+      .cookie-consent {
+        flex-direction: column;
+        text-align: center;
+        gap: 15px;
+        padding: 20px;
+      }
+      .btn.btn-cookie {
+        width: 100%;
+        max-width: 280px;
+      }
+    }
     
     [data-anim] { opacity: 0; transform: translateY(20px); transition: opacity .6s ease-out, transform .6s ease-out; }
     [data-anim].is-visible { opacity: 1; transform: translateY(0); }
@@ -406,6 +450,29 @@
     }
 
   </style>
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZVK7KFH0SQ"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-ZVK7KFH0SQ');
+  </script>
+
+  
+  <script type="text/javascript">
+      (function(m,e,t,r,i,k,a){
+          m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+          m[i].l=1*new Date();
+          for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+          k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
+      })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=104881602', 'ym');
+
+      ym(104881602, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", accurateTrackBounce:true, trackLinks:true});
+  </script>
+  <noscript><div><img src="https://mc.yandex.ru/watch/104881602" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+  
 </head>
 <body>
 
@@ -505,6 +572,13 @@
       <div class="lightbox-image-container" id="lightboxImageContainer"></div>
       <button class="lightbox-close" aria-label="Закрыть фото">&times;</button>
     </div>
+  </div>
+
+  <div id="cookie-consent-banner" class="cookie-consent">
+    <div class="cookie-consent__text">
+      Мы используем файлы cookie для улучшения работы сайта. Продолжая, вы соглашаетесь с их использованием.
+    </div>
+    <button id="cookie-consent-accept" class="btn btn-cookie">Хорошо</button>
   </div>
 
   <script>
@@ -648,6 +722,30 @@
           if (e.key === 'Escape' && lightbox.classList.contains('is-visible')) {
             closeLightbox();
           }
+        });
+      })();
+
+      // Логика для Cookie баннера
+      (function(){
+        const banner = document.getElementById('cookie-consent-banner');
+        const acceptBtn = document.getElementById('cookie-consent-accept');
+
+        if (!banner || !acceptBtn) {
+          return;
+        }
+
+        // Проверяем, было ли дано согласие
+        if (!localStorage.getItem('cookieConsent')) {
+          // Небольшая задержка перед показом для плавности
+          setTimeout(() => {
+            banner.classList.add('is-visible');
+          }, 500);
+        }
+
+        // При нажатии на кнопку
+        acceptBtn.addEventListener('click', () => {
+          localStorage.setItem('cookieConsent', 'given');
+          banner.classList.remove('is-visible');
         });
       })();
 
