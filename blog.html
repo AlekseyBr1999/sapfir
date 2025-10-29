@@ -177,8 +177,8 @@
     .blog-section.cosmo h2::before { background: var(--accent-cosmo); box-shadow: 0 0 10px var(--accent-cosmo); }
     .blog-section.brows h2::before { background: var(--accent-brows); box-shadow: 0 0 10px var(--accent-brows); }
 
-    /* Горизонтальный скроллер для последних статей */
-    .latest-articles-scroller {
+    /* ОБЩИЙ КОНТЕЙНЕР ДЛЯ СТАТЕЙ (Скроллер на мобильных, сетка на десктопе) */
+    .articles-scroller {
       display: flex;
       gap: 20px;
       overflow-x: auto;
@@ -189,31 +189,29 @@
       scroll-snap-type: x mandatory;
       scrollbar-color: var(--sapphire-mid) transparent;
     }
-    .latest-articles-scroller::-webkit-scrollbar { height: 6px; }
-    .latest-articles-scroller::-webkit-scrollbar-thumb { background: var(--sapphire-mid); border-radius: 6px; }
-    .latest-articles-scroller .article-card-link {
+    .articles-scroller::-webkit-scrollbar { height: 6px; }
+    .articles-scroller::-webkit-scrollbar-thumb { background: var(--sapphire-mid); border-radius: 6px; }
+    
+    /* Стили для дочерних элементов скроллера */
+    .articles-scroller > * {
       flex: 0 0 80%;
       max-width: 320px;
       scroll-snap-align: start;
     }
+
     @media(min-width: 768px) {
-      .latest-articles-scroller {
+      .articles-scroller {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
         gap: 24px;
         overflow-x: visible;
         padding: 0;
         margin: 0;
       }
-      .latest-articles-scroller .article-card-link {
+      .articles-scroller > * {
         max-width: none;
+        flex: none; /* Сбрасываем flex свойства */
       }
-    }
-
-    .blog-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 24px;
     }
 
     .article-card-link {
@@ -273,6 +271,7 @@
       place-items: center;
       text-align: center;
       min-height: 180px;
+      height: 100%;
       border-radius: var(--radius-xl);
       background: var(--glass-bg);
       border: 1px dashed var(--glass-border-color);
@@ -477,7 +476,7 @@
       
       <section class="blog-section" data-anim>
         <h2>Последние статьи</h2>
-        <div class="latest-articles-scroller">
+        <div class="articles-scroller">
           <a href="#" class="article-card-link">
             <article class="article-card">
               <div class="article-card__placeholder"><span>Изображение</span></div>
@@ -508,7 +507,7 @@
       
       <section class="blog-section hair" data-anim>
         <h2>Парикмахерское искусство</h2>
-        <div class="blog-grid">
+        <div class="articles-scroller">
           <div class="article-placeholder">Здесь будет статья</div>
           <div class="article-placeholder">Здесь будет статья</div>
           <div class="article-placeholder">Здесь будет статья</div>
@@ -518,7 +517,8 @@
       
       <section class="blog-section nails" data-anim>
         <h2>Ногтевой сервис</h2>
-        <div class="blog-grid">
+        <div class="articles-scroller">
+          <div class="article-placeholder">Здесь будет статья</div>
           <div class="article-placeholder">Здесь будет статья</div>
           <div class="article-placeholder">Здесь будет статья</div>
         </div>
@@ -527,7 +527,7 @@
       
       <section class="blog-section cosmo" data-anim>
         <h2>Косметология</h2>
-        <div class="blog-grid">
+        <div class="articles-scroller">
           <div class="article-placeholder">Здесь будет статья</div>
           <div class="article-placeholder">Здесь будет статья</div>
           <div class="article-placeholder">Здесь будет статья</div>
@@ -537,7 +537,8 @@
       
       <section class="blog-section brows" data-anim>
         <h2>Коррекция бровей</h2>
-        <div class="blog-grid">
+        <div class="articles-scroller">
+          <div class="article-placeholder">Здесь будет статья</div>
           <div class="article-placeholder">Здесь будет статья</div>
           <div class="article-placeholder">Здесь будет статья</div>
         </div>
