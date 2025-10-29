@@ -1,5 +1,4 @@
 <!doctype html>
-
 <html lang="ru">
 <head>
   <meta charset="utf-8" />
@@ -144,21 +143,86 @@
     .page-intro {
       text-align: center;
       max-width: 65ch;
-      margin: 0 auto 40px;
+      margin: 0 auto 60px;
       font-size: 18px;
       color: var(--text-secondary);
     }
+
+    .blog-section {
+      margin-bottom: 60px;
+    }
+
+    .blog-section h2 {
+      font-size: clamp(22px, 4vw, 26px);
+      font-weight: 600;
+      letter-spacing: .03em;
+      margin: 0 0 24px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--glass-border-color);
+      position: relative;
+    }
+    .blog-section h2::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: -1px;
+      width: 80px;
+      height: 2px;
+      background: var(--sapphire-highlight);
+      border-radius: 2px;
+      box-shadow: 0 0 10px var(--sapphire-highlight);
+    }
+    .blog-section.hair h2::before { background: var(--accent-hair); box-shadow: 0 0 10px var(--accent-hair); }
+    .blog-section.nails h2::before { background: var(--accent-nails); box-shadow: 0 0 10px var(--accent-nails); }
+    .blog-section.cosmo h2::before { background: var(--accent-cosmo); box-shadow: 0 0 10px var(--accent-cosmo); }
+    .blog-section.brows h2::before { background: var(--accent-brows); box-shadow: 0 0 10px var(--accent-brows); }
+
+    /* Горизонтальный скроллер для последних статей */
+    .latest-articles-scroller {
+      display: flex;
+      gap: 20px;
+      overflow-x: auto;
+      padding: 4px 4px 20px 4px; /* Паддинг для тени и скроллбара */
+      margin: 0 -22px; /* Выход за пределы контейнера для эффекта "от края до края" на мобильных */
+      padding-left: 22px;
+      padding-right: 22px;
+      scroll-snap-type: x mandatory;
+      scrollbar-color: var(--sapphire-mid) transparent;
+    }
+    .latest-articles-scroller::-webkit-scrollbar { height: 6px; }
+    .latest-articles-scroller::-webkit-scrollbar-thumb { background: var(--sapphire-mid); border-radius: 6px; }
+    .latest-articles-scroller .article-card-link {
+      flex: 0 0 80%;
+      max-width: 320px;
+      scroll-snap-align: start;
+    }
+    @media(min-width: 768px) {
+      .latest-articles-scroller {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 24px;
+        overflow-x: visible;
+        padding: 0;
+        margin: 0;
+      }
+      .latest-articles-scroller .article-card-link {
+        max-width: none;
+      }
+    }
+
     .blog-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
       gap: 24px;
     }
+
     .article-card-link {
       text-decoration: none;
       color: inherit;
       display: block;
       -webkit-tap-highlight-color: transparent;
     }
+
     .article-card {
       height: 100%;
       display: flex;
@@ -170,14 +234,15 @@
       box-shadow: var(--shadow-soft);
       transition: transform .3s ease, box-shadow .3s ease;
     }
+
     @media (hover: hover) {
       .article-card-link:hover .article-card {
         transform: translateY(-8px);
-        box-shadow: 0 20px 50px rgba(0,0,0,.4),
-                    0 0 20px var(--gold-accent);
+        box-shadow: 0 20px 50px rgba(0,0,0,.4);
       }
     }
-    .article-card__image-placeholder {
+
+    .article-card__placeholder {
       aspect-ratio: 16 / 9;
       background-color: var(--bg-dark);
       border-bottom: 1px solid var(--glass-border-color);
@@ -194,34 +259,34 @@
       flex-direction: column;
       flex-grow: 1;
     }
-    .article-card__date {
-      font-size: 13px;
-      color: var(--text-secondary);
-      margin-bottom: 8px;
-    }
     .article-card h3 {
-      margin: 0 0 12px;
-      font-size: 20px;
+      margin: 0;
+      font-size: 18px;
       font-weight: 600;
       letter-spacing: .02em;
       color: var(--text-primary);
     }
-    .article-card p {
-      margin: 0 0 24px;
+    
+    /* Стили для заглушки */
+    .article-placeholder {
+      display: grid;
+      place-items: center;
+      text-align: center;
+      min-height: 180px;
+      border-radius: var(--radius-xl);
+      background: var(--glass-bg);
+      border: 1px dashed var(--glass-border-color);
       color: var(--text-secondary);
-      flex-grow: 1;
+      font-size: 15px;
+      letter-spacing: .04em;
+      padding: 20px;
+      transition: background-color .3s ease, border-color .3s ease;
     }
-    .article-card__read-more {
-      color: var(--gold-accent);
-      text-decoration: none;
-      font-weight: 600;
-      letter-spacing: .05em;
-      align-self: flex-start;
-      transition: color .3s ease;
-    }
-    .article-card-link:hover .article-card__read-more {
-      color: var(--text-primary);
-      text-decoration: underline;
+    @media (hover: hover) {
+      .article-placeholder:hover {
+        background-color: var(--sapphire-deep);
+        border-color: var(--sapphire-highlight);
+      }
     }
     /* --- КОНЕЦ СТИЛЕЙ БЛОГА --- */
 
@@ -339,9 +404,6 @@
     /* Анимации появления */
     [data-anim] { opacity: 0; transform: translateY(20px); transition: opacity .6s ease-out, transform .6s ease-out; }
     [data-anim].is-visible { opacity: 1; transform: translateY(0); }
-    .blog-grid > a:nth-child(1) { transition-delay: .1s; }
-    .blog-grid > a:nth-child(2) { transition-delay: .2s; }
-    .blog-grid > a:nth-child(3) { transition-delay: .3s; }
 
   </style>
   
@@ -353,7 +415,6 @@
 
     gtag('config', 'G-ZVK7KFH0SQ');
   </script>
-
   
   <script type="text/javascript">
       (function(m,e,t,r,i,k,a){
@@ -408,29 +469,80 @@
   <main>
     
     <section class="section" id="blog">
-      <h1 data-anim>Блог</h1>
+      <h1 data-anim>Наш Блог</h1>
       <p class="page-intro" data-anim>
-        Блог находится в разработке. Скоро здесь появятся полезные статьи о красоте и уходе. Следите за обновлениями!
+        Здесь мы делимся советами, рассказываем о трендах и новинках в мире красоты. Все, что вы хотели знать об уходе за собой — от наших лучших мастеров.
       </p>
 
-      <div class="blog-grid">
-        <a href="#" class="article-card-link" data-anim>
-          <article class="article-card">
-            <div class="article-card__image-placeholder">
-              <span>Изображение статьи</span>
-            </div>
-            <div class="article-card__content">
-              <span class="article-card__date">27 августа 2025</span>
-              <h3>5 секретов идеального блонда: как сохранить цвет и здоровье волос</h3>
-              <p>Узнайте, как правильно ухаживать за осветленными волосами, какие средства использовать для нейтрализации желтизны и как продлить яркость вашего оттенка...</p>
-              <span class="article-card__read-more">Читать далее →</span>
-            </div>
-          </article>
-        </a>
-        
-        
+      
+      <section class="blog-section" data-anim>
+        <h2>Последние статьи</h2>
+        <div class="latest-articles-scroller">
+          <a href="#" class="article-card-link">
+            <article class="article-card">
+              <div class="article-card__placeholder"><span>Изображение</span></div>
+              <div class="article-card__content">
+                <h3>Здесь будет статья</h3>
+              </div>
+            </article>
+          </a>
+          <a href="#" class="article-card-link">
+            <article class="article-card">
+              <div class="article-card__placeholder"><span>Изображение</span></div>
+              <div class="article-card__content">
+                <h3>Здесь будет статья</h3>
+              </div>
+            </article>
+          </a>
+          <a href="#" class="article-card-link">
+            <article class="article-card">
+              <div class="article-card__placeholder"><span>Изображение</span></div>
+              <div class="article-card__content">
+                <h3>Здесь будет статья</h3>
+              </div>
+            </article>
+          </a>
+        </div>
+      </section>
 
-      </div>
+      
+      <section class="blog-section hair" data-anim>
+        <h2>Парикмахерское искусство</h2>
+        <div class="blog-grid">
+          <div class="article-placeholder">Здесь будет статья</div>
+          <div class="article-placeholder">Здесь будет статья</div>
+          <div class="article-placeholder">Здесь будет статья</div>
+        </div>
+      </section>
+
+      
+      <section class="blog-section nails" data-anim>
+        <h2>Ногтевой сервис</h2>
+        <div class="blog-grid">
+          <div class="article-placeholder">Здесь будет статья</div>
+          <div class="article-placeholder">Здесь будет статья</div>
+        </div>
+      </section>
+
+      
+      <section class="blog-section cosmo" data-anim>
+        <h2>Косметология</h2>
+        <div class="blog-grid">
+          <div class="article-placeholder">Здесь будет статья</div>
+          <div class="article-placeholder">Здесь будет статья</div>
+          <div class="article-placeholder">Здесь будет статья</div>
+        </div>
+      </section>
+
+      
+      <section class="blog-section brows" data-anim>
+        <h2>Коррекция бровей</h2>
+        <div class="blog-grid">
+          <div class="article-placeholder">Здесь будет статья</div>
+          <div class="article-placeholder">Здесь будет статья</div>
+        </div>
+      </section>
+
     </section>
 
   </main>
@@ -493,7 +605,7 @@
               observer.unobserve(entry.target);
             }
           });
-        }, { threshold: 0.2 });
+        }, { threshold: 0.1 });
         document.querySelectorAll('[data-anim]').forEach(el => observer.observe(el));
       })();
 
@@ -536,10 +648,9 @@
         };
         navToggle.addEventListener('click', () => toggleMenu());
         navClose.addEventListener('click', () => toggleMenu(false));
-        // Не закрываем меню при клике на якорные ссылки на ДРУГУЮ страницу
         mobileNav.querySelectorAll('a').forEach(link => {
-          if (!link.getAttribute('href').includes('#')) {
-            link.addEventListener('click', () => toggleMenu(false));
+          if (!link.getAttribute('href').includes('#') || link.classList.contains('nav-contact-trigger')) {
+             link.addEventListener('click', () => toggleMenu(false));
           }
         });
         document.addEventListener('keydown', (e) => e.key === 'Escape' && mobileNav.classList.contains('is-open') && toggleMenu(false));
@@ -548,7 +659,7 @@
       // Модальное окно
       (function(){
         const modal = document.getElementById('contactModal');
-        const openTriggers = document.querySelectorAll('.modal-trigger, .nav-contact-trigger');
+        const openTriggers = document.querySelectorAll('.nav-contact-trigger');
         const closeBtn = modal.querySelector('.modal-close');
         const openModal = (e) => { e.preventDefault(); modal.classList.add('is-visible'); scrollLocker.lock(); };
         const closeModal = () => { modal.classList.remove('is-visible'); scrollLocker.unlock(); };
@@ -567,15 +678,12 @@
           return;
         }
 
-        // Проверяем, было ли дано согласие
         if (!localStorage.getItem('cookieConsent')) {
-          // Небольшая задержка перед показом для плавности
           setTimeout(() => {
             banner.classList.add('is-visible');
           }, 500);
         }
 
-        // При нажатии на кнопку
         acceptBtn.addEventListener('click', () => {
           localStorage.setItem('cookieConsent', 'given');
           banner.classList.remove('is-visible');
