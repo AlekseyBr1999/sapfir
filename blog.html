@@ -239,18 +239,16 @@
         box-shadow: 0 20px 50px rgba(0,0,0,.4);
       }
     }
-
-    .article-card__placeholder {
+    
+    /* Стили для изображения в карточке статьи */
+    .article-card__image {
+      display: block;
+      width: 100%;
       aspect-ratio: 16 / 9;
-      background-color: var(--bg-dark);
+      object-fit: cover; /* Картинка будет красиво обрезаться, а не сжиматься */
       border-bottom: 1px solid var(--glass-border-color);
-      display: grid;
-      place-items: center;
-      color: var(--text-secondary);
-      font-size: 14px;
-      letter-spacing: .1em;
-      text-transform: uppercase;
     }
+
     .article-card__content {
       padding: 24px;
       display: flex;
@@ -477,27 +475,29 @@
       <section class="blog-section" data-anim>
         <h2>Последние статьи</h2>
         <div class="articles-scroller">
+          
+          
+          <a href="articles/vypadenie-volos-pri-menopauze.html" class="article-card-link">
+            <article class="article-card">
+              <img class="article-card__image" src="articles/article_pictures/picture1.jpg" alt="Фото здоровых и шелковистых волос">
+              <div class="article-card__content">
+                <h3>Выпадение волос у женщин после менопаузы</h3>
+              </div>
+            </article>
+          </a>
+          
+
           <a href="#" class="article-card-link">
             <article class="article-card">
-              <div class="article-card__placeholder"><span>Изображение</span></div>
               <div class="article-card__content">
-                <h3>Здесь будет статья</h3>
+                <h3>Здесь будет следующая статья</h3>
               </div>
             </article>
           </a>
           <a href="#" class="article-card-link">
             <article class="article-card">
-              <div class="article-card__placeholder"><span>Изображение</span></div>
               <div class="article-card__content">
-                <h3>Здесь будет статья</h3>
-              </div>
-            </article>
-          </a>
-          <a href="#" class="article-card-link">
-            <article class="article-card">
-              <div class="article-card__placeholder"><span>Изображение</span></div>
-              <div class="article-card__content">
-                <h3>Здесь будет статья</h3>
+                <h3>И еще одна статья</h3>
               </div>
             </article>
           </a>
@@ -508,7 +508,18 @@
       <section class="blog-section hair" data-anim>
         <h2>Парикмахерское искусство</h2>
         <div class="articles-scroller">
-          <div class="article-placeholder">Здесь будет статья</div>
+          
+          
+          <a href="articles/vypadenie-volos-pri-menopauze.html" class="article-card-link">
+            <article class="article-card">
+              <img class="article-card__image" src="articles/article_pictures/picture1.jpg" alt="Фото здоровых и шелковистых волос">
+              <div class="article-card__content">
+                <h3>Выпадение волос у женщин после менопаузы</h3>
+              </div>
+            </article>
+          </a>
+          
+
           <div class="article-placeholder">Здесь будет статья</div>
           <div class="article-placeholder">Здесь будет статья</div>
         </div>
