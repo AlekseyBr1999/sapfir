@@ -14,10 +14,12 @@
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@700&display=swap" rel="stylesheet">
+  
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
+  
   <style>
     :root {
-      /* Глубокая сапфировая палитра */
+      /* Палитра из основного сайта для сохранения стиля */
       --bg-dark: #050818;
       --sapphire-deep: #0d1a4f;
       --sapphire-mid: #1a3a9a;
@@ -28,154 +30,113 @@
       --glass-bg: rgba(13, 26, 79, 0.45);
       --glass-border-color: rgba(74, 125, 255, 0.25);
       --ink-brand: #c5d2ff;
-
-      /* Акценты для карточек */
-      --accent-hair: #4a7dff; /* Сапфировый */
-      --accent-nails: #d31e6a; /* Гранатовый */
-      --accent-cosmo: #10b981; /* Изумрудный */
-      --accent-brows: #dab785; /* Золотой */
-
       --radius-xl: 18px;
       --shadow-soft: 0 16px 40px rgba(0,0,0,.3);
     }
 
     html {
       scroll-behavior: smooth;
-      scrollbar-width: thin;
-      scrollbar-color: var(--sapphire-mid) transparent;
     }
-    html, body { height: 100%; color: var(--text-primary); -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
-
+    
     body {
       margin: 0;
-      font-family: "Segoe UI", Roboto, "Helvetica Neue", Arial, system-ui, -apple-system, "Noto Sans", "Liberation Sans", sans-serif;
-      line-height: 1.6;
-      scrollbar-gutter: stable;
-      background: linear-gradient(180deg, var(--bg-dark) 0%, var(--sapphire-deep) 70%, var(--bg-dark) 100%);
-      background-size: 100% 200%;
-      animation: gradient-pan 12s ease-in-out infinite alternate;
+      /* Новый, более читабельный шрифт */
+      font-family: 'Inter', sans-serif;
+      line-height: 1.7; /* Увеличена высота строки для комфортного чтения */
+      color: var(--text-primary);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      /* Убран анимированный фон, заменен на статичный темный */
+      background-color: var(--bg-dark);
+      background-image: linear-gradient(180deg, #090e2b, var(--bg-dark));
       overflow-x: hidden;
-      overscroll-behavior-y: contain;
-    }
-
-    @keyframes gradient-pan {
-      from { background-position: 0% 0%; }
-      to { background-position: 0% 100%; }
     }
 
     @media (prefers-reduced-motion: reduce) {
-      body, .btn::before, #particles-bg, .modal, .modal-overlay { 
+      body, .btn, .modal, .modal-overlay { 
         animation: none !important; 
         transition: none !important;
       }
     }
-
-    /* Стилизация скроллбара для WebKit */
-    ::-webkit-scrollbar { width: 8px; }
-    ::-webkit-scrollbar-track { background: transparent; }
-    ::-webkit-scrollbar-thumb {
-      border-radius: 10px;
-      background: linear-gradient(180deg, var(--sapphire-highlight), var(--sapphire-mid));
-    }
-    body.no-scroll { overflow: hidden; }
     
-    #particles-bg {
-      position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; 
-      will-change: transform;
-    }
+    body.no-scroll { overflow: hidden; }
 
     /* Кнопки */
     .btn {
-      position: relative; display: inline-flex; align-items: center; justify-content: center; gap: 10px;
-      padding: 14px 24px; border-radius: 999px;
+      display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+      padding: 12px 24px; border-radius: 999px;
       border: 1px solid var(--glass-border-color);
       background-color: var(--glass-bg);
       color: var(--text-primary); text-decoration: none; letter-spacing: .04em; font-weight: 600;
-      box-shadow: 0 8px 24px rgba(0,0,0,.3);
+      box-shadow: 0 4px 12px rgba(0,0,0,.2);
       transition: transform .25s ease, box-shadow .25s ease, background-color .25s ease;
       -webkit-tap-highlight-color: transparent;
     }
     @media (hover: hover) {
       .btn:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 12px 32px rgba(0,0,0,.4);
+        transform: translateY(-2px);
+        box-shadow: 0 8px 24px rgba(0,0,0,.3);
         background-color: var(--sapphire-deep);
       }
     }
     .btn:active { transform: translateY(0) scale(0.98); }
-    .btn.secondary { background: transparent; }
-    .btn.secondary:hover { background: var(--glass-bg); }
-    .btn svg { width: 18px; height: 18px; }
 
-    /* Секции */
-    .section { max-width: 1200px; margin: 30px auto; padding: 20px 18px; }
-    
     /* --- СТИЛИ ДЛЯ СТРАНИЦЫ СТАТЬИ --- */
-
-    /* Упрощенная шапка с кнопкой "назад" */
     .article-header {
       padding: 20px 18px;
       max-width: 1200px;
       margin: 0 auto;
     }
     .back-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 12px;
-      color: var(--text-secondary);
-      text-decoration: none;
-      font-size: 15px;
-      font-weight: 500;
-      letter-spacing: .03em;
+      display: inline-flex; align-items: center; gap: 12px;
+      color: var(--text-secondary); text-decoration: none;
+      font-size: 15px; font-weight: 500;
       transition: color .3s ease, transform .3s ease;
     }
     .back-link svg {
-      width: 24px;
-      height: 24px;
+      width: 24px; height: 24px;
       transition: transform .3s ease;
     }
     .back-link:hover {
       color: var(--text-primary);
       transform: translateX(-4px);
     }
-    .back-link:hover svg {
-      transform: scale(1.1);
-    }
 
-    /* Контейнер для контента статьи */
-    .article-content {
-      max-width: 75ch; /* Оптимальная ширина для чтения */
+    .article-container {
+      max-width: 70ch; /* Оптимальная ширина для чтения */
       margin: 0 auto;
-      padding: 20px 0;
+      padding: 20px 18px;
     }
 
-    .article-content h1, .article-content h2, .article-content h3 {
-      text-align: left; /* Убираем центрирование */
+    .article-content h1, .article-content h2 {
       text-shadow: 0 0 10px rgba(125, 168, 255, .2);
     }
 
     .article-content h1 {
-      font-family: Georgia, "Times New Roman", serif; font-weight: 400; letter-spacing: .05em;
+      /* Новый шрифт для заголовков */
+      font-family: 'Merriweather', Georgia, serif;
+      font-weight: 700;
       font-size: clamp(28px, 6vw, 42px);
       line-height: 1.2;
-      margin: 0 0 30px;
+      margin: 10px 0 30px;
     }
     .article-content h2 {
+      font-family: 'Merriweather', Georgia, serif;
       font-size: clamp(22px, 5vw, 28px);
-      font-weight: 600;
-      margin: 40px 0 20px;
+      font-weight: 700;
+      margin: 50px 0 20px;
       padding-bottom: 10px;
       border-bottom: 1px solid var(--glass-border-color);
     }
     .article-content h3 {
-      font-size: clamp(18px, 4vw, 22px);
+      font-size: clamp(19px, 4vw, 22px);
       font-weight: 600;
       color: var(--ink-brand);
       margin: 30px 0 15px;
     }
 
-    .article-content p {
-      font-size: 17px;
+    .article-content p, .article-content li {
+      font-size: 18px; /* Увеличен размер для читабельности */
       color: var(--text-secondary);
       margin-bottom: 20px;
     }
@@ -197,9 +158,7 @@
     }
 
     .article-content img {
-      display: block;
-      max-width: 100%;
-      height: auto;
+      display: block; max-width: 100%; height: auto;
       border-radius: var(--radius-xl);
       margin: 30px 0;
       border: 1px solid var(--glass-border-color);
@@ -207,85 +166,113 @@
     }
 
     .article-content ul {
-      list-style: none;
-      padding-left: 0;
+      list-style: none; padding-left: 0;
     }
     .article-content ul li {
-      position: relative;
-      padding-left: 28px;
-      margin-bottom: 12px;
-      font-size: 17px;
-      color: var(--text-secondary);
+      position: relative; padding-left: 28px;
     }
     .article-content ul li::before {
-      content: '◆';
-      position: absolute;
-      left: 0;
-      top: 1px;
-      color: var(--sapphire-highlight);
-      font-size: 18px;
+      content: '◆'; position: absolute; left: 0; top: 1px;
+      color: var(--sapphire-highlight); font-size: 18px;
     }
 
-    /* Навигация в конце статьи */
     .article-navigation {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      align-items: center;
-      gap: 20px;
-      margin-top: 50px;
+      display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center;
+      gap: 20px; margin-top: 50px; padding-top: 30px;
+      border-top: 1px solid var(--glass-border-color);
+    }
+    
+    /* Стили для блока "Читать также" */
+    .next-article-section {
+      margin-top: 60px;
       padding-top: 30px;
       border-top: 1px solid var(--glass-border-color);
     }
-    .article-navigation .btn.disabled {
-      opacity: 0.5;
-      pointer-events: none;
-      user-select: none;
+    .next-article__title {
+      font-family: 'Merriweather', serif;
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin: 0 0 20px;
+    }
+    .next-article-card {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border-color);
+      border-radius: var(--radius-xl);
+      padding: 20px;
+      text-decoration: none;
+      transition: background-color .3s ease, box-shadow .3s ease, transform .3s ease;
+    }
+    .next-article-card:hover {
+      background-color: var(--sapphire-deep);
+      box-shadow: 0 8px 24px rgba(0,0,0,.3);
+      transform: translateY(-4px);
+    }
+    .next-article-card__image-placeholder {
+      flex-shrink: 0;
+      width: 100px;
+      height: 100px;
+      border-radius: 12px;
+      background-color: var(--bg-dark);
+      display: grid;
+      place-items: center;
+      color: var(--text-secondary);
+      font-size: 14px;
+    }
+    .next-article-card__content h4 {
+      margin: 0 0 8px;
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+    .next-article-card__content p {
+      margin: 0;
+      font-size: 15px;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+    @media(max-width: 480px) {
+      .next-article-card { flex-direction: column; align-items: flex-start; }
+      .next-article-card__image-placeholder { width: 100%; height: auto; aspect-ratio: 16/9; }
     }
 
-    /* --- КОНЕЦ СТИЛЕЙ СТАТЬИ --- */
 
     /* Футер */
     footer { 
-      margin-top: 34px; border-top: 1px solid var(--glass-border-color); color: var(--text-secondary); 
-      font-size: 13px; padding: 24px 18px; text-align: center; background: rgba(5, 8, 24, 0.6); backdrop-filter: blur(12px);
+      margin-top: 60px; border-top: 1px solid var(--glass-border-color); color: var(--text-secondary); 
+      font-size: 13px; padding: 24px 18px; text-align: center;
     }
-    .dev-signature { margin-top: 10px; }
-    .brand-logo-char { font-family: "JetBrains Mono", monospace; font-weight: 700; color: var(--ink-brand); font-size: 22px; line-height: 1; display: inline-block; vertical-align: middle; }
 
-    /* Анимации появления */
-    [data-anim] { opacity: 0; transform: translateY(20px); transition: opacity .6s ease-out, transform .6s ease-out; }
-    [data-anim].is-visible { opacity: 1; transform: translateY(0); }
-
+    /* Модальное окно */
+    .modal-overlay { 
+      position: fixed; inset: 0; background: rgba(5, 8, 24, 0.7); backdrop-filter: blur(10px); z-index: 1000; 
+      display: flex; align-items: center; justify-content: center; padding: 14px; 
+      opacity: 0; visibility: hidden; transition: opacity .3s ease, visibility .3s ease;
+    }
+    .modal-overlay.is-visible { opacity: 1; visibility: visible; }
+    .modal { 
+      background: var(--sapphire-deep); border: 1px solid var(--glass-border-color); 
+      border-radius: var(--radius-xl); padding: 28px; width: 100%; max-width: 480px; 
+      box-shadow: 0 0 40px var(--sapphire-highlight); 
+      transform: translateY(20px) scale(0.98);
+      transition: transform .3s ease;
+    }
+    .modal-overlay.is-visible .modal { transform: translateY(0) scale(1); }
+    .modal h3 { margin: 0 0 20px; font-weight: 600; font-size: 20px; color: var(--text-primary); }
+    .modal-close { position: absolute; top: 10px; right: 10px; background: none; border: none; color: var(--text-secondary); font-size: 24px; cursor: pointer; padding: 4px; opacity: .8; transition: opacity .2s ease, transform .2s ease; }
+    .modal-close:hover { opacity: 1; transform: scale(1.1) rotate(90deg); }
+    .contact-list { display: flex; flex-direction: column; gap: 10px; }
+    .contact-item__phone { display: block; padding: 14px 16px; border-radius: 12px; background-color: rgba(0,0,0,0.2); border: 1px solid var(--glass-border-color); text-decoration: none; transition: background-color 0.3s ease, box-shadow 0.3s ease; }
+    .contact-item__phone:hover { background-color: rgba(0,0,0,0.4); box-shadow: 0 0 15px -5px var(--sapphire-highlight); }
+    .contact-item__title { display: block; font-size: 13px; font-weight: 500; color: var(--text-secondary); margin-bottom: 4px; }
+    .contact-item__number { display: block; font-size: 18px; font-weight: 600; color: var(--text-primary); }
+    .contact-item__phone:hover .contact-item__number { color: var(--gold-accent); }
   </style>
-  
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZVK7KFH0SQ"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-
-    gtag('config', 'G-ZVK7KFH0SQ');
-  </script>
-  
-  <script type="text/javascript">
-      (function(m,e,t,r,i,k,a){
-          m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
-          m[i].l=1*new Date();
-          for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
-          k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
-      })(window, document,'script','https://mc.yandex.ru/metrika/tag.js?id=104881602', 'ym');
-
-      ym(104881602, 'init', {ssr:true, webvisor:true, clickmap:true, ecommerce:"dataLayer", accurateTrackBounce:true, trackLinks:true});
-  </script>
-  <noscript><div><img src="https://mc.yandex.ru/watch/104881602" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
-  
-
 </head>
 <body>
-
-  <div id="particles-bg"></div>
-  
   
   <header class="article-header">
     <a href="blog.html" class="back-link">
@@ -297,11 +284,9 @@
     </a>
   </header>
 
-
   <main>
-    
-    <section class="section" id="article">
-      <article class="article-content" data-anim>
+    <div class="article-container">
+      <article class="article-content">
 
         <h1>Выпадение волос у женщин после менопаузы</h1>
 
@@ -311,104 +296,104 @@
 
         <h2>Почему выпадают волосы после менопаузы?</h2>
 
-        <p>Всему виной гормоны. Менопауза — это, по сути, отключение половой системы у женщины, которое перестраивает весь организм. Перестают выделяться в нужном количестве эстрогены, женские половые гормоны, и начинают преобладать андрогены — мужские гормоны. Главный виновник — гормон дигидротестостерон (ДГТ), который ослабляет фолликулы и вызывает выпадение волос. Он влияет на выпадение волос в 2.5 раза сильнее тестостерона.</p>
+        <p>Всему виной гормоны. Менопауза — это, по сути, отключение половой системы у женщины, которое перестраивает весь организм. Перестают выделяться в нужном количестве эстрогены, и начинают преобладать андрогены. Главный виновник — гормон дигидротестостерон (ДГТ), который ослабляет фолликулы и вызывает выпадение волос. Он влияет на выпадение волос в 2.5 раза сильнее тестостерона.</p>
 
         <img src="article_pictures/picture2.jpg" alt="Гормон дигидротестостерон">
 
         <h3>Как часто у женщин выпадают волосы после менопаузы?</h3>
 
-        <p>Чаще, чем вы думаете. Согласно данным <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC4828511/" target="_blank" rel="noopener noreferrer">исследования</a>, от этого страдают от 20% до 60% женщин до достижения 60-летнего возраста. Авторы предполагают, что раз основная причина потери волосяного покрова — гормональная, значит главный способ повлиять на ситуацию — <strong>скорректировать питание.</strong></p>
-
+        <p>Чаще, чем вы думаете. Согласно данным <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC4828511/" target="_blank" rel="noopener noreferrer">исследования</a>, от этого страдают от 20% до 60% женщин до 60 лет. Авторы предполагают, что раз основная причина гормональная, значит главный способ повлиять на ситуацию — <strong>скорректировать питание.</strong></p>
+        
+        
         <img src="article_pictures/picture3.jpg" alt="Облысение при климаксе и менопаузе">
 
         <h2>Чем питаться, чтобы предотвратить потерю волос?</h2>
 
-        <p>Авторы <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC4828511/" target="_blank" rel="noopener noreferrer">исследования</a> анализируют большое количество работ по теме и выделяют несколько ключевых элементов, которые оказывают положительное влияние на гормональный фон, предотвращая дальнейшее выпадение волос.</p>
+        <p>Авторы <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC4828511/" target="_blank" rel="noopener noreferrer">исследования</a> анализируют большое количество работ по теме и выделяют несколько ключевых элементов, которые оказывают положительное влияние на гормональный фон.</p>
 
         <h3>Белки</h3>
 
-        <p>Некоторые белки необходимы для синтеза <strong>кератина</strong> — именно из него состоят наши волосы. Особенно важны аминокислоты цистин и метионин, содержащие серу. Ученые пишут о необходимости включать в рацион <strong>рыбу, мясо птицы, бобовые и орехи</strong>. В <a href="https://scholar.google.com/scholar_lookup?journal=N%20Engl%20J%20Med&title=Clinical%20practice:%20Hair%20loss%20in%20women&author=J%20Shapiro&volume=357&publication_year=2007&pages=1620-1630&pmid=17942874&doi=10.1056/NEJMcp072110&" target="_blank" rel="noopener noreferrer">некоторых работах</a> описаны случаи сильного облысения женщин, придерживающихся вегетарианской диеты. С таким рационом очень трудно добиться баланса нужных аминокислот (если вообще возможно), поэтому мы рекомендуем не исключать животные продукты, включая мясо, рыбу и птицу. Они критически важны для гормонального фона.</p>
-        <p>Белки должны составлять не менее 10–15% энергетической ценности рациона (0,9 г/кг массы тела в день). Основное количество лучше всего съедать в утреннее и дневное время.</p>
+        <p>Некоторые белки необходимы для синтеза <strong>кератина</strong> — именно из него состоят наши волосы. Особенно важны аминокислоты цистин и метионин. Ученые пишут о необходимости включать в рацион <strong>рыбу, мясо птицы, бобовые и орехи</strong>. В <a href="https://scholar.google.com/scholar_lookup?journal=N%20Engl%20J%20Med&title=Clinical%20practice:%20Hair%20loss%20in%20women&author=J%20Shapiro&volume=357&publication_year=2007&pages=1620-1630&pmid=17942874&doi=10.1056/NEJMcp072110&" target="_blank" rel="noopener noreferrer">некоторых работах</a> описаны случаи сильного облысения у вегетарианцев. С таким рационом очень трудно добиться баланса нужных аминокислот.</p>
         
         <img src="article_pictures/picture4.jpg" alt="Белковая еда">
 
         <h3>Жиры</h3>
 
-        <p>Полезные жиры — это то, чем часто пренебрегают. Польза от <strong>Омега-3 и Омега-6</strong> — это не маркетинг или уловка, а доказанный факт. <a href="https://pubmed.ncbi.nlm.nih.gov/23938188/" target="_blank" rel="noopener noreferrer">Исследования</a> подтверждают не только общие положительные эффекты для организма, но и связь с фотостарением кожи и волос (фотостарение — старение из-за солнца и других источников ультрафиолета) — насыщенные жирные кислоты замедляют этот процесс. Они напрямую участвуют в синтезе стероидных гормонов, которые сильно влияют на состояние кожи и волос. И совсем не обязательно покупать дорогие БАДы на iHerb или отечественных маркетплейсах. Омега-3 и Омега-6 можно получать из продуктов питания — рыбы, яиц, оливкового и рапсового масел.</p>
+        <p>Польза от <strong>Омега-3 и Омега-6</strong> — это не маркетинг, а доказанный факт. <a href="https://pubmed.ncbi.nlm.nih.gov/23938188/" target="_blank" rel="noopener noreferrer">Исследования</a> подтверждают их связь с замедлением фотостарения кожи и волос. Они напрямую участвуют в синтезе стероидных гормонов. Омега-3 и Омега-6 можно получать из рыбы, яиц, оливкового и рапсового масел.</p>
 
         <img src="article_pictures/picture5.jpg" alt="Жирная рыба">
         
         <h3>Углеводы</h3>
         
-        <p>Ваш главный враг — простые сахара. Доказано, что они повышают секрецию кожного сала. Казалось бы: это же хорошо, поскольку кожное сало стимулирует рост волос. Но чрезмерная секреция создает среду для размножения микроорганизмов, что запускает воспалительный процесс и не дает волосам расти.</p>
-        <p>Также диета, богатая простыми сахарами, приводит к нарушению гликемии и инсулинемии, что напрямую способствует увеличению синтеза андрогенов в яичниках, что прямо влияет на облысение после менопаузы. В волосяных фолликулах инсулин напрямую влияет на рост волос, делая их тоньше и короче. Исследователи из Финляндии <a href="https://pubmed.ncbi.nlm.nih.gov/12775957/" target="_blank" rel="noopener noreferrer">выяснили</a>, что у женщин с признаками инсулинорезистентности (абдоминальное ожирение, повышенные показатели инсулина в крови) гораздо чаще других были замечены и проблемы с волосяным покровом.</p>
-        <p>Для того, чтобы этого избежать, нужно делать основой диеты именно сложные углеводы с низким гликемическим индексом: <strong>цельнозерновой хлеб, крупы, рис, макаронные изделия из твердых сортов пшеницы, несладкие овощи и фрукты</strong>. Это не значит, что от сладкого нужно отказываться вовсе, но лучше ограничить его употребление.</p>
+        <p>Ваш главный враг — простые сахара. Они повышают секрецию кожного сала, что создает среду для размножения микроорганизмов и запускает воспалительный процесс. Также диета, богатая сахарами, приводит к увеличению синтеза андрогенов, что прямо влияет на облысение. Делайте основой диеты сложные углеводы: <strong>цельнозерновой хлеб, крупы, рис, овощи и несладкие фрукты</strong>.</p>
 
         <h3>Витамины</h3>
         <ul>
-            <li><strong>Витамин C</strong>: основа основ. Это один из главных стройматериалов нашего организма. Когда его не хватает, все идет на перекосяк. Содержится в петрушке, брокколи, черной смородине, цитрусовых и других фруктах и овощах. Его довольно много в болгарском перце.</li>
-            <li><strong>Витамин D</strong>: настоящее супер вещество, которое часто недооценивают. <a href="https://pubmed.ncbi.nlm.nih.gov/23428658/" target="_blank" rel="noopener noreferrer">Исследования</a> буквально КРИЧАТ: недок витамина D напрямую связан с выпадением волос у женщин. Лучшие источники: жирная рыба, яйца, грибы.</li>
-            <li><strong>Витамин А</strong>: очень важен для роста и здоровья волос, но является палкой о двух концах: облысение может вызывать как недостаток, так и передозировка витамином А. Лучше всего сдать анализы перед приемом. Содержится в моркови, тыкве, зелени и абрикосах.</li>
-            <li><strong>Витамины группы B</strong>: их много, каждый важен по-своему. Фолиевая кислота (B9) поддерживает нормальный рост волос, пантотеновая кислота (B5) препятствует появлению ранней седины,, биотин (B7) необходим для синтеза белков, Кобаламин (B12) участвует в процессах кроветворения. Витамины группы B содержатся в рыбе, мясе, орехах, зеленых овощах, яйцах и молочных продуктах.</li>
+            <li><strong>Витамин C</strong>: один из главных стройматериалов организма. Содержится в петрушке, брокколи, черной смородине, цитрусовых.</li>
+            <li><strong>Витамин D</strong>: <a href="https://pubmed.ncbi.nlm.nih.gov/23428658/" target="_blank" rel="noopener noreferrer">Исследования</a> показывают, что его недостаток напрямую связан с выпадением волос у женщин. Лучшие источники: жирная рыба, яйца, грибы.</li>
+            <li><strong>Витамин А</strong>: важен для роста волос, но облысение может вызывать как недостаток, так и передозировка. Содержится в моркови, тыкве, зелени.</li>
+            <li><strong>Витамины группы B</strong>: необходимы для синтеза белков и кроветворения. Содержатся в рыбе, мясе, орехах, зеленых овощах, яйцах.</li>
         </ul>
 
         <h3>Минералы</h3>
         <ul>
-            <li><strong>Цинк</strong> активно задействуется при росте волос. <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC3870206/" target="_blank" rel="noopener noreferrer">Исследование</a> показало его дефицит в крови у всех людей с облысениями, в том числе при женском типе облысения. Он задействован во всех процессах: от выделения нужных гормонов, до взаимодействия с витаминами и белками, нужными для образования волосяных фоликул.</li>
-            <li><strong>Железо</strong> играет активную роль в образовании волос. <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC3678013/" target="_blank" rel="noopener noreferrer">Исследования</a> показывают прямую связь между его дефицитом и выпадением волос, в том числе у женщин после менопаузы.</li>
-            <li><strong>Медь</strong> тоже очень важна в построении волос. Она является одним из главных элементов в кератине. Содержится в печени, орехах, семенах и морских водорослях.</li>
+            <li><strong>Цинк</strong>: <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC3870206/" target="_blank" rel="noopener noreferrer">исследование</a> показало его дефицит у всех людей с облысением. Он задействован во всех процессах роста волос.</li>
+            <li><strong>Железо</strong>: <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC3678013/" target="_blank" rel="noopener noreferrer">исследования</a> показывают прямую связь между его дефицитом и выпадением волос.</li>
+            <li><strong>Медь</strong>: один из главных элементов в кератине. Содержится в печени, орехах, семенах.</li>
         </ul>
-        <p>Среди минералов можно также отметить <strong>селен, кремний и магний</strong>.</p>
-        <p>Если резюмировать про питание, можно сделать несложный вывод: питание должно быть разнообразным, чтобы организм мог получать все нужные микроэлементы и правильный баланс БЖУ. Нужно есть достаточное количество белка из разных источников, зелень, рыбу и воздерживаться от сладкого.</p>
+        <p>Если резюмировать: питание должно быть разнообразным, с достаточным количеством белка, зелени, рыбы и с ограничением сладкого.</p>
 
-        <h2>Что делать, чтобы предотвратить потерю волос после менопаузы</h2>
-        <p>Помимо питания, главное, что вы можете сделать для своих волос — заниматься физической активностью. Здесь достигнут полный научный консенсус: длительное сидение и малоподвижный образ жизни прямо влияют на симптомы менопаузы, среди которых часто встречается и облысение.</p>
-        <p><a href="https://bmcwomenshealth.biomedcentral.com/articles/10.1186/s12905-024-03243-4" target="_blank" rel="noopener noreferrer">Обзор</a> 80 актуальных исследований по теме, в которых приняли участие 8983 женщины, показал, что лучше всего на здоровье женщин в после менопаузы влияют занятия йогой. Спорт оказывает положительное влияние на гормональный фон и иммунную систему, что также способствует сохранению здоровья волос.</p>
+        <h2>Что еще можно сделать?</h2>
+        <p>Помимо питания, важна физическая активность. <a href="https://bmcwomenshealth.biomedcentral.com/articles/10.1186/s12905-024-03243-4" target="_blank" rel="noopener noreferrer">Обзор</a> 80 исследований показал, что лучше всего на здоровье женщин в постменопаузе влияют занятия йогой. Спорт оказывает положительное влияние на гормональный фон и иммунную систему.</p>
         
         <img src="article_pictures/picture6.jpg" alt="Йога после климакса">
         
-
-        <h2>Как ухаживать за волосами при облысении после менопаузы?</h2>
-        <p>Существует несколько действий, которыми вы можете помочь своим волосам при менопаузе. Необходимо учитывать их новые свойства: ломкость, истончение, сухость:</p>
+        <h2>Как ухаживать за волосами?</h2>
+        <p>Учитывайте новые свойства волос: ломкость, истончение, сухость.</p>
         <ul>
-            <li>Выбирайте мягкие шампуни с низким содержанием сульфатов и парабенов</li>
-            <li>Используйте шампуни и кондиционеры с гиалуроновой кислотой. Она помогает увлажнить волосы и заметно улучшает их внешний вид. По результатам <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC4025514/" target="_blank" rel="noopener noreferrer">исследования</a>, на 4-й неделе уменьшение шелушения, эритемы и зуда у испытуемых составило 76,9 %, 64,3 % и 50 % соответственно. На 8-й неделе общая оценка улучшилась у 92,3 % пациентов.</li>
-            <li>Используйте уходовую косметику с аминокислотами и протеинами шелка. Они визуально улучшают волосы, делают их блестящими, более устойчивыми к повреждениям.</li>
-            <li>Применяйте средства с пептидами, растительными маслами, витаминами группы B, биотинами и цинком.</li>
+            <li>Выбирайте мягкие шампуни без сульфатов и парабенов.</li>
+            <li>Используйте средства с гиалуроновой кислотой для увлажнения.</li>
+            <li>Применяйте уход с аминокислотами, протеинами шелка, пептидами, маслами, биотином и цинком.</li>
         </ul>
 
         <h3>Выбирайте стрижку правильно</h3>
-        <p>Часто даже при сложных случаях облысения при климаксе можно выбрать стрижку так, чтобы проблема не бросалась в глаза. Есть несколько общих рекомендаций:</p>
+        <p>Правильная стрижка может скрыть проблему.</p>
         <ul>
-            <li>Выбирайте стрижку средней длины. Если оставить слишком много, волосы будут вытягиваться под собственным весом и обнажать корни, а если оставить мало, обнажатся залысины.</li>
-            <li>Избегайте тугих плетений: хвостов, кос, заколок. Они не только обнажают залысины, но и нагружают из без того ослабленные волосяные фолликулы.</li>
-            <li>Используйте многослойные стрижки с перепадами, которые визуально увеличивают объем.</li>
-            <li>Делайте легкие укладки, которые могут подчеркнуть объем.</li>
+            <li>Выбирайте среднюю длину, чтобы волосы не вытягивались под собственным весом.</li>
+            <li>Избегайте тугих плетений: хвостов, кос, заколок.</li>
+            <li>Используйте многослойные стрижки для визуального объема.</li>
         </ul>
 
         <h2>Куда идти?</h2>
-        <p>Если вы в Тольятти, то в салон красоты Сапфир. Наши мастера подберут индивидуальный уход для вашего типа кожи и волоса, сделают стрижку которая подчеркнет достоинства и будет подходить к форме вашего лица.</p>
-
-        
-        <div class="article-navigation">
-          <a href="#" class="btn secondary nav-contact-trigger">Записаться в Сапфир</a>
-          <a href="blog.html" class="btn secondary">Назад в Блог</a>
-          
-          <a href="#" class="btn disabled">Читать далее</a>
-        </div>
-
+        <p>Если вы в Тольятти, ждем вас в салоне красоты «Сапфир». Наши мастера подберут индивидуальный уход и стрижку, которая подчеркнет ваши достоинства.</p>
       </article>
-    </section>
 
+      <div class="article-navigation">
+        <a href="#" class="btn nav-contact-trigger">Записаться в Сапфир</a>
+        <a href="blog.html" class="btn">Назад в Блог</a>
+      </div>
+      
+      <div class="next-article-section">
+        <h3 class="next-article__title">Читайте также:</h3>
+        <a href="#" class="next-article-card">
+          <div class="next-article-card__image-placeholder">
+            <span>Фото</span>
+          </div>
+          <div class="next-article-card__content">
+            <h4>Как ухаживать за ногтями осенью</h4>
+            <p>Секреты мастеров по маникюру: как сохранить ногти здоровыми и красивыми в холодное время года.</p>
+          </div>
+        </a>
+      </div>
+
+    </div>
   </main>
   
   <footer>
-    © Сапфир, 2025. v 1.0
-    <div class="dev-signature">Сайт разработал Алексей <span class="brand-logo-char">Э.</span> Бронников</div>
+    © Сапфир, 2025.
   </footer>
 
-  
-  <div class="modal-overlay" id="contactModal" aria-hidden="true" style="display:none;">
+  <div class="modal-overlay" id="contactModal" aria-hidden="true">
     <div class="modal" role="dialog" aria-labelledby="modalTitle">
       <button class="modal-close" aria-label="Закрыть окно">&times;</button>
       <h3 id="modalTitle">Запись по телефону</h3>
@@ -441,31 +426,9 @@
     </div>
   </div>
 
-  <div id="cookie-consent-banner" class="cookie-consent" style="display:none;">
-    <div class="cookie-consent__text">
-      Мы используем файлы cookie для улучшения работы сайта. Продолжая, вы соглашаетесь с их использованием.
-    </div>
-    <button id="cookie-consent-accept" class="btn btn-cookie">Хорошо</button>
-  </div>
-
-  <script src="https://cdn.jsdelivr.net/npm/tsparticles@2.12.0/tsparticles.bundle.min.js"></script>
-
   <script>
     document.addEventListener('DOMContentLoaded', function() {
-      // Анимации появления
-      (function(){
-        const observer = new IntersectionObserver((entries) => {
-          entries.forEach(entry => {
-            if (entry.isIntersecting) {
-              entry.target.classList.add('is-visible');
-              observer.unobserve(entry.target);
-            }
-          });
-        }, { threshold: 0.1 });
-        document.querySelectorAll('[data-anim]').forEach(el => observer.observe(el));
-      })();
-
-      // Улучшенная логика блокировки скролла
+      // Логика блокировки скролла
       const scrollLocker = (function() {
         let lockCount = 0;
         return {
@@ -485,65 +448,29 @@
         };
       })();
       
-      // Модальное окно (оставил на случай, если кнопка "Записаться" используется)
+      // Модальное окно
       (function(){
         const modal = document.getElementById('contactModal');
         if (!modal) return;
-        modal.style.display = 'flex'; // Делаем видимым для скрипта
         
         const openTriggers = document.querySelectorAll('.nav-contact-trigger');
         const closeBtn = modal.querySelector('.modal-close');
         
-        const openModal = (e) => { e.preventDefault(); modal.style.opacity = '1'; modal.style.visibility = 'visible'; scrollLocker.lock(); };
-        const closeModal = () => { modal.style.opacity = '0'; modal.style.visibility = 'hidden'; scrollLocker.unlock(); };
+        const openModal = (e) => {
+          e.preventDefault();
+          modal.classList.add('is-visible');
+          scrollLocker.lock();
+        };
+        const closeModal = () => {
+          modal.classList.remove('is-visible');
+          scrollLocker.unlock();
+        };
         
         openTriggers.forEach(trigger => trigger.addEventListener('click', openModal));
         closeBtn.addEventListener('click', closeModal);
         modal.addEventListener('click', (e) => e.target === modal && closeModal());
-        document.addEventListener('keydown', (e) => e.key === 'Escape' && modal.style.visibility === 'visible' && closeModal());
+        document.addEventListener('keydown', (e) => e.key === 'Escape' && modal.classList.contains('is-visible') && closeModal());
       })();
-      
-      // Логика для Cookie баннера
-      (function(){
-        const banner = document.getElementById('cookie-consent-banner');
-        const acceptBtn = document.getElementById('cookie-consent-accept');
-        if (!banner || !acceptBtn) return;
-        
-        banner.style.display = 'flex'; // Делаем видимым для скрипта
-
-        if (!localStorage.getItem('cookieConsent')) {
-          setTimeout(() => {
-            banner.classList.add('is-visible');
-            banner.style.transform = 'translateY(0)';
-          }, 500);
-        }
-
-        acceptBtn.addEventListener('click', () => {
-          localStorage.setItem('cookieConsent', 'given');
-          banner.style.transform = 'translateY(100%)';
-        });
-      })();
-
-      // Анимация частиц
-      (function(){
-        if (typeof tsParticles === 'undefined') { console.error('tsParticles not loaded'); return; }
-        tsParticles.load("particles-bg", {
-          fullScreen: { enable: false },
-          particles: {
-            number: { value: 50, density: { enable: true, value_area: 800 } },
-            shape: { type: "image", image: { src: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 80 72'%3E%3Cdefs%3E%3CradialGradient id='a' cx='50%25' cy='50%25' r='50%25'%3E%3Cstop offset='0%25' stop-color='%23c5d2ff'/%3E%3Cstop offset='100%25' stop-color='%231a3a9a'/%3E%3C/radialGradient%3E%3C/defs%3E%3Cpath d='M40 0L80 22L40 72L0 22L40 0Z' fill='url(%23a)'/%3E%3Cpath d='M40 0L0 22L40 26Z' fill='%23e8eaf6' fill-opacity='0.6'/%3E%3Cpath d='M40 0L80 22L40 26Z' fill='%237da8ff' fill-opacity='0.6'/%3E%3Cpath d='M0 22L40 72L40 26Z' fill='%230d1a4f' fill-opacity='0.7'/%3E%3Cpath d='M80 22L40 72L40 26Z' fill='%231a3a9a' fill-opacity='0.7'/%3E%3Cpath d='M40 5L20 16L40 24L60 16L40 5Z' fill='%23fff' fill-opacity='0.3'/%3E%3Cpath d='M40 26L20 16L0 22L40 26Z' fill='%23a7b0d1' fill-opacity='0.3'/%3E%3C/svg%3E" } },
-            opacity: { value: { min: 0.4, max: 0.9 }, animation: { enable: true, speed: 2.5, sync: false } },
-            size: { value: { min: 12, max: 28 } },
-            shadow: { enable: true, blur: 15, color: "#4a7dff" },
-            rotate: { value: { min: 0, max: 360 }, direction: "random", animation: { enable: true, speed: 5, sync: false } },
-            twinkle: { particles: { enable: true, frequency: 0.1, opacity: 1, color: "#fff5cc" } },
-            move: { enable: true, speed: { min: 0.8, max: 2 }, direction: "bottom", straight: true, outModes: { default: "out" } }
-          },
-          interactivity: { events: { onHover: { enable: false }, onClick: { enable: false } } },
-          detectRetina: true
-        });
-      })();
-
     });
   </script>
 </body>
