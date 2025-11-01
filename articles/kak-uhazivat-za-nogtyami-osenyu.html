@@ -218,6 +218,7 @@
       place-items: center;
       color: var(--text-secondary);
       font-size: 14px;
+      object-fit: cover; /* Добавлено для корректного отображения картинки */
     }
     .next-article-card__content h4 {
       margin: 0 0 8px;
@@ -353,13 +354,11 @@
       
       <div class="next-article-section">
         <h3 class="next-article__title">Читайте также:</h3>
-        <a href="#" class="next-article-card">
-          <div class="next-article-card__image-placeholder">
-            <span>Скоро</span>
-          </div>
+        <a href="articles/vypadenie-volos-pri-menopauze.html" class="next-article-card">
+          <img src="articles/article-pictures/vypadenie-volos-pri-menopauze/picture1.jpeg" alt="Выпадение волос при менопаузе" class="next-article-card__image-placeholder">
           <div class="next-article-card__content">
-            <h4>Новая статья уже в работе</h4>
-            <p>Мы готовим для вас еще больше полезных материалов о красоте и здоровье. Заглядывайте в наш блог почаще!</p>
+            <h4>Выпадение волос при менопаузе</h4>
+            <p>Узнайте о причинах и способах борьбы с выпадением волос в этот непростой для женщины период.</p>
           </div>
         </a>
       </div>
